@@ -1,4 +1,4 @@
-package service.serviceImpl;
+package service.impl;
 
 import beans.Car;
 import service.CarService;

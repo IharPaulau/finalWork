@@ -1,13 +1,15 @@
-package service.serviceImpl;
+package service.impl;
 
 import beans.User;
 import dao.UserDao;
 import service.UserService;
 
 public class UserServiceImpl implements UserService {
-    public User chekUser(String login) {
+    UserDao userDao;
 
-        return UserDao.chekUser(login);
+
+    public User chekUser(String login) {
+        return userDao.chekUser(login);
     }
     }
 

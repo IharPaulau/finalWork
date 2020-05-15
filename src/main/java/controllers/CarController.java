@@ -1,7 +1,6 @@
 package controllers;
 
 import beans.Car;
-import dao.daoImpl.CarDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +41,15 @@ public class CarController {
         m.addAttribute("car", car);
         return "cars/careditform";
     }
+
+    @GetMapping(value = "/cars/cardetails/{id}")
+    public String carinfo(@PathVariable int id, Model m) {
+        Car car = carService.getCarById(id);
+        m.addAttribute("car", car);
+        return "cars/carinfo";
+    }
+
+
 
     @PostMapping(value = "/cars/editsave")
     public String editsave(@ModelAttribute("car") Car car) {

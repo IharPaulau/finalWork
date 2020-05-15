@@ -27,11 +27,11 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     <property name="dataSource" ref="ds"/>
   </bean>
 
-  <bean id="carDao" class="dao.daoImpl.CarDaoImpl">
+  <bean id="carDao" class="dao.impl.CarDaoImpl">
     <property name="template" ref="jt"/>
   </bean>
 
-    <bean id="carService" class="service.serviceImpl.CarServiceImpl">
+    <bean id="carService" class="service.impl.CarServiceImpl">
       <property name="carDao" ref="carDao"/>
     </bean>
 

@@ -13,8 +13,8 @@
           <td><form:input path="model" /></td>
          </tr> 
          <tr>
-                            <td>fueltank :</td>
-                            <td><form:input path="fuelTank" /></td>
+                            <td>cost :</td>
+                            <td><form:input path="costPerOneDay" /></td>
                   </tr>
          <tr>  
           <td> </td>  
@@ -23,3 +23,5 @@
          </tr>
         </table>  
        </form:form>
+
+        <a href="viewcars">Back to main menu</a>

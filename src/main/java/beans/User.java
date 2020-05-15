@@ -1,16 +1,30 @@
 package beans;
 
-public class User {
-    private String login;
-    private String password;
-    private boolean isAdmin;
+import java.util.Set;
 
-    public String getLogin() {
-        return login;
+public class User {
+    private Long id;
+    private String username;
+    private String password;
+    private Set<Role> roles;
+
+    public User() {
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -21,11 +35,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

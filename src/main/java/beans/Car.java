@@ -9,7 +9,7 @@ public class Car {
     private String typeBody;
     private String typeEngine;
     private double fuelConsumption;
-    private int fuelTank;
+    private int costPerOneDay;
 
     public int getId() {
         return id;
@@ -59,11 +59,11 @@ public class Car {
         this.fuelConsumption = fuelConsumption;
     }
 
-    public int getFuelTank() {
-        return fuelTank;
+    public int getCostPerOneDay() {
+        return costPerOneDay;
     }
 
-    public void setFuelTank(int fuelTank) {
-        this.fuelTank = fuelTank;
+    public void setCostPerOneDay(int costPerOneDay) {
+        this.costPerOneDay = costPerOneDay;
     }
 }
