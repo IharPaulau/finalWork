@@ -6,7 +6,7 @@
       	<table>
          <tr>  
           <td>brand : </td>
-          <td><form:input path="brand"  /></td>
+                  <td><form:input path="brand"  /></td>
          </tr>
          <tr>  
           <td>model :</td>
@@ -24,4 +24,7 @@
         </table>  
        </form:form>
 
-        <a href="viewcars">Back to main menu</a>
+
+<form action="viewCars" >
+           <button>view all car</button>
+          </form>

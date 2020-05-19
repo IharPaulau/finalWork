@@ -9,11 +9,7 @@ import dao.CarDao;
 
 public class CarServiceImpl implements CarService {
 
-    CarDao carDao;
-
-    public void setCarDao(CarDao carDao) {
-        this.carDao = carDao;
-    }
+    private CarDao carDao;
 
     public int save(Car car) {
         return this.carDao.save(car);
@@ -34,4 +30,12 @@ public class CarServiceImpl implements CarService {
     public int delete(int id) {
         return carDao.delete(id);
     }
+
+    public void setCarDao(CarDao carDao) {
+        this.carDao = carDao;
+    }
+
+
+
+
 }

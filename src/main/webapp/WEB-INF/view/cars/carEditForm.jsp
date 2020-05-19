@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
 		<h1>Edit Car</h1>
-       <form:form method="post" action="/cars/editsave" modelAttribute="car">
+       <form:form method="post" action="/cars/editSave" modelAttribute="car">
       	<table >  
       	<tr>
 

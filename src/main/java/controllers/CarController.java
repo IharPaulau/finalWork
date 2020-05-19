@@ -9,58 +9,60 @@ import service.CarService;
 
 import java.util.List;
 
+import static utils.Constants.CAR_MODEL_ATTRIBUTE;
+import static utils.Constants.REDIRECT_PREFIX;
+
 @Controller
 public class CarController {
 
     @Autowired
-    CarService carService;
+    private CarService carService;
 
-    @GetMapping("/cars/carform")
-    public String showform(Model m) {
-        m.addAttribute("car", new Car());
-        return "cars/carform";
+    @GetMapping("/cars/carForm")
+    public String showForm(Model model) {
+        model.addAttribute("car", new Car());
+        return "cars/carForm";
     }
 
-       @PostMapping(value = "/save")
-    public String save(@ModelAttribute("car") Car car) {
+    @PostMapping("/save")
+    public String save(@ModelAttribute(CAR_MODEL_ATTRIBUTE) Car car) {
         carService.save(car);
-        return "redirect:/cars/viewcars";
+        return REDIRECT_PREFIX + "/cars/viewCars";
     }
 
 
-    @GetMapping("/cars/viewcars")
-    public String viewemp(Model m) {
+    @GetMapping("/cars/viewCars")
+    public String viewCar(Model model) {
         List<Car> list = carService.getCars();
-        m.addAttribute("list", list);
-        return "cars/viewcars";
+        model.addAttribute("list", list);
+        return "cars/viewCars";
     }
 
-      @GetMapping(value = "/cars/editcar/{id}")
+    @GetMapping("/cars/editCar/{id}")
     public String edit(@PathVariable int id, Model m) {
         Car car = carService.getCarById(id);
-        m.addAttribute("car", car);
-        return "cars/careditform";
+        m.addAttribute(CAR_MODEL_ATTRIBUTE, car);
+        return "cars/carEditForm";
     }
 
-    @GetMapping(value = "/cars/cardetails/{id}")
-    public String carinfo(@PathVariable int id, Model m) {
+    @GetMapping("/cars/carDetails/{id}")
+    public String showCarDetails(@PathVariable int id, Model model) {
         Car car = carService.getCarById(id);
-        m.addAttribute("car", car);
-        return "cars/carinfo";
+        model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
+        return "cars/carInfo";
     }
 
 
-
-    @PostMapping(value = "/cars/editsave")
-    public String editsave(@ModelAttribute("car") Car car) {
+    @PostMapping(value = "/cars/editSave")
+    public String editSave(@ModelAttribute(CAR_MODEL_ATTRIBUTE) Car car) {
         carService.update(car);
-        return "redirect:/cars/viewcars";
+        return REDIRECT_PREFIX + "/cars/viewCars";
     }
 
 
-    @GetMapping(value = "/cars/deletecar/{id}")
+    @GetMapping(value = "/cars/deleteCar/{id}")
     public String delete(@PathVariable int id) {
         carService.delete(id);
-        return "redirect:/cars/viewcars";
+        return REDIRECT_PREFIX + "/cars/viewCars";
     }
 }

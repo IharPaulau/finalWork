@@ -1,2 +1,7 @@
-<a href="cars/carform">Add new car</a>
-<a href="cars/viewcars">View all cars</a>
+ <form action="cars/carForm" >
+           <button>Add new car</button>
+          </form>
+
+           <form action="cars/viewCars" >
+                     <button>View all</button>
+                    </form>

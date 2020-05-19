@@ -1,4 +1,4 @@
-package utils;
+package mappers;
 
 import beans.Car;
 import org.springframework.jdbc.core.RowMapper;
