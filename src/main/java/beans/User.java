@@ -3,19 +3,17 @@ package beans;
 import java.util.Set;
 
 public class User {
-    private Long id;
+    private int id;
     private String userName;
     private String password;
+    private String email;
     private Set<Role> roles;
 
-    public User() {
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -41,5 +39,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

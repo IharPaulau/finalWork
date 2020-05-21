@@ -18,7 +18,10 @@ public class OrderRowMapper implements RowMapper<Order> {
         order.setPassportSeries(rs.getString("passportSeries"));
         order.setPassportNumber(rs.getInt("passportNumber"));
         order.setPassportId(rs.getString("passportId"));
-        order.setOrderApproved(rs.getBoolean("orderApproved"));
+        Object checkForNull = rs.getObject("orderApproved");
+        if (checkForNull != null) {
+            order.setOrderApproved(rs.getBoolean("orderApproved"));
+        }
         order.setRentalPeriodInDays(rs.getInt("rentalPeriodInDays"));
         return order;
     }

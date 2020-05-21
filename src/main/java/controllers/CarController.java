@@ -39,9 +39,9 @@ public class CarController {
     }
 
     @GetMapping("/cars/editCar/{id}")
-    public String edit(@PathVariable int id, Model m) {
+    public String edit(@PathVariable int id, Model model) {
         Car car = carService.getCarById(id);
-        m.addAttribute(CAR_MODEL_ATTRIBUTE, car);
+        model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
         return "cars/carEditForm";
     }
 

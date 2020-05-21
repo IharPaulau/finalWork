@@ -59,11 +59,11 @@ public class Order {
         this.passportId = passportId;
     }
 
-    public boolean isOrderApproved() {
+    public Boolean getOrderApproved() {
         return orderApproved;
     }
 
-    public void setOrderApproved(boolean orderApproved) {
+    public void setOrderApproved(Boolean orderApproved) {
         this.orderApproved = orderApproved;
     }
 

@@ -5,13 +5,32 @@
 	<table border="2" width="50%" cellpadding="2" >
 	<tr><th>User</th><<th>Car</th><th>Rental period</th><th>status</th><th>decision </th></tr>
     <c:forEach var="order" items="${list}">
-    <tr>
-    <td>....</td>
-    <td>....</td>
-    <td>${order.rentalPeriodInDays}</td>
-    <td>${order.orderApproved}  </td>
-    <td><a href="deleteCar/${car.id}">Delete</a></td>
-       </tr>
+        <tr>
+            <td>....</td>
+            <td>....</td>
+            <td>${order.rentalPeriodInDays}</td>
+            <td>
+                <c:choose>
+                    <c:when test="${order.orderApproved}">
+                        this order is approved
+                        <br />
+                    </c:when>
+                    <c:when test="${order.orderApproved == 'false'}">
+                        this order is rejected
+                        <br />
+                    </c:when>
+                    <c:otherwise>
+                        this order not yet verified
+                        <br />
+                    </c:otherwise>
+                </c:choose>
+            </td>
+            <td>
+                <button><a href="/approve/${order.id}">approved</a></button>
+
+                <button><a href="/reject/${order.id}">rejected</a></button>
+            </td>
+        </tr>
     </c:forEach>
     </table>
     <br/>

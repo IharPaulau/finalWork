@@ -1,7 +1,9 @@
 package dao.impl;
 
+import beans.Car;
 import beans.Order;
 import dao.OrderDao;
+import mappers.CarRowMapper;
 import mappers.OrderRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -14,6 +16,7 @@ public class OrderDaoImpl implements OrderDao {
     private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders WHERE id=?";
     private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders";
     private static final String SELECT_ALL_OWN_ORDERS = "SELECT * FROM orders WHERE userId=?";
+    private static final String SELECT_ALL_CARS = "SELECT * FROM cars";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -24,18 +27,13 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public int update(Order order) {
-        return jdbcTemplate.update(CHANGE_APPROVED_STATUS, order.isOrderApproved(), order.getId());
-    }
-
-    @Override
     public int delete(int id) {
         return jdbcTemplate.update(DELETE_ORDER, id);
     }
 
     @Override
     public Order getOrderById(int id) {
-        return jdbcTemplate.queryForObject(SELECT_ORDER_BY_ID, new Object[]{id}, new OrderRowMapper() );
+        return jdbcTemplate.queryForObject(SELECT_ORDER_BY_ID, new Object[]{id}, new OrderRowMapper());
     }
 
     @Override
@@ -46,6 +44,21 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getOwnOrders() {
         return jdbcTemplate.query(SELECT_ALL_OWN_ORDERS, new OrderRowMapper(), 1);
+    }
+
+    @Override
+    public int reject(int id) {
+        return jdbcTemplate.update(CHANGE_APPROVED_STATUS, false, id);
+    }
+
+    @Override
+    public int approve(int id) {
+        return jdbcTemplate.update(CHANGE_APPROVED_STATUS, true, id);
+    }
+
+    @Override
+    public List<Car> getCars() {
+        return jdbcTemplate.query(SELECT_ALL_CARS, new CarRowMapper());
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {

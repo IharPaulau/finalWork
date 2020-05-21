@@ -43,13 +43,16 @@ public class OrderController {
     @GetMapping("/orders/viewMyOrders")
     public String viewMyOrders(Model model) {
         List<Order> list = orderService.getOwnOrders();
+        List<Car> cars = orderService.getCars();
         model.addAttribute("list", list);
+        model.addAttribute("cars", cars);
         return "orders/viewMyOrders";
     }
 
-    @GetMapping("/orders/viewOrders")
+       @GetMapping("/orders/viewOrders")
     public String viewAllOrders(Model model) {
         List<Order> list = orderService.getOrders();
+
         model.addAttribute("list", list);
         return "orders/viewOrders";
     }
@@ -58,6 +61,18 @@ public class OrderController {
     public String delete(@PathVariable int id) {
         orderService.delete(id);
         return REDIRECT_PREFIX + "/orders/viewMyOrders";
+    }
+
+    @GetMapping(value = "/approve/{id}")
+    public String orderApproved(@PathVariable int id) {
+        orderService.approve(id);
+        return REDIRECT_PREFIX + "/orders/viewOrders";
+    }
+
+    @GetMapping(value = "/reject/{id}")
+    public String orderReject(@PathVariable int id) {
+        orderService.reject(id);
+        return REDIRECT_PREFIX + "/orders/viewOrders";
     }
 
 

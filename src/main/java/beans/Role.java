@@ -2,22 +2,16 @@ package beans;
 
 import java.util.Set;
 
-
 public class Role {
-
-
-    private Long id;
+    private int id;
     private String name;
     private Set<User> users;
 
-    public Role() {
-    }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

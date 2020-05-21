@@ -6,11 +6,34 @@
 	<tr><th>Car</th><th>Rental period</th><th>status</th><th>Delete</th></tr>
     <c:forEach var="order" items="${list}">
     <tr>
-    <td>....</td>
-    <td>${order.rentalPeriodInDays}</td>
-    <td>${order.orderApproved}  </td>
-    <td><a href="deleteMyOrder/${order.id}">Delete</a></td>
-       </tr>
+        <td>
+         <c:forEach var="car" items="${cars}">
+        <c:if test="${car.id eq order.carId}"> ${car.brand}</c:if>
+        </c:forEach>
+        </td>
+        <td>
+        ${order.rentalPeriodInDays}
+        </td>
+        <td>
+            <c:choose>
+                <c:when test="${order.orderApproved}">
+                    your order is approved
+                    <br />
+                </c:when>
+                <c:when test="${order.orderApproved == 'false'}">
+                    your order is rejected
+                    <br />
+                </c:when>
+                <c:otherwise>
+                    not yet verified 
+                    <br />
+                </c:otherwise>
+            </c:choose>
+        </td>
+        <td>
+        <a href="deleteMyOrder/${order.id}">Delete</a>
+        </td>
+    </tr>
     </c:forEach>
     </table>
     <br/>
