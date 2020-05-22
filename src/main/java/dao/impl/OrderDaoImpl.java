@@ -14,15 +14,15 @@ public class OrderDaoImpl implements OrderDao {
     private static final String CHANGE_APPROVED_STATUS = "UPDATE orders SET orderApproved=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
     private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders WHERE id=?";
-    private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders";
-    private static final String SELECT_ALL_OWN_ORDERS = "SELECT * FROM orders WHERE userId=?";
+    private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id";
+    private static final String SELECT_ALL_OWN_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id WHERE userId=?";
     private static final String SELECT_ALL_CARS = "SELECT * FROM cars";
 
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public int save(Order order) {
-        return jdbcTemplate.update(ADD_NEW_ORDER, 1, order.getCarId(), order.getPassportSeries(), order.getPassportNumber(),
+    public int save(Order order, int carId) {
+        return jdbcTemplate.update(ADD_NEW_ORDER, 1, carId, order.getPassportSeries(), order.getPassportNumber(),
                 order.getPassportId(), order.getRentalPeriodInDays());
     }
 

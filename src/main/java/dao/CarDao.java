@@ -7,7 +7,7 @@ import java.util.List;
 public interface CarDao {
     int save(Car car);
 
-    int update(Car car);
+    int update(Car car2);
 
     int delete(int id);
 

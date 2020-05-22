@@ -1,7 +1,5 @@
 package controllers;
 
-
-import beans.Car;
 import beans.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,9 +31,9 @@ public class OrderController {
         return "orders/orderForm";
     }
 
-    @PostMapping("/saveOrder")
-    public String save(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) Order order) {
-        orderService.save(order);
+    @PostMapping("/saveOrder/{carId}")
+    public String save(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) Order order, @PathVariable int carId) {
+        orderService.save(order, carId);
         return REDIRECT_PREFIX + "/orders/viewMyOrders";
     }
 
@@ -43,16 +41,13 @@ public class OrderController {
     @GetMapping("/orders/viewMyOrders")
     public String viewMyOrders(Model model) {
         List<Order> list = orderService.getOwnOrders();
-        List<Car> cars = orderService.getCars();
         model.addAttribute("list", list);
-        model.addAttribute("cars", cars);
         return "orders/viewMyOrders";
     }
 
-       @GetMapping("/orders/viewOrders")
+    @GetMapping("/orders/viewOrders")
     public String viewAllOrders(Model model) {
         List<Order> list = orderService.getOrders();
-
         model.addAttribute("list", list);
         return "orders/viewOrders";
     }
@@ -74,7 +69,6 @@ public class OrderController {
         orderService.reject(id);
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }
-
 
 
 }

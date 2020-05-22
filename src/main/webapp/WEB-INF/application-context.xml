@@ -15,8 +15,20 @@
 
     <context:component-scan base-package="controllers"/>
 
-    <mvc:annotation-driven/>
-
     <context:property-placeholder ignore-unresolvable="true" location="classpath:database.properties"/>
+
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <!-- Locale Change Interceptor to achieve internationalization. -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+                <property name="paramName" value="lang" />
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 
 </beans>

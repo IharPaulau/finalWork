@@ -1,6 +1,7 @@
 package mappers;
 
 
+import beans.Car;
 import beans.Order;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -12,9 +13,9 @@ public class OrderRowMapper implements RowMapper<Order> {
     @Override
     public Order mapRow(ResultSet rs, int i) throws SQLException {
         Order order = new Order();
+        Car car = new Car();
+        car.setId(rs.getInt("carId"));
         order.setId(rs.getInt("id"));
-        order.setUserId(rs.getInt("userId"));
-        order.setCarId(rs.getInt("carId"));
         order.setPassportSeries(rs.getString("passportSeries"));
         order.setPassportNumber(rs.getInt("passportNumber"));
         order.setPassportId(rs.getString("passportId"));
@@ -23,6 +24,7 @@ public class OrderRowMapper implements RowMapper<Order> {
             order.setOrderApproved(rs.getBoolean("orderApproved"));
         }
         order.setRentalPeriodInDays(rs.getInt("rentalPeriodInDays"));
+        order.setCar(car);
         return order;
     }
 }

@@ -1,28 +1,40 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ page pageEncoding="UTF-8" %>
+    <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+    <html>
+    <head>
+        <title>Login page</title>
+        <link href="/resources/css/style.css" rel="stylesheet"/>
+    </head>
+    <body>
+    <div>
+        <a href="?lang=en"><spring:message code="locale.en"/></a>
+        <a href="?lang=ru"><spring:message code="locale.ru"/></a>
+    </div>
+    <div>
+        <form method="POST" action="/login" class="form-signin">
+            <h2 class="form-heading"><spring:message code="login.form"/></h2>
+            <span class="success-message">${message}</span>
+            <div class="form-attributes">
+                <label><spring:message code="username.label"/></label>
+                <spring:message code="username.placeholder" var="usernamePlaceholder"/>
+                <input name="username" type="text" placeholder="${usernamePlaceholder}"/>
 
-
-<div>
-    <form method="POST" action="${contextPath}/login">
-        <h2>login</h2>
-        <div>
-            <span>${message}</span>
-            <div>
-                <label>username</label>
-                <input name="username" type="text"/>
+                <label> <spring:message code="password.label"/></label>
+                <spring:message code="password.placeholder" var="passwordPlaceholder"/>
+                <input name="password" type="password" placeholder="${passwordPlaceholder}"/>
+                <span class="error-message">${error}</span>
             </div>
-            <div>
-                <label>password</label>
-                <input name="password" type="password"/>
-            </div>
-            <span>${error}</span>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <div>
-                <button type="submit">login</button>
+            <button class="button" type="submit"><spring:message code="login.button"/></button>
+            <div id="create-account">
+                <a href="/registration"><spring:message code="create.account"/></a>
             </div>
-            <a href="/registration">create new account</a>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+    <div id="footer">
+        <h2>Final Project For Java Web Development Course.</h2>
+    </div>
+    </body>
+    </html>

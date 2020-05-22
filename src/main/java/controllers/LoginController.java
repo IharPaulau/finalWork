@@ -2,15 +2,22 @@ package controllers;
 
 import beans.User;
 import forms.RegistrationForm;
+import service.LoginService;
+import service.UserService;
+import validators.RegistrationFormValidator;
+
+import java.util.Locale;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import service.LoginService;
-import service.UserService;
-
 
 import static utils.Constants.REDIRECT_PREFIX;
 
@@ -26,7 +33,10 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private LoginService loginService;
-
+    @Autowired
+    private MessageSource messageSource;
+    @Autowired
+    private RegistrationFormValidator registrationFormValidator;
 
     @GetMapping(value = "/registration")
     public String openRegistrationPage(Model model) {
@@ -35,7 +45,16 @@ public class LoginController {
     }
 
     @PostMapping(value = "/registration")
-    public String registerUser(@ModelAttribute(REGISTRATION_FORM_MODEL_ATTRIBUTE) RegistrationForm registrationForm, Model model) {
+    public String registerUser(@ModelAttribute(REGISTRATION_FORM_MODEL_ATTRIBUTE) @Valid RegistrationForm registrationForm,
+                               BindingResult bindingResult, Model model) {
+
+        registrationFormValidator.validate(registrationForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(REGISTRATION_FORM_MODEL_ATTRIBUTE, registrationForm);
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return REGISTRATION_PAGE;
+        }
+
         User newUser = userService.createNewRegisteredUser(registrationForm);
         userService.saveUserWithRole(newUser);
         loginService.autoLogin(registrationForm.getName(), registrationForm.getPassword());
@@ -44,14 +63,13 @@ public class LoginController {
     }
 
     @GetMapping(value = {"/", "/login"})
-    public String openLoginPage(Model model, String error, String logout) {
+    public String openLoginPage(Model model, String error, String logout, Locale locale) {
         if (error != null) {
-            model.addAttribute("error", "invalid credentials");
+            model.addAttribute("error", messageSource.getMessage("invalid.credentials", null, locale));
         }
         if (logout != null) {
-            model.addAttribute("message", "success logout");
+            model.addAttribute("message", messageSource.getMessage("success.logout", null, locale));
         }
         return LOGIN_PAGE;
     }
-
 }

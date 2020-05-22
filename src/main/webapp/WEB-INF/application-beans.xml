@@ -10,6 +10,26 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!-- Include the properties file into the bean configuration file -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:/messages/locales</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="cp1251"/>
+    </bean>
+
+<!--    <bean id="localeChangeInterceptor"-->
+<!--          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
+<!--        <property name="paramName" value="lang"/>-->
+<!--    </bean>-->
+
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="en"/>
+    </bean>
+
     <!-- Initialization for data source -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driver.class.name}"/>
@@ -42,6 +62,7 @@
     </bean>
     <bean id="orderService" class="service.impl.OrderServiceImpl">
         <property name="orderDao" ref="orderDao"/>
+        <property name="carDao" ref="carDao"/>
     </bean>
     <bean id="userService" class="service.impl.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
@@ -55,5 +76,9 @@
     <bean id="loginService" class="service.impl.LoginServiceImpl">
         <property name="authenticationManager" ref="authenticationManager"/>
         <property name="userDetailsService" ref="userDetailsService"/>
+    </bean>
+    <!-- Validators -->
+    <bean id="registrationFormValidator" class="validators.RegistrationFormValidator">
+        <property name="userService" ref="userService"/>
     </bean>
 </beans>

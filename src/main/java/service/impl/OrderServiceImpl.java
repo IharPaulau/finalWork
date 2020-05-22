@@ -2,6 +2,7 @@ package service.impl;
 
 import beans.Car;
 import beans.Order;
+import dao.CarDao;
 import dao.OrderDao;
 import service.OrderService;
 
@@ -10,15 +11,21 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private OrderDao orderDao;
+    private CarDao carDao;
+
 
     @Override
-    public int save(Order order) {
-        return orderDao.save(order);
+    public int save(Order order, int carId) {
+        return orderDao.save(order, carId);
     }
 
     @Override
     public List<Order> getOrders() {
-        return orderDao.getOrders();
+        List<Order> orders = orderDao.getOrders();
+        for(Order order:orders){
+            order.setCar(carDao.getCarById(order.getCar().getId()));
+        }
+        return orders;
     }
 
     @Override
@@ -33,7 +40,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getOwnOrders() {
-        return orderDao.getOwnOrders();
+        List<Order> orders = orderDao.getOwnOrders();
+        for(Order order:orders){
+            order.setCar(carDao.getCarById(order.getCar().getId()));
+        }
+        return orders;
     }
 
     @Override
@@ -53,5 +64,9 @@ public class OrderServiceImpl implements OrderService {
 
     public void setOrderDao(OrderDao orderDao) {
         this.orderDao = orderDao;
+    }
+
+    public void setCarDao(CarDao carDao) {
+        this.carDao = carDao;
     }
 }

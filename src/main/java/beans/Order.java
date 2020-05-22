@@ -3,8 +3,8 @@ package beans;
 
 public class Order {
     private int id;
-    private int userId;
-    private int carId;
+    private User user;
+    private Car car;
     private String passportSeries;
     private Integer passportNumber;
     private String passportId;
@@ -19,20 +19,20 @@ public class Order {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getCarId() {
-        return carId;
+    public Car getCar() {
+        return car;
     }
 
-    public void setCarId(int carId) {
-        this.carId = carId;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     public String getPassportSeries() {
