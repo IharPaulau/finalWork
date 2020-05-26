@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import service.CarService;
+import org.springframework.validation.BindingResult;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static utils.Constants.CAR_MODEL_ATTRIBUTE;
@@ -24,8 +26,16 @@ public class CarController {
         return "cars/carForm";
     }
 
-    @PostMapping("/save")
-    public String save(@ModelAttribute(CAR_MODEL_ATTRIBUTE) Car car) {
+    @PostMapping("/car/save")
+    public String save(@ModelAttribute(CAR_MODEL_ATTRIBUTE) @Valid Car car,
+                       BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "cars/carForm";
+        }
+
+
         carService.save(car);
         return REDIRECT_PREFIX + "/cars/viewCars";
     }
@@ -54,7 +64,13 @@ public class CarController {
 
 
     @PostMapping(value = "/cars/editSave")
-    public String editSave(@ModelAttribute(CAR_MODEL_ATTRIBUTE) Car car) {
+    public String editSave(@ModelAttribute(CAR_MODEL_ATTRIBUTE) @Valid Car car, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "cars/carEditForm";
+        }
+
         carService.update(car);
         return REDIRECT_PREFIX + "/cars/viewCars";
     }

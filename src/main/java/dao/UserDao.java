@@ -23,6 +23,23 @@ public interface UserDao {
     User getUserByName(String name);
 
     /**
+     * Get User by provided user email
+     *
+     * @param email user email to search
+     * @return User
+     */
+    User getUserByEmail(String email);
+
+
+    /**
+     * Get User With Roles by provided value
+     *
+     * @param value user name or email to search
+     * @return User
+     */
+    User getUserWithRoles(String value);
+
+    /**
      * Save mapping User with Role by provided userId and roleId
      *
      * @param userId userId to save

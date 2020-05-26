@@ -8,6 +8,7 @@
         <link href="/resources/css/style.css" rel="stylesheet"/>
     </head>
     <body>
+
     <div>
         <a href="?lang=en"><spring:message code="locale.en"/></a>
         <a href="?lang=ru"><spring:message code="locale.ru"/></a>

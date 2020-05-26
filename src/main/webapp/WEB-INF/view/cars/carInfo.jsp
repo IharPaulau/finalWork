@@ -8,7 +8,7 @@
         <a href="?lang=en"><spring:message code="locale.en"/></a>
         <a href="?lang=ru"><spring:message code="locale.ru"/></a>
     </div>
-	<form:form method="get" action="/makeOrder/${car.id}" modelAttribute="car">
+	<form:form method="get" action="/orderForm/${car.id}" modelAttribute="car">
         <table border="7" width="30%" cellpadding="5">
             <tr>
                 <th><spring:message code="car.characteristics"/></th>
@@ -27,10 +27,6 @@
                 <td>${car.model}</td>
             </tr>
             <tr>
-                <td><spring:message code="car.cost.placeholder"/></td>
-                <td>${car.costPerOneDay}</td>
-            </tr>
-            <tr>
                 <td><spring:message code="car.body.placeholder"/></td>
                 <td>${car.typeBody}</td>
             </tr>
@@ -39,10 +35,18 @@
                 <td>${car.typeEngine}</td>
             </tr>
             <tr>
-                <td><spring:message code="car.fuel.placeholder"/></td>
-                <td>${car.fuelConsumption}</td>
+                <td><spring:message code="car.color.placeholder"/></td>
+                <td>${car.bodyColor}</td>
             </tr>
-        </table>
+            <tr>
+                <td><spring:message code="car.transmission.placeholder"/></td>
+                <td>${car.transmission}</td>
+            </tr>
+            <tr>
+                <td><spring:message code="car.cost.placeholder"/></td>
+                <td>${car.costPerOneDay}</td>
+            </tr>
+            </table>
         <spring:message code="button.to.rent" var="rent"/>
         <input type="submit" value="${rent}" />
     </form:form>

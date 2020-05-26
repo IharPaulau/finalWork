@@ -1,15 +1,28 @@
 package beans;
 
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class Car {
 
     private int id;
+    @NotBlank
     private String brand;
+    @NotBlank
     private String model;
+    @NotBlank
     private String typeBody;
+    @NotBlank
     private String typeEngine;
-    private double fuelConsumption;
+    @NotBlank
+    private String bodyColor;
+    @NotBlank
+    private String transmission;
+    @NotNull
     private int costPerOneDay;
+    private boolean available;
 
     public int getId() {
         return id;
@@ -51,12 +64,20 @@ public class Car {
         this.typeEngine = typeEngine;
     }
 
-    public double getFuelConsumption() {
-        return fuelConsumption;
+    public String getBodyColor() {
+        return bodyColor;
     }
 
-    public void setFuelConsumption(double fuelConsumption) {
-        this.fuelConsumption = fuelConsumption;
+    public void setBodyColor(String bodyColor) {
+        this.bodyColor = bodyColor;
+    }
+
+    public String getTransmission() {
+        return transmission;
+    }
+
+    public void setTransmission(String transmission) {
+        this.transmission = transmission;
     }
 
     public int getCostPerOneDay() {
@@ -65,5 +86,13 @@ public class Car {
 
     public void setCostPerOneDay(int costPerOneDay) {
         this.costPerOneDay = costPerOneDay;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

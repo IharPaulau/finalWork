@@ -14,18 +14,43 @@
             <tr>
                 <td></td>
                 <td><form:hidden path="id" /></td>
+                <td><form:errors path="costPerOneDay" class="error-message"/></td>
             </tr>
             <tr>
                 <td><spring:message code="car.brand.placeholder"/>:</td>
                 <td><form:input path="brand"  /></td>
+                <td><form:errors path="brand" class="error-message"/></td>
+
             </tr>
             <tr>
                 <td><spring:message code="car.model.placeholder"/>:</td>
                 <td><form:input path="model" /></td>
+                <td><form:errors path="model" class="error-message"/></td>
             </tr>
             <tr>
-                <td><spring:message code="car.cost.placeholder"/>:</td>
-                <td><form:input path="costPerOneDay" /></td>
+                <td><spring:message code="car.body.placeholder"/></td>
+                <td><form:input path="typeBody"/></td>
+                <td><form:errors path="typeBody" class="error-message"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="car.engine.placeholder"/></td>
+                <td><form:input path="typeEngine"/></td>
+                <td><form:errors path="typeEngine" class="error-message"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="car.color.placeholder"/></td>
+                <td><form:input path="bodyColor"/></td>
+                <td><form:errors path="bodyColor" class="error-message"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="car.transmission.placeholder"/></td>
+                <td><form:input path="transmission"/></td>
+                <td><form:errors path="transmission" class="error-message"/></td>
+            </tr>
+            <tr>
+                <td><spring:message code="car.cost.placeholder"/></td>
+                <td><form:input path="costPerOneDay"/></td>
+                <td><form:errors path="costPerOneDay" class="error-message"/></td>
             </tr>
             <tr>
                 <td> </td>

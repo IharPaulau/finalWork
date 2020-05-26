@@ -24,6 +24,7 @@ public class OrderRowMapper implements RowMapper<Order> {
             order.setOrderApproved(rs.getBoolean("orderApproved"));
         }
         order.setRentalPeriodInDays(rs.getInt("rentalPeriodInDays"));
+
         order.setCar(car);
         return order;
     }

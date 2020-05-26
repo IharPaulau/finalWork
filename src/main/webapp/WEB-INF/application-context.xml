@@ -17,7 +17,7 @@
 
     <context:property-placeholder ignore-unresolvable="true" location="classpath:database.properties"/>
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven validator="validator"/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
     <!-- Locale Change Interceptor to achieve internationalization. -->

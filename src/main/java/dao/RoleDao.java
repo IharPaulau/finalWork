@@ -18,11 +18,4 @@ public interface RoleDao {
      */
     Role getRoleByName(String roleName);
 
-    /**
-     * Get list of Roles related for User by provided user id
-     *
-     * @param userId user id to search
-     * @return list of Role objects
-     */
-    List<Role> getUserRoles(int userId);
 }

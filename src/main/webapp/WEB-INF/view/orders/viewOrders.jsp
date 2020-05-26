@@ -27,6 +27,7 @@
                     <c:choose>
                         <c:when test="${order.orderApproved}">
                             <spring:message code="order.approved"/>
+                            <!-- TODO only one active button-->
                         </c:when>
                         <c:when test="${order.orderApproved == 'false'}">
                             <spring:message code="order.rejected"/>

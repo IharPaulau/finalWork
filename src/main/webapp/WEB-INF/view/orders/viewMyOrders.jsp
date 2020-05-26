@@ -14,7 +14,7 @@
             <th><spring:message code="car.placeholder"/></th>
             <th><spring:message code="rental.placeholder"/></th>
             <th><spring:message code="status.placeholder"/></th>
-            <th><spring:message code="delete.placeholder"/></th>
+            <th><spring:message code="action.placeholder"/></th>
         </tr>
         <c:forEach var="order" items="${list}">
             <tr>
@@ -27,7 +27,17 @@
                         <c:otherwise><spring:message code="order.not.verified"/></c:otherwise>
                     </c:choose>
                 </td>
-                <td><a href="deleteMyOrder/${order.id}"><spring:message code="delete.placeholder"/></a></td>
+                <td><a href="deleteMyOrder/${order.id}">
+                        <button><spring:message code="delete.placeholder"/></button>
+                    </a>
+                    <c:choose>
+                        <c:when test="${order.orderApproved}">
+                            <a href="/order/pay/${order.id}">
+                                <button><spring:message code="pay.placeholder"/></button>
+                            </a>
+                        </c:when>
+                    </c:choose>
+                </td>
             </tr>
         </c:forEach>
     </table>

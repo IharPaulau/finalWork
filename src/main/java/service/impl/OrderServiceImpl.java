@@ -15,8 +15,8 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public int save(Order order, int carId) {
-        return orderDao.save(order, carId);
+    public int save(Order order) {
+        return orderDao.save(order);
     }
 
     @Override
@@ -30,7 +30,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderById(int id) {
-        return orderDao.getOrderById(id);
+        Order order = orderDao.getOrderById(id);
+        order.setCar(carDao.getCarById(order.getCar().getId()));
+        return order;
     }
 
     @Override

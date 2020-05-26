@@ -31,6 +31,10 @@ a:hover {
     padding-bottom: 45px;
 }
 
+.form-attribute {
+    margin-bottom: 16px;
+}
+
 .form-signin {
     max-width: 600px;
     padding: 10px;

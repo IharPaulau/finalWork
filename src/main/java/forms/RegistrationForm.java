@@ -1,17 +1,19 @@
 package forms;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
+
 public class RegistrationForm {
-    @NotEmpty
+    @NotBlank(message = "{empty.name}")
     private String name;
-    @NotEmpty
+    @NotBlank(message = "{empty.password}")
     private String password;
-    @NotEmpty
+    @NotBlank(message = "{empty.confirmPassword}")
     private String confirmPassword;
-    @NotEmpty
-    @Email
+    @NotBlank(message = "{empty.email}")
+    @Email(message = "{invalid.email}")
     private String email;
 
     public String getName() {

@@ -10,14 +10,19 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!-- Include the properties file into the bean configuration file -->
+    <!-- qInclude the properties file into the bean configuration file -->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">
             <list>
                 <value>classpath:/messages/locales</value>
+                <value>classpath:/messages/validationMessages</value>
             </list>
         </property>
         <property name="defaultEncoding" value="cp1251"/>
+    </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource"/>
     </bean>
 
 <!--    <bean id="localeChangeInterceptor"-->
@@ -71,7 +76,7 @@
     </bean>
     <bean id="userDetailsService" class="service.impl.UserDetailsServiceImpl">
         <property name="userDao" ref="userDao"/>
-        <property name="roleDao" ref="roleDao"/>
+
     </bean>
     <bean id="loginService" class="service.impl.LoginServiceImpl">
         <property name="authenticationManager" ref="authenticationManager"/>

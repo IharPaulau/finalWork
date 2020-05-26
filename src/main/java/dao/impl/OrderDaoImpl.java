@@ -21,9 +21,10 @@ public class OrderDaoImpl implements OrderDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public int save(Order order, int carId) {
-        return jdbcTemplate.update(ADD_NEW_ORDER, 1, carId, order.getPassportSeries(), order.getPassportNumber(),
+    public int save(Order order) {
+        return jdbcTemplate.update(ADD_NEW_ORDER, 2, order.getCar().getId(), order.getPassportSeries(), order.getPassportNumber(),
                 order.getPassportId(), order.getRentalPeriodInDays());
+        //TODO save order for correct userid
     }
 
     @Override
@@ -43,7 +44,8 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getOwnOrders() {
-        return jdbcTemplate.query(SELECT_ALL_OWN_ORDERS, new OrderRowMapper(), 1);
+        return jdbcTemplate.query(SELECT_ALL_OWN_ORDERS, new OrderRowMapper(), 2);
+        //TODO make search by id;
     }
 
     @Override

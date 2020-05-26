@@ -10,8 +10,8 @@ import mappers.CarRowMapper;
 import java.util.List;
 
 public class CarDaoImpl implements CarDao {
-    private static final String ADD_NEW_CAR = "INSERT INTO cars(brand,model,costPerOneDay) VALUES(?, ?, ?)";
-    private static final String UPDATE_CAR = "UPDATE cars SET brand=?, model=?, costPerOneDay=? WHERE id=?";
+    private static final String ADD_NEW_CAR = "INSERT INTO cars(brand,model,typeBody,typeEngine,bodyColor,costPerOneDay,transmission) VALUES(?,?,?,?,?,?,?)";
+    private static final String UPDATE_CAR = "UPDATE cars SET brand=?,model=?,typeBody=?,typeEngine=?,bodyColor=?,costPerOneDay=?,transmission=? WHERE id=?";
     private static final String DELETE_CAR = "DELETE FROM cars WHERE id=?";
     private static final String SELECT_CAR_BY_ID = "SELECT * FROM cars WHERE id=?";
     private static final String SELECT_ALL_CARS = "SELECT * FROM cars";
@@ -19,11 +19,11 @@ public class CarDaoImpl implements CarDao {
     private JdbcTemplate jdbcTemplate;
 
     public int save(Car car) {
-        return jdbcTemplate.update(ADD_NEW_CAR, car.getBrand(), car.getModel(), car.getCostPerOneDay());
+        return jdbcTemplate.update(ADD_NEW_CAR, car.getBrand(), car.getModel(), car.getTypeBody(), car.getTypeEngine(), car.getBodyColor(), car.getCostPerOneDay(), car.getTransmission());
     }
 
     public int update(Car car) {
-        return jdbcTemplate.update(UPDATE_CAR, car.getBrand(), car.getModel(), car.getCostPerOneDay(), car.getId());
+        return jdbcTemplate.update(UPDATE_CAR, car.getBrand(), car.getModel(), car.getTypeBody(), car.getTypeEngine(), car.getBodyColor(), car.getCostPerOneDay(), car.getTransmission(), car.getId());
     }
 
     public int delete(int id) {

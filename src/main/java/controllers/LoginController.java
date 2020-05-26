@@ -38,13 +38,13 @@ public class LoginController {
     @Autowired
     private RegistrationFormValidator registrationFormValidator;
 
-    @GetMapping(value = "/registration")
+    @GetMapping("/registration")
     public String openRegistrationPage(Model model) {
         model.addAttribute(REGISTRATION_FORM_MODEL_ATTRIBUTE, new RegistrationForm());
         return REGISTRATION_PAGE;
     }
 
-    @PostMapping(value = "/registration")
+    @PostMapping("/registration")
     public String registerUser(@ModelAttribute(REGISTRATION_FORM_MODEL_ATTRIBUTE) @Valid RegistrationForm registrationForm,
                                BindingResult bindingResult, Model model) {
 

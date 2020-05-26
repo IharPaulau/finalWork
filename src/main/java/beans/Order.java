@@ -1,14 +1,24 @@
 package beans;
 
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+
 public class Order {
     private int id;
     private User user;
     private Car car;
+
+    @NotBlank
     private String passportSeries;
+    @NotNull
     private Integer passportNumber;
+    @NotBlank
     private String passportId;
     private Boolean orderApproved;
+    @NotNull
     private int rentalPeriodInDays;
 
     public int getId() {

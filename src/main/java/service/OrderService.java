@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    int save(Order order, int carId);
+    int save(Order order);
 
     Order getOrderById(int id);
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface OrderDao {
 
-    int save(Order order, int carId);
+    int save(Order order);
 
     int delete(int id);
 

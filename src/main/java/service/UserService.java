@@ -30,4 +30,12 @@ public interface UserService {
      * @return User
      */
     User getUserByName(String name);
+
+    /**
+     * Get User by provided email
+     *
+     * @param email user email
+     * @return User
+     */
+    User getUserByEmail(String email);
 }

@@ -4,8 +4,9 @@ USE mydb;
 -- Table to store Users
 CREATE TABLE users (
     id          INT            NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    userName    VARCHAR(45)    NOT NULL UNIQUE,
-    password    VARCHAR(255)    NOT NULL
+    username    VARCHAR(45)    NOT NULL UNIQUE,
+    password    VARCHAR(255)   NOT NULL,
+    email       VARCHAR(45)    NOT NULL UNIQUE
 ) ENGINE = InnoDB;
 
 -- Table to store Roles
@@ -32,8 +33,10 @@ CREATE TABLE cars (
     model           VARCHAR(45) DEFAULT NULL,
     typeBody        VARCHAR(45) DEFAULT NULL,
     typeEngine      VARCHAR(45) DEFAULT NULL,
+    bodyColor       VARCHAR(45) DEFAULT NULL,
     costPerOneDay   INT         DEFAULT NULL,
-    fuelTank        INT         DEFAULT NULL
+    transmission    VARCHAR(45) DEFAULT NULL,
+    available       TINYINT     DEFAULT true
 ) ENGINE = InnoDB;
 
 -- Table of orders
@@ -45,12 +48,12 @@ CREATE TABLE orders (
   passportSeries    VARCHAR(45) NULL,
   passportNumber    VARCHAR(45) NULL,
   passportId        VARCHAR(45) NULL,
-  orderApproved TINYINT NULL,
+  orderApproved 	TINYINT 	NULL,
   rentalPeriodInDays INT NULL
    )ENGINE = InnoDB;
 
-INSERT INTO users VALUES (1, 'admin', '$2a$11$qpS3KqDvy9Xd1mq1xC/8jeycG1JCs2nmy7LWdefve/iAYXMsam9Ua');
-INSERT INTO users VALUES (2, 'pavlov', '$2a$11$MZvC3Xg76BwHqyhz2XJMGuan8i8/opQVdJ0zRnIUd8B4e5uilBsOi');
+INSERT INTO users VALUES (1, 'admin', '$2a$11$qpS3KqDvy9Xd1mq1xC/8jeycG1JCs2nmy7LWdefve/iAYXMsam9Ua', 'admin@gmail.com');
+INSERT INTO users VALUES (2, 'pavlov', '$2a$11$MZvC3Xg76BwHqyhz2XJMGuan8i8/opQVdJ0zRnIUd8B4e5uilBsOi', 'pavlov@gmail.com');
 
 INSERT INTO roles VALUES (1, 'ROLE_USER');
 INSERT INTO roles VALUES (2, 'ROLE_ADMIN');
@@ -58,3 +61,14 @@ INSERT INTO roles VALUES (2, 'ROLE_ADMIN');
 INSERT INTO users_to_roles VALUES (1, 1);
 INSERT INTO users_to_roles VALUES (1, 2);
 INSERT INTO users_to_roles VALUES (2, 1);
+
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('1', 'Porche', '911', 'coupe', 'gasoline', 'black', '300', '45', 'true');
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('2', 'Lada', 'XRAY Cross', 'sedan', 'gasoline', 'White', '75', 'manual', 'true');
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('3', 'Mercedes', 'G 500', 'station wagon', 'gasoline', 'black', '150', 'manual', 'true');
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('4', 'BMW', '520d AT', 'sedan', 'diesel', 'black', '150', '55', 'true');
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('5', 'FORD', 'TAURUS ', 'sedan', 'gasoline', 'brown', '100', '50', 'true');
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('6', 'KIA', 'Cerato', 'sedan', 'gasoline', 'red', '100', '50', 'true');
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('7', 'BMW', 'M550i xDrive AT', 'sedan', 'gasoline', 'black', '170', 'manual', 'true');
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('8', 'Mercedes', 'AMG', 'coupe', 'gasoline', 'White', '300', '50', 'true');
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('Tesla Motors', 'Model X', 'sedan', 'electric car', 'White', '100', 'manual', 'true');
+

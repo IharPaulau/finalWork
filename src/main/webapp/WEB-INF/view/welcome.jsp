@@ -21,3 +21,6 @@
             <a href="cars/viewCars"><spring:message code="View.all.cars"/></a>
         </div>
     </div>
+
+
+${pageContext.request.userPrincipal.name}
