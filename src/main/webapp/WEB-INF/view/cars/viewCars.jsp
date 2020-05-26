@@ -49,14 +49,14 @@
 
     <br/>
     <sec:authorize access="hasAuthority('ROLE_ADMIN')">
-    <a href action="carForm" >
+    <a href ="/cars/carForm" >
         <button><spring:message code="Add.new.car"/></button>
     </a>
     <a href ="/orders/viewOrders">
         <button><spring:message code="View.all.orders"/></button>
     </a>
     </sec:authorize>
-    <a href ="/orders/viewMyOrders">
+    <a href ="/orders/viewMyOrders/">
         <button><spring:message code="View.my.orders"/></button>
     </a>
 

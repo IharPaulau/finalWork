@@ -23,4 +23,3 @@
     </div>
 
 
-${pageContext.request.userPrincipal.name}

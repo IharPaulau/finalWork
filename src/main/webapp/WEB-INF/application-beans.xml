@@ -25,10 +25,10 @@
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
 
-<!--    <bean id="localeChangeInterceptor"-->
-<!--          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
-<!--        <property name="paramName" value="lang"/>-->
-<!--    </bean>-->
+    <!--    <bean id="localeChangeInterceptor"-->
+    <!--          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
+    <!--        <property name="paramName" value="lang"/>-->
+    <!--    </bean>-->
 
     <bean id="localeResolver"
           class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
@@ -67,7 +67,7 @@
     </bean>
     <bean id="orderService" class="service.impl.OrderServiceImpl">
         <property name="orderDao" ref="orderDao"/>
-        <property name="carDao" ref="carDao"/>
+        <property name="userService" ref="userService"/>
     </bean>
     <bean id="userService" class="service.impl.UserServiceImpl">
         <property name="userDao" ref="userDao"/>

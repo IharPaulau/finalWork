@@ -5,6 +5,7 @@ public final class Constants {
     public static final String REDIRECT_PREFIX = "redirect:";
     public static final String ORDER_MODEL_ATTRIBUTE = "order";
     public static final String CAR_MODEL_ATTRIBUTE = "car";
+    public static final String User_MODEL_ATTRIBUTE = "user";
 
     public static final String USER_ID_COLUMN_NAME = "id";
     public static final String USER_USERNAME_COLUMN_NAME = "username";

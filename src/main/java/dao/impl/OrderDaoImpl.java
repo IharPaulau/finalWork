@@ -13,18 +13,16 @@ public class OrderDaoImpl implements OrderDao {
     private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String CHANGE_APPROVED_STATUS = "UPDATE orders SET orderApproved=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
-    private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders WHERE id=?";
-    private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id";
-    private static final String SELECT_ALL_OWN_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id WHERE userId=?";
-    private static final String SELECT_ALL_CARS = "SELECT * FROM cars";
+    private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id WHERE o.id=?";
+    private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id";
+    private static final String SELECT_ALL_OWN_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id WHERE userId=?";
 
     private JdbcTemplate jdbcTemplate;
 
     @Override
     public int save(Order order) {
-        return jdbcTemplate.update(ADD_NEW_ORDER, 2, order.getCar().getId(), order.getPassportSeries(), order.getPassportNumber(),
+        return jdbcTemplate.update(ADD_NEW_ORDER, order.getUser().getId(), order.getCar().getId(), order.getPassportSeries(), order.getPassportNumber(),
                 order.getPassportId(), order.getRentalPeriodInDays());
-        //TODO save order for correct userid
     }
 
     @Override
@@ -43,9 +41,8 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getOwnOrders() {
-        return jdbcTemplate.query(SELECT_ALL_OWN_ORDERS, new OrderRowMapper(), 2);
-        //TODO make search by id;
+    public List<Order> getOwnOrders(int id) {
+        return jdbcTemplate.query(SELECT_ALL_OWN_ORDERS, new OrderRowMapper(), id);
     }
 
     @Override
@@ -58,10 +55,10 @@ public class OrderDaoImpl implements OrderDao {
         return jdbcTemplate.update(CHANGE_APPROVED_STATUS, true, id);
     }
 
-    @Override
-    public List<Car> getCars() {
-        return jdbcTemplate.query(SELECT_ALL_CARS, new CarRowMapper());
-    }
+//    @Override
+//    public List<Car> getCars() {
+//        return jdbcTemplate.query(SELECT_ALL_CARS, new CarRowMapper());
+//    }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

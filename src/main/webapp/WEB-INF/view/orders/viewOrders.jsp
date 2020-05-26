@@ -20,7 +20,7 @@
         </tr>
         <c:forEach var="order" items="${list}">
             <tr>
-                <td>....</td>
+                <td>${order.user.username}</td>
                 <td>${order.car.model}</td>
                 <td>${order.rentalPeriodInDays}</td>
                 <td>
@@ -38,8 +38,18 @@
                     </c:choose>
                 </td>
                 <td>
-                    <button><a href="/approve/${order.id}"><spring:message code="approved"/></a></button>
-                    <button><a href="/reject/${order.id}"><spring:message code="rejected"/></a></button>
+                    <c:choose>
+                        <c:when test="${order.orderApproved}">
+                            <button><a href="/reject/${order.id}"><spring:message code="rejected"/></a></button>
+                        </c:when>
+                        <c:when test="${order.orderApproved == 'false'}">
+                            <button><a href="/approve/${order.id}"><spring:message code="approved"/></a></button>
+                        </c:when>
+                        <c:otherwise>
+                            <button><a href="/reject/${order.id}"><spring:message code="rejected"/></a></button>
+                            <button><a href="/approve/${order.id}"><spring:message code="approved"/></a></button>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
             </tr>
         </c:forEach>

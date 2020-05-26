@@ -14,6 +14,7 @@ import service.OrderService;
 
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 import static utils.Constants.*;
@@ -34,8 +35,8 @@ public class OrderController {
         return "orders/orderForm";
     }
 
-    @PostMapping("/orderForm/{carId}")
-    public String save(@PathVariable int carId, @ModelAttribute(ORDER_MODEL_ATTRIBUTE) @Valid Order order,
+    @PostMapping("/orderForm")
+    public String save(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) @Valid Order order,
                        BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
@@ -44,14 +45,15 @@ public class OrderController {
             return "orders/orderForm";
         }
 
-        orderService.save(order, carId);
+        orderService.save(order);
         return REDIRECT_PREFIX + "/orders/viewMyOrders";
     }
 
 
     @GetMapping("/orders/viewMyOrders")
-    public String viewMyOrders(Model model) {
-        List<Order> list = orderService.getOwnOrders();
+    public String viewMyOrders(Model model, Principal principal) {
+        String username = principal.getName();
+        List<Order> list = orderService.getOwnOrders(username);
         model.addAttribute("list", list);
         return "orders/viewMyOrders";
     }
@@ -84,7 +86,7 @@ public class OrderController {
     @GetMapping("/order/pay/{id}")
     public String payOrder(@PathVariable int id, Model model) {
         Order order = orderService.getOrderById(id);
-        order.getCar().setAvailable(false); // update available status in database
+//        order.getCar().setAvailable(false); // update available status in database
         model.addAttribute("order", order);
         return "orders/receiptOfPayment";
     }

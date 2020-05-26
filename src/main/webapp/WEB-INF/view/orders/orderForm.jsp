@@ -10,12 +10,13 @@
     </div>
     <div class="container">
 	<h1><spring:message code="fill.order"/></h1>
-    <form:form method="post" action="/orderForm/${carId}" modelAttribute="order">
-
+    <form:form method="post" action="/orderForm" modelAttribute="order">
+    <form:hidden path="user.username" value="${pageContext.request.userPrincipal.name}"/>
+    <form:hidden path="car.id" value="${carId}"/>
         <table>
             <tr>
             <div>
-                <td><spring:message code="passport.series.placeholder"/></td>
+               <td><spring:message code="passport.series.placeholder"/></td>
                 <td><form:input path="passportSeries"/></td>
                 <td><form:errors path="passportSeries" class="error-message"/></td>
              </div>

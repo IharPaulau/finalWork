@@ -15,7 +15,7 @@ public interface OrderDao {
 
     Order getOrderById(int id);
 
-    List<Order> getOwnOrders();
+    List<Order> getOwnOrders(int id);
 
     List<Order> getOrders();
 
@@ -23,6 +23,6 @@ public interface OrderDao {
 
     int approve(int id);
 
-    List<Car> getCars();
+//    List<Car> getCars();
 
 }

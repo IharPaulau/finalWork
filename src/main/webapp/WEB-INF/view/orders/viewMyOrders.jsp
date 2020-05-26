@@ -27,7 +27,7 @@
                         <c:otherwise><spring:message code="order.not.verified"/></c:otherwise>
                     </c:choose>
                 </td>
-                <td><a href="deleteMyOrder/${order.id}">
+                <td><a href="/orders/deleteMyOrder/${order.id}">
                         <button><spring:message code="delete.placeholder"/></button>
                     </a>
                     <c:choose>
@@ -41,6 +41,6 @@
             </tr>
         </c:forEach>
     </table>
-    <form action="/cars/viewCars">
+    <a href="/cars/viewCars">
         <button><spring:message code="View.all.cars"/></button>
-    </form>
+    </a>
