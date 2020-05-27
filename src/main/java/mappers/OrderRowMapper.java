@@ -22,6 +22,7 @@ public class OrderRowMapper implements RowMapper<Order> {
         if (checkForNull != null) {
             order.setOrderApproved(rs.getBoolean("orderApproved"));
         }
+        order.setOrderPaid(rs.getBoolean("orderPaid"));
         order.setRentalPeriodInDays(rs.getInt("rentalPeriodInDays"));
         order.setCar(fillCar(rs));
         order.setUser(fillUser(rs));
@@ -38,7 +39,7 @@ public class OrderRowMapper implements RowMapper<Order> {
     private Car fillCar(ResultSet rs) throws SQLException {
         {
             Car car = new Car();
-            car.setId(rs.getInt("id"));
+            car.setId(rs.getInt("carId"));
             car.setBrand(rs.getString("brand"));
             car.setModel(rs.getString("model"));
             car.setTypeBody(rs.getString("typeBody"));

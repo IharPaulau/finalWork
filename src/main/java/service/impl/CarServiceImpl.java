@@ -4,6 +4,7 @@ import beans.Car;
 import service.CarService;
 
 import java.util.List;
+
 import dao.CarDao;
 
 
@@ -31,11 +32,19 @@ public class CarServiceImpl implements CarService {
         return carDao.delete(id);
     }
 
+    @Override
+    public int setCarNoMoreAvailable(Car car) {
+        return carDao.setCarNoMoreAvailable(car);
+    }
+
+    @Override
+    public int setCarAvailable(Car car) {
+        return carDao.setCarAvailable(car);
+    }
+
     public void setCarDao(CarDao carDao) {
         this.carDao = carDao;
     }
-
-
 
 
 }

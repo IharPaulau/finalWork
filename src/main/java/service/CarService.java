@@ -15,4 +15,8 @@ public interface CarService {
     int update(Car car);
 
     int delete(int id);
+
+    int setCarNoMoreAvailable(Car car);
+
+    int setCarAvailable(Car car);
 }

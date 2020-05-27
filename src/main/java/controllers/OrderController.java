@@ -28,6 +28,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+
     @GetMapping("/orderForm/{id}")
     public String showForm(@PathVariable int id, Model model) {
         model.addAttribute(ORDER_MODEL_ATTRIBUTE, new Order());
@@ -86,7 +87,8 @@ public class OrderController {
     @GetMapping("/order/pay/{id}")
     public String payOrder(@PathVariable int id, Model model) {
         Order order = orderService.getOrderById(id);
-//        order.getCar().setAvailable(false); // update available status in database
+        orderService.setOrderStatusToPaid(order);
+        carService.setCarNoMoreAvailable(order.getCar());
         model.addAttribute("order", order);
         return "orders/receiptOfPayment";
     }

@@ -17,28 +17,54 @@
             <th><spring:message code="action.placeholder"/></th>
         </tr>
         <c:forEach var="order" items="${list}">
-            <tr>
-                <td>${order.car.brand} ${order.car.model}</td>
-                <td>${order.rentalPeriodInDays}</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${order.orderApproved}"><spring:message code="order.approved"/></c:when>
-                        <c:when test="${order.orderApproved == 'false'}"><spring:message code="order.rejected"/></c:when>
-                        <c:otherwise><spring:message code="order.not.verified"/></c:otherwise>
-                    </c:choose>
-                </td>
-                <td><a href="/orders/deleteMyOrder/${order.id}">
-                        <button><spring:message code="delete.placeholder"/></button>
-                    </a>
-                    <c:choose>
-                        <c:when test="${order.orderApproved}">
-                            <a href="/order/pay/${order.id}">
-                                <button><spring:message code="pay.placeholder"/></button>
+            <c:choose>
+                <c:when test="${order.car.available}">
+                    <tr>
+                        <td>${order.car.brand} ${order.car.model}</td>
+                        <td>${order.rentalPeriodInDays}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${order.orderApproved}"><spring:message code="order.approved"/></c:when>
+                                <c:when test="${order.orderApproved == 'false'}"><spring:message code="order.rejected"/></c:when>
+                                <c:otherwise><spring:message code="order.not.verified"/></c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td><a href="/orders/deleteMyOrder/${order.id}">
+                                <button><spring:message code="delete.placeholder"/></button>
                             </a>
-                        </c:when>
-                    </c:choose>
-                </td>
-            </tr>
+                            <c:choose>
+                                <c:when test="${order.orderApproved}">
+                                    <a href="/order/pay/${order.id}">
+                                        <button><spring:message code="pay.placeholder"/></button>
+
+                                    </a>
+                                </c:when>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:when>
+                <c:when test="${order.car.available == 'false'}">
+
+                    <tr>
+                        <td>${order.car.brand} ${order.car.model}</td>
+                        <td>${order.rentalPeriodInDays}</td>
+                        <td>
+                                <c:if test="${order.car.available == 'false'}">
+                                    car in rent
+                                </c:if>
+                        </td>
+                        <td>
+                            <c:if test="${order.orderPaid== 'false'}">
+                                ты не заплатил сука
+                            </c:if>
+                            <c:if test="${order.orderPaid}">
+                                тыркни сюда чтобы вернуть тачку
+                            </c:if>
+
+                        </td>
+                    </tr>
+                </c:when>
+            </c:choose>
         </c:forEach>
     </table>
     <a href="/cars/viewCars">

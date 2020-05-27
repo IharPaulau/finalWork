@@ -23,6 +23,8 @@ public interface OrderDao {
 
     int approve(int id);
 
-//    List<Car> getCars();
+    void setOrderStatusToPaid(Order order);
+
+
 
 }

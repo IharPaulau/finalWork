@@ -2,15 +2,14 @@ package beans;
 
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 
 public class Order {
     private int id;
     private User user;
     private Car car;
-
     @NotBlank
     private String passportSeries;
     @NotNull
@@ -18,8 +17,10 @@ public class Order {
     @NotBlank
     private String passportId;
     private Boolean orderApproved;
+    private Boolean orderPaid;
     @NotNull
     private int rentalPeriodInDays;
+    private Date payTillDate;
 
     public int getId() {
         return id;
@@ -83,5 +84,21 @@ public class Order {
 
     public void setRentalPeriodInDays(int rentalPeriodInDays) {
         this.rentalPeriodInDays = rentalPeriodInDays;
+    }
+
+    public Boolean getOrderPaid() {
+        return orderPaid;
+    }
+
+    public void setOrderPaid(Boolean orderPaid) {
+        this.orderPaid = orderPaid;
+    }
+
+    public Date getPayTillDate() {
+        return payTillDate;
+    }
+
+    public void setPayTillDate(Date payTillDate) {
+        this.payTillDate = payTillDate;
     }
 }

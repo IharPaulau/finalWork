@@ -68,6 +68,7 @@
     <bean id="orderService" class="service.impl.OrderServiceImpl">
         <property name="orderDao" ref="orderDao"/>
         <property name="userService" ref="userService"/>
+        <property name="carService" ref="carService"/>
     </bean>
     <bean id="userService" class="service.impl.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
@@ -85,5 +86,9 @@
     <!-- Validators -->
     <bean id="registrationFormValidator" class="validators.RegistrationFormValidator">
         <property name="userService" ref="userService"/>
+    </bean>
+    <!-- Utils -->
+    <bean id="orderCancellationRunnable" class="utils.OrderCancellationRunnable">
+
     </bean>
 </beans>

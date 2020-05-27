@@ -25,6 +25,8 @@ public interface OrderService {
 
     int approve(int id);
 
-//    List<Car> getCars();
+    void setOrderStatusToPaid(Order order);
+
+    void cancelExpiredOrders();
 }
 

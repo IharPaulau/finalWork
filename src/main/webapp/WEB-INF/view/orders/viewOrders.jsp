@@ -21,7 +21,7 @@
         <c:forEach var="order" items="${list}">
             <tr>
                 <td>${order.user.username}</td>
-                <td>${order.car.model}</td>
+                <td>${order.car.brand} ${order.car.model}</td>
                 <td>${order.rentalPeriodInDays}</td>
                 <td>
                     <c:choose>

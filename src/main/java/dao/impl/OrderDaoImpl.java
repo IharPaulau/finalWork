@@ -12,6 +12,7 @@ import java.util.List;
 public class OrderDaoImpl implements OrderDao {
     private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String CHANGE_APPROVED_STATUS = "UPDATE orders SET orderApproved=? WHERE id=?";
+    private static final String CHANGE_PAID_STATUS = "UPDATE orders SET orderPaid=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
     private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id WHERE o.id=?";
     private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id";
@@ -53,6 +54,11 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public int approve(int id) {
         return jdbcTemplate.update(CHANGE_APPROVED_STATUS, true, id);
+    }
+
+    @Override
+    public void setOrderStatusToPaid(Order order) {
+        jdbcTemplate.update(CHANGE_PAID_STATUS, true, order.getId());
     }
 
 //    @Override

@@ -14,4 +14,9 @@ public interface CarDao {
     Car getCarById(int id);
 
     List<Car> getCars();
+
+    int setCarNoMoreAvailable(Car car);
+
+    int setCarAvailable(Car car);
+
 }
