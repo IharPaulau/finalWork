@@ -8,6 +8,9 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+
+import static utils.DateConverter.stringToDate;
 
 public class OrderRowMapper implements RowMapper<Order> {
 
@@ -26,6 +29,12 @@ public class OrderRowMapper implements RowMapper<Order> {
         order.setRentalPeriodInDays(rs.getInt("rentalPeriodInDays"));
         order.setCar(fillCar(rs));
         order.setUser(fillUser(rs));
+        String payDay = rs.getString("payTillDate");
+        try {
+            order.setPayTillDate(stringToDate(payDay));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return order;
     }
 

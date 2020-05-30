@@ -10,20 +10,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
-    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays) VALUES(?, ?, ?, ?, ?, ?)";
+    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, payTillDate) VALUES(?, ?, ?, ?, ?, ?, ?)";
     private static final String CHANGE_APPROVED_STATUS = "UPDATE orders SET orderApproved=? WHERE id=?";
     private static final String CHANGE_PAID_STATUS = "UPDATE orders SET orderPaid=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
     private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id WHERE o.id=?";
     private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id";
     private static final String SELECT_ALL_OWN_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id WHERE userId=?";
+    private static final String SET_DEADLINE_TO_PAID = "UPDATE orders SET payTillDate=? WHERE id=?";
 
     private JdbcTemplate jdbcTemplate;
 
     @Override
     public int save(Order order) {
         return jdbcTemplate.update(ADD_NEW_ORDER, order.getUser().getId(), order.getCar().getId(), order.getPassportSeries(), order.getPassportNumber(),
-                order.getPassportId(), order.getRentalPeriodInDays());
+                order.getPassportId(), order.getRentalPeriodInDays(), order.getPayTillDate());
     }
 
     @Override
@@ -61,10 +62,11 @@ public class OrderDaoImpl implements OrderDao {
         jdbcTemplate.update(CHANGE_PAID_STATUS, true, order.getId());
     }
 
-//    @Override
-//    public List<Car> getCars() {
-//        return jdbcTemplate.query(SELECT_ALL_CARS, new CarRowMapper());
-//    }
+    @Override
+    public void setDeadline(Order order, String payTillDay) {
+        jdbcTemplate.update(SET_DEADLINE_TO_PAID, payTillDay, order.getId());
+    }
+
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

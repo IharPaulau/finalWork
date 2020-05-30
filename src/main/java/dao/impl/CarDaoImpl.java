@@ -15,8 +15,8 @@ public class CarDaoImpl implements CarDao {
     private static final String DELETE_CAR = "DELETE FROM cars WHERE id=?";
     private static final String SELECT_CAR_BY_ID = "SELECT * FROM cars WHERE id=?";
     private static final String SELECT_ALL_CARS = "SELECT * FROM cars";
-    private static final String NO_MORE_AVAILABLE = "UPDATE cars SET available = 0 WHERE id =?";
-    private static final String NOW_AVAILABLE = "UPDATE cars SET available = 1 WHERE id =?";
+    private static final String NO_MORE_AVAILABLE = "UPDATE cars SET available = false WHERE id =?";
+    private static final String NOW_AVAILABLE = "UPDATE cars SET available = true WHERE id =?";
 
     private JdbcTemplate jdbcTemplate;
 

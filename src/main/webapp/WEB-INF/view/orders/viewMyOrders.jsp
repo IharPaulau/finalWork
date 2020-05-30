@@ -50,16 +50,14 @@
                         <td>${order.rentalPeriodInDays}</td>
                         <td>
                                 <c:if test="${order.car.available == 'false'}">
-                                    car in rent
+                                    car not available
+                                    ${order.payTillDate}
                                 </c:if>
                         </td>
                         <td>
-                            <c:if test="${order.orderPaid== 'false'}">
-                                ты не заплатил сука
-                            </c:if>
-                            <c:if test="${order.orderPaid}">
-                                тыркни сюда чтобы вернуть тачку
-                            </c:if>
+                            <a href="/orders/deleteMyOrder/${order.id}">
+                                <button><spring:message code="delete.placeholder"/></button>
+                            </a>
 
                         </td>
                     </tr>

@@ -12,8 +12,9 @@ public class OrderCancellationRunnable implements Runnable {
     @Override
     public void run() {
         do {
+            System.out.println("im alive");
             orderService.cancelExpiredOrders();
-            try {                                       //create property to configure wait interval
+            try {
                 Thread.sleep(20000); //20 sec
             } catch (InterruptedException e) {
                 e.printStackTrace();

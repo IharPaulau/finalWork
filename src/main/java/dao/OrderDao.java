@@ -26,5 +26,5 @@ public interface OrderDao {
     void setOrderStatusToPaid(Order order);
 
 
-
+    void setDeadline(Order order, String payTillDay);
 }

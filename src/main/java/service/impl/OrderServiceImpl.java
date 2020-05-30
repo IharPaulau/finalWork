@@ -16,11 +16,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static utils.DateConverter.dateToString;
+
 public class OrderServiceImpl implements OrderService {
 
     private OrderDao orderDao;
     private UserService userService;
     private CarService carService;
+
     @Autowired
     private ApplicationContext applicationContext;
 
@@ -47,6 +50,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int delete(int id) {
+        Order order = getOrderById(id);
+        carService.setCarAvailable(order.getCar());
         return orderDao.delete(id);
     }
 
@@ -66,8 +71,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int approve(int id) {
         Order order = orderDao.getOrderById(id);
-        order.setPayTillDate(new Date().toInstant().);
+        order.setPayTillDate(setterPaymentDeadline());
+        orderDao.setDeadline(order, dateToString(order.getPayTillDate()));
         return orderDao.approve(id);
+    }
+
+
+    private Date setterPaymentDeadline() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.MINUTE, 1);
+        return cal.getTime();
+
     }
 
     @Override
@@ -77,17 +92,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void cancelExpiredOrders() {
-        //TODO logic to get all order for date
-        List<Order> orders = orderDao.getOrders();
+        List<Order> orders = getOrders();
         for (Order order : orders) {
-            Calendar payTillDate = Calendar.getInstance();
-            if (payTillDate.after(Calendar.getInstance())) {
-                order.setStatus(OrderStatus.CANCEL);
-                orderDao.save(order);
-                Car car = order.getCar();
-                car.setAvailable(true);
-                carService.save(car);
-            }
+            Calendar presentTime = Calendar.getInstance();
+            if (order.getPayTillDate() != null)
+                if (order.getPayTillDate().before(presentTime.getTime()) & (order.getOrderApproved() == true)) {
+                    reject(order.getId());
+                    System.out.println("слишкмо долго думал и заказ отменен");
+                }
         }
     }
 
