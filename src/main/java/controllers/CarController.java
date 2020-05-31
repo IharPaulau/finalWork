@@ -12,6 +12,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static utils.Constants.CAR_MODEL_ATTRIBUTE;
+import static utils.Constants.FORM_ACTION_MODEL_ATTRIBUTE;
+import static utils.Constants.PAGE_LABEL_MODEL_ATTRIBUTE;
 import static utils.Constants.REDIRECT_PREFIX;
 
 @Controller
@@ -22,20 +24,22 @@ public class CarController {
 
     @GetMapping("/cars/carForm")
     public String showForm(Model model) {
-        model.addAttribute("car", new Car());
+        model.addAttribute(CAR_MODEL_ATTRIBUTE, new Car());
+        model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "add.new.car.form");
+        model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/carForm");
         return "cars/carForm";
     }
 
-    @PostMapping("/car/save")
+    @PostMapping("/car/carForm")
     public String save(@ModelAttribute(CAR_MODEL_ATTRIBUTE) @Valid Car car,
                        BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
+            model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "add.new.car.form");
+            model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/carForm");
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "cars/carForm";
         }
-
-
         carService.save(car);
         return REDIRECT_PREFIX + "/cars/viewCars";
     }
@@ -52,7 +56,10 @@ public class CarController {
     public String edit(@PathVariable int id, Model model) {
         Car car = carService.getCarById(id);
         model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
-        return "cars/carEditForm";
+        model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "edit.car.form");
+        model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/editCar/" + car.getId());
+        return "cars/carForm";
+
     }
 
     @GetMapping("/cars/carDetails/{id}")
@@ -63,12 +70,14 @@ public class CarController {
     }
 
 
-    @PostMapping(value = "/cars/editSave")
-    public String editSave(@ModelAttribute(CAR_MODEL_ATTRIBUTE) @Valid Car car, BindingResult bindingResult, Model model) {
+    @PostMapping(value = "/cars/editCar/{id}")
+    public String editSave(@PathVariable int id, @Valid Car car, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
+            model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "edit.car.form");
+            model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/editCar/" + car.getId());
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return "cars/carEditForm";
+            return "cars/carForm";
         }
 
         carService.update(car);

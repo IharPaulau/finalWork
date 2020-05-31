@@ -1,8 +1,10 @@
 package beans;
 
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 
@@ -16,8 +18,9 @@ public class Order {
     private Integer passportNumber;
     @NotBlank
     private String passportId;
+    @Min(value = 1)
     @NotNull
-    private int rentalPeriodInDays;
+    private Integer rentalPeriodInDays;
     private Date payTillDate;
     private Date rentalStartTime;
     private Date rentalEndTime;
@@ -71,11 +74,11 @@ public class Order {
         this.passportId = passportId;
     }
 
-    public int getRentalPeriodInDays() {
+    public Integer getRentalPeriodInDays() {
         return rentalPeriodInDays;
     }
 
-    public void setRentalPeriodInDays(int rentalPeriodInDays) {
+    public void setRentalPeriodInDays(Integer rentalPeriodInDays) {
         this.rentalPeriodInDays = rentalPeriodInDays;
     }
 

@@ -12,9 +12,12 @@
 <div>
     <a href="?lang=en"><spring:message code="locale.en"/></a>
     <a href="?lang=ru"><spring:message code="locale.ru"/></a>
+    <div>
+        <a href="/login"><spring:message code="go.back"/></a>
+    </div>
 </div>
 <div class="container">
-    <form:form action="/registration" method="POST" class="form-signin" modelAttribute="registrationForm">
+    <form:form action="/registration" method="POST" class="form" modelAttribute="registrationForm">
         <h2 class="form-heading"><spring:message code="registration.form"/></h2>
         <div class="form-attributes">
             <div class="form-attribute">

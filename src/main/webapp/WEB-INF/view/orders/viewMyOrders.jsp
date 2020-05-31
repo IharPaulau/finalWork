@@ -57,5 +57,5 @@
         </c:forEach>
     </table>
     <a href="/cars/viewCars">
-        <button><spring:message code="View.all.cars"/></button>
+        <button><spring:message code="view.all.cars"/></button>
     </a>

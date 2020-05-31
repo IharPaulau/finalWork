@@ -59,5 +59,5 @@
 
 
     <form action="/cars/viewCars">
-       <button><spring:message code="View.all.cars"/></button>
+       <button><spring:message code="view.all.cars"/></button>
       </form>

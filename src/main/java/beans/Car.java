@@ -1,27 +1,28 @@
 package beans;
 
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class Car {
 
     private int id;
-    @NotBlank
+    @NotBlank(message = "{empty.car.brand}")
     private String brand;
-    @NotBlank
+    @NotBlank(message = "{empty.car.model}")
     private String model;
-    @NotBlank
+    @NotBlank(message = "{empty.car.typeBody}")
     private String typeBody;
-    @NotBlank
+    @NotBlank(message = "{empty.car.typeEngine}")
     private String typeEngine;
-    @NotBlank
+    @NotBlank(message = "{empty.car.bodyColor}")
     private String bodyColor;
-    @NotBlank
+    @NotBlank(message = "{empty.car.transmission}")
     private String transmission;
-    @NotNull
-    private int costPerOneDay;
+    @Min(value = 100, message = "{min.car.costPerOneDay}")
+    @NotNull(message = "{null.car.costPerOneDay}")
+    private Integer costPerOneDay;
     private boolean available;
 
     public int getId() {
@@ -80,11 +81,11 @@ public class Car {
         this.transmission = transmission;
     }
 
-    public int getCostPerOneDay() {
+    public Integer getCostPerOneDay() {
         return costPerOneDay;
     }
 
-    public void setCostPerOneDay(int costPerOneDay) {
+    public void setCostPerOneDay(Integer costPerOneDay) {
         this.costPerOneDay = costPerOneDay;
     }
 

@@ -1,14 +1,14 @@
-        <%@ page pageEncoding="UTF-8"%>
-        <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-        <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-    <link href="/resources/css/style.css" rel="stylesheet"/>
-    <div>
-        <a href="?lang=en"><spring:message code="locale.en"/></a>
-        <a href="?lang=ru"><spring:message code="locale.ru"/></a>
-    </div>
-	<form:form method="get" action="/orderForm/${car.id}" modelAttribute="car">
+<link href="/resources/css/style.css" rel="stylesheet"/>
+<div>
+<a href="?lang=en"><spring:message code="locale.en"/></a>
+<a href="?lang=ru"><spring:message code="locale.ru"/></a>
+</div>
+    <form:form method="get" action="/orderForm/${car.id}" modelAttribute="car">
         <table border="7" width="30%" cellpadding="5">
             <tr>
                 <th><spring:message code="car.characteristics"/></th>
@@ -50,6 +50,6 @@
         <spring:message code="button.to.rent" var="rent"/>
         <input type="submit" value="${rent}" />
     </form:form>
-    <form action="/cars/viewCars" >
-        <button><spring:message code="View.all.cars"/></button>
-    </form>
+<form action="/cars/viewCars" >
+    <button><spring:message code="view.all.cars"/></button>
+</form>

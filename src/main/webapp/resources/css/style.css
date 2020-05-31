@@ -1,12 +1,11 @@
 body {
-    padding-top: 40px;
-    padding-left: 40px;
+    padding: 40px;
     background-color: LightGrey;
 }
 
 a {
     color:#008fc3;
-    font-size:25px;
+    font-size: 25px;
     text-decoration: none;
     padding: 0px 5px;
 }
@@ -21,7 +20,7 @@ a:hover {
 }
 
 .form-heading {
-    color:#008fc3;
+    color: #008fc3;
     font-size:40px;
     text-align: center;
 }
@@ -32,16 +31,17 @@ a:hover {
 }
 
 .form-attribute {
+    text-align: left;
     margin-bottom: 16px;
 }
 
-.form-signin {
+.form {
     max-width: 600px;
     padding: 10px;
     margin: 0 auto;
 }
 
-.form-signin input {
+.form input {
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px;
@@ -49,12 +49,12 @@ a:hover {
     width: 100%;
 }
 
-.form-signin label {
-    color:#008fc3;
-    font-size:30px;
+.form label {
+    color: #008fc3;
+    font-size: 30px;
 }
 
-.form-signin span {
+.form span {
     font-size:20px;
     width:600px;
     position: absolute;
@@ -63,11 +63,11 @@ a:hover {
 }
 
 .error-message {
-    color:red;
+    color: red;
 }
 
 .success-message {
-    color:green;
+    color: green;
 }
 
 .button {
@@ -85,6 +85,45 @@ a:hover {
     opacity: 1;
 }
 
+#header {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    margin:0 auto;
+}
+
+#left-section {
+    position: absolute;
+    width: 250px;
+    left: 0;
+}
+
+#right-section {
+    position: absolute;
+    width: 220px;
+    right: 0;
+}
+
+#right-section h2 {
+    color: #008fc3;
+    text-decoration: none;
+    margin: 0px;
+    font-size: 20px;
+    text-align: right;
+}
+
+#right-section button {
+    font-size: 20px;
+    height: 30px;
+    float: right;
+    width: 50%
+}
+
+#content {
+    text-align: center;
+    padding-bottom: 40 px;
+}
+
 #footer {
     text-align: center;
     position: fixed;
@@ -93,6 +132,15 @@ a:hover {
 }
 
 #footer h2 {
-    color:#008fc3;
+    color: #008fc3;
     text-decoration: none;
+}
+
+h1 {
+    color: #008fc3;
+    font-size: 56px;
+}
+
+.menu-link {
+    padding-bottom: 20px;
 }
