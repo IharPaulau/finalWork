@@ -16,11 +16,19 @@ public class Order {
     private Integer passportNumber;
     @NotBlank
     private String passportId;
-    private Boolean orderApproved;
-    private Boolean orderPaid;
     @NotNull
     private int rentalPeriodInDays;
     private Date payTillDate;
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    private OrderStatus orderStatus;
 
     public int getId() {
         return id;
@@ -70,28 +78,12 @@ public class Order {
         this.passportId = passportId;
     }
 
-    public Boolean getOrderApproved() {
-        return orderApproved;
-    }
-
-    public void setOrderApproved(Boolean orderApproved) {
-        this.orderApproved = orderApproved;
-    }
-
     public int getRentalPeriodInDays() {
         return rentalPeriodInDays;
     }
 
     public void setRentalPeriodInDays(int rentalPeriodInDays) {
         this.rentalPeriodInDays = rentalPeriodInDays;
-    }
-
-    public Boolean getOrderPaid() {
-        return orderPaid;
-    }
-
-    public void setOrderPaid(Boolean orderPaid) {
-        this.orderPaid = orderPaid;
     }
 
     public Date getPayTillDate() {

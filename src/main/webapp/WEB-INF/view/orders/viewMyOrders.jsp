@@ -17,52 +17,43 @@
             <th><spring:message code="action.placeholder"/></th>
         </tr>
         <c:forEach var="order" items="${list}">
-            <c:choose>
-                <c:when test="${order.car.available}">
-                    <tr>
+            <tr>
                         <td>${order.car.brand} ${order.car.model}</td>
                         <td>${order.rentalPeriodInDays}</td>
                         <td>
                             <c:choose>
-                                <c:when test="${order.orderApproved}"><spring:message code="order.approved"/></c:when>
-                                <c:when test="${order.orderApproved == 'false'}"><spring:message code="order.rejected"/></c:when>
-                                <c:otherwise><spring:message code="order.not.verified"/></c:otherwise>
+                                <c:when test="${order.orderStatus == 'APPROVED'}">
+                                    <spring:message code="order.approved"/>
+                                    <spring:message code="order.shoudPay"/>
+                                </c:when>
+                                <c:when test="${order.orderStatus == 'REJECTED'}"><spring:message code="order.rejected"/></c:when>
+                                <c:when test="${order.orderStatus == 'NOT_VERIFIED'}"><spring:message code="order.not.verified"/></c:when>
+
                             </c:choose>
                         </td>
-                        <td><a href="/orders/deleteMyOrder/${order.id}">
-                                <button><spring:message code="delete.placeholder"/></button>
-                            </a>
+                        <td>
                             <c:choose>
-                                <c:when test="${order.orderApproved}">
+                                <c:when test="${order.orderStatus == 'APPROVED'}">
                                     <a href="/order/pay/${order.id}">
                                         <button><spring:message code="pay.placeholder"/></button>
-
+                                    </a>
+                                    <a href="/orders/deleteMyOrder/${order.id}">
+                                        <button><spring:message code="delete.placeholder"/></button>
+                                    </a>
+                                    </c:when>
+                                <c:when test="${order.orderStatus == 'REJECTED'}">
+                                    <a href="/orders/deleteMyOrder/${order.id}">
+                                        <button><spring:message code="delete.placeholder"/></button>
                                     </a>
                                 </c:when>
+                                <c:otherwise>
+                                    <a href="/orders/deleteMyOrder/${order.id}">
+                                        <button><spring:message code="delete.placeholder"/></button>
+                                    </a>
+                                </c:otherwise>
                             </c:choose>
                         </td>
-                    </tr>
-                </c:when>
-                <c:when test="${order.car.available == 'false'}">
-
-                    <tr>
-                        <td>${order.car.brand} ${order.car.model}</td>
-                        <td>${order.rentalPeriodInDays}</td>
-                        <td>
-                                <c:if test="${order.car.available == 'false'}">
-                                    car not available
-                                    ${order.payTillDate}
-                                </c:if>
-                        </td>
-                        <td>
-                            <a href="/orders/deleteMyOrder/${order.id}">
-                                <button><spring:message code="delete.placeholder"/></button>
-                            </a>
-
-                        </td>
-                    </tr>
-                </c:when>
-            </c:choose>
+            </tr>
         </c:forEach>
     </table>
     <a href="/cars/viewCars">

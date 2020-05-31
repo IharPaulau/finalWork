@@ -10,9 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
-    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, payTillDate) VALUES(?, ?, ?, ?, ?, ?, ?)";
-    private static final String CHANGE_APPROVED_STATUS = "UPDATE orders SET orderApproved=? WHERE id=?";
-    private static final String CHANGE_PAID_STATUS = "UPDATE orders SET orderPaid=? WHERE id=?";
+    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, payTillDate, orderStatus) " +
+            "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String CHANGE_ORDER_STATUS = "UPDATE orders SET orderStatus=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
     private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id WHERE o.id=?";
     private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id";
@@ -24,7 +24,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public int save(Order order) {
         return jdbcTemplate.update(ADD_NEW_ORDER, order.getUser().getId(), order.getCar().getId(), order.getPassportSeries(), order.getPassportNumber(),
-                order.getPassportId(), order.getRentalPeriodInDays(), order.getPayTillDate());
+                order.getPassportId(), order.getRentalPeriodInDays(), order.getPayTillDate(), order.getOrderStatus().getName());
     }
 
     @Override
@@ -49,17 +49,17 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public int reject(int id) {
-        return jdbcTemplate.update(CHANGE_APPROVED_STATUS, false, id);
+        return jdbcTemplate.update(CHANGE_ORDER_STATUS, "REJECTED", id);
     }
 
     @Override
     public int approve(int id) {
-        return jdbcTemplate.update(CHANGE_APPROVED_STATUS, true, id);
+        return jdbcTemplate.update(CHANGE_ORDER_STATUS, "APPROVED", id);
     }
 
     @Override
     public void setOrderStatusToPaid(Order order) {
-        jdbcTemplate.update(CHANGE_PAID_STATUS, true, order.getId());
+        jdbcTemplate.update(CHANGE_ORDER_STATUS, "IN_RENT", order.getId());
     }
 
     @Override

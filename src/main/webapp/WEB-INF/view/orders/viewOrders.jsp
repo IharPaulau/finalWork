@@ -25,30 +25,30 @@
                 <td>${order.rentalPeriodInDays}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${order.orderApproved}">
+                        <c:when test="${order.orderStatus == 'APPROVED'}">
                             <spring:message code="order.approved"/>
                             <!-- TODO only one active button-->
                         </c:when>
-                        <c:when test="${order.orderApproved == 'false'}">
+                        <c:when test="${order.orderStatus == 'REJECTED'}">
                             <spring:message code="order.rejected"/>
                         </c:when>
-                        <c:otherwise>
+                        <c:when test="${order.orderStatus == 'NOT_VERIFIED'}">
                             <spring:message code="order.not.verified"/>
-                        </c:otherwise>
+                        </c:when>
                     </c:choose>
                 </td>
                 <td>
                     <c:choose>
-                        <c:when test="${order.orderApproved}">
+                        <c:when test="${order.orderStatus == 'APPROVED'}">
                             <button><a href="/reject/${order.id}"><spring:message code="rejected"/></a></button>
                         </c:when>
-                        <c:when test="${order.orderApproved == 'false'}">
+                         <c:when test="${order.orderStatus == 'REJECTED'}">
                             <button><a href="/approve/${order.id}"><spring:message code="approved"/></a></button>
                         </c:when>
-                        <c:otherwise>
+                        <c:when test="${order.orderStatus == 'NOT_VERIFIED'}">
                             <button><a href="/reject/${order.id}"><spring:message code="rejected"/></a></button>
                             <button><a href="/approve/${order.id}"><spring:message code="approved"/></a></button>
-                        </c:otherwise>
+                        </c:when>
                     </c:choose>
                 </td>
             </tr>

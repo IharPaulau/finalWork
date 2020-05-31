@@ -2,6 +2,7 @@ package service.impl;
 
 import beans.Car;
 import beans.Order;
+import beans.OrderStatus;
 import beans.User;
 import dao.OrderDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
         int carId = order.getCar().getId();
         Car car = carService.getCarById(carId);
         carService.setCarNoMoreAvailable(car);
+        order.setOrderStatus(OrderStatus.NOT_VERIFIED);
         return orderDao.save(order);
     }
 
@@ -96,9 +98,8 @@ public class OrderServiceImpl implements OrderService {
         for (Order order : orders) {
             Calendar presentTime = Calendar.getInstance();
             if (order.getPayTillDate() != null)
-                if (order.getPayTillDate().before(presentTime.getTime()) & (order.getOrderApproved() == true)) {
+                if (order.getPayTillDate().before(presentTime.getTime()) & (order.getOrderStatus() == OrderStatus.APPROVED)) {
                     reject(order.getId());
-                    System.out.println("слишкмо долго думал и заказ отменен");
                 }
         }
     }

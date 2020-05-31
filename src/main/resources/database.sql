@@ -48,7 +48,8 @@ CREATE TABLE orders (
   passportSeries    VARCHAR(45) NULL,
   passportNumber    VARCHAR(45) NULL,
   passportId        VARCHAR(45) NULL,
-  orderApproved 	TINYINT 	NULL,
+  orderStatus    	ENUM('REJECTED', 'APPROVED', 'NOT_VERIFIED', 'IN_RENT', 'COMPLETED') 	NULL,
+  payTillDate       VARCHAR(45) NULL,
   rentalPeriodInDays INT NULL
    )ENGINE = InnoDB;
 
@@ -59,7 +60,6 @@ INSERT INTO roles VALUES (1, 'ROLE_USER');
 INSERT INTO roles VALUES (2, 'ROLE_ADMIN');
 
 INSERT INTO users_to_roles VALUES (1, 1);
-INSERT INTO users_to_roles VALUES (1, 2);
 INSERT INTO users_to_roles VALUES (2, 1);
 
 INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('1', 'Porche', '911', 'coupe', 'gasoline', 'black', '300', '45', 'true');

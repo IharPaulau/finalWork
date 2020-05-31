@@ -3,6 +3,7 @@ package mappers;
 
 import beans.Car;
 import beans.Order;
+import beans.OrderStatus;
 import beans.User;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -21,11 +22,7 @@ public class OrderRowMapper implements RowMapper<Order> {
         order.setPassportSeries(rs.getString("passportSeries"));
         order.setPassportNumber(rs.getInt("passportNumber"));
         order.setPassportId(rs.getString("passportId"));
-        Object checkForNull = rs.getObject("orderApproved");
-        if (checkForNull != null) {
-            order.setOrderApproved(rs.getBoolean("orderApproved"));
-        }
-        order.setOrderPaid(rs.getBoolean("orderPaid"));
+        order.setOrderStatus(OrderStatus.valueOf(rs.getString("orderStatus")));
         order.setRentalPeriodInDays(rs.getInt("rentalPeriodInDays"));
         order.setCar(fillCar(rs));
         order.setUser(fillUser(rs));
