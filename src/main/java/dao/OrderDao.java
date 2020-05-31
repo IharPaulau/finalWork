@@ -19,7 +19,7 @@ public interface OrderDao {
 
     List<Order> getOrders();
 
-    int changeOrderStatus(int id, String newStatus);
+    int changeOrderStatus(Order order);
 
     void setDeadline(Order order, String payTillDay);
 

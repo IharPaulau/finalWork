@@ -49,8 +49,8 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public int changeOrderStatus(int id, String newStatus) {
-        return jdbcTemplate.update(CHANGE_ORDER_STATUS, newStatus, id);
+    public int changeOrderStatus(Order order) {
+        return jdbcTemplate.update(CHANGE_ORDER_STATUS, order.getOrderStatus().getName(), order.getId());
     }
 
     @Override

@@ -67,15 +67,18 @@ public class OrderServiceImpl implements OrderService {
     public int reject(int id) {
         Order order = orderDao.getOrderById(id);
         carService.setCarAvailable(order.getCar());
-        return orderDao.changeOrderStatus(id, "REJECTED");
+        order.setOrderStatus(OrderStatus.REJECTED);
+        return orderDao.changeOrderStatus(order);
     }
 
     @Override
     public int approve(int id) {
         Order order = orderDao.getOrderById(id);
         order.setPayTillDate(setterPaymentDeadline());
+        order.setOrderStatus(OrderStatus.APPROVED);
+        carService.setCarNoMoreAvailable(order.getCar());
         orderDao.setDeadline(order, dateToString(order.getPayTillDate()));
-        return orderDao.changeOrderStatus(id, "APPROVED");
+        return orderDao.changeOrderStatus(order);
     }
 
 
@@ -88,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
 
     private Date setterRentalEnd(Date date, Order order) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
+        cal.setTime(order.getRentalStartTime());
         cal.add(Calendar.MINUTE, order.getRentalPeriodInDays());
         return cal.getTime();
     }
@@ -98,7 +101,8 @@ public class OrderServiceImpl implements OrderService {
         order.setRentalStartTime(new Date());
         order.setRentalEndTime(setterRentalEnd(new Date(), order));
         orderDao.setTimes(order);
-        orderDao.changeOrderStatus(order.getId(), "IN_RENT");
+        order.setOrderStatus(OrderStatus.IN_RENT);
+        orderDao.changeOrderStatus(order);
     }
 
     @Override
@@ -113,13 +117,14 @@ public class OrderServiceImpl implements OrderService {
                 }
         }
     }
+
     @Override
     public void autoReturnCars(Order order) {
         if (order.getOrderStatus() == OrderStatus.IN_RENT) {
             Calendar presentTime = Calendar.getInstance();
             if (order.getRentalEndTime().before(presentTime.getTime())) {
                 order.setOrderStatus(OrderStatus.COMPLETED);
-                orderDao.changeOrderStatus(order.getId(), "COMPLETED");
+                orderDao.changeOrderStatus(order);
                 carService.setCarAvailable(order.getCar());
             }
         }
