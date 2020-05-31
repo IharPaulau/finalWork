@@ -59,7 +59,19 @@ public class CarController {
         model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "edit.car.form");
         model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/editCar/" + car.getId());
         return "cars/carForm";
+    }
 
+    @PostMapping("/cars/editCar/{id}")
+    public String editSave(@Valid Car car, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
+            model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "edit.car.form");
+            model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/editCar/" + car.getId());
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "cars/carForm";
+        }
+        carService.update(car);
+        return REDIRECT_PREFIX + "/cars/viewCars";
     }
 
     @GetMapping("/cars/carDetails/{id}")
@@ -69,23 +81,7 @@ public class CarController {
         return "cars/carInfo";
     }
 
-
-    @PostMapping(value = "/cars/editCar/{id}")
-    public String editSave(@PathVariable int id, @Valid Car car, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
-            model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "edit.car.form");
-            model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/editCar/" + car.getId());
-            model.addAttribute("errors", bindingResult.getAllErrors());
-            return "cars/carForm";
-        }
-
-        carService.update(car);
-        return REDIRECT_PREFIX + "/cars/viewCars";
-    }
-
-
-    @GetMapping(value = "/cars/deleteCar/{id}")
+    @GetMapping("/cars/deleteCar/{id}")
     public String delete(@PathVariable int id) {
         carService.delete(id);
         return REDIRECT_PREFIX + "/cars/viewCars";

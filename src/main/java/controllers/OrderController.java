@@ -1,6 +1,7 @@
 package controllers;
 
 import beans.Order;
+import beans.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,9 @@ import service.OrderService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static utils.Constants.*;
 
@@ -36,7 +39,7 @@ public class OrderController {
         return "orders/orderForm";
     }
 
-    @PostMapping("/orderForm")
+    @PostMapping("/orderForm/{id}")
     public String save(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) @Valid Order order,
                        BindingResult bindingResult, Model model) {
 
@@ -93,5 +96,12 @@ public class OrderController {
         return "orders/receiptOfPayment";
     }
 
+    @GetMapping("/orders/completeOrders")
+    public String showCompletedOrders(Model model) {
+        List<Order> orderList= orderService.getOrders();
+        List<Order> orderList2 = orderList.stream().filter(x -> x.getOrderStatus() == OrderStatus.COMPLETED).collect(Collectors.toList());
+        model.addAttribute("list", orderList2);
+        return "orders/completeOrders";
+    }
 
 }

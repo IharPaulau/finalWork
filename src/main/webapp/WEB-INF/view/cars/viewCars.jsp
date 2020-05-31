@@ -49,16 +49,22 @@
 
 <br/>
 <sec:authorize access="hasAuthority('ROLE_ADMIN')">
-<a href ="/cars/carForm" >
-    <button><spring:message code="add.new.car"/></button>
+<a href ="/cars/carForm" class="notification">
+    <span><spring:message code="add.new.car"/></span>
 </a>
-<a href ="/orders/viewOrders">
-    <button><spring:message code="view.all.orders"/></button>
+<a href ="/orders/viewOrders" class="notification">
+    <span><spring:message code="view.all.orders"/></span>
+    <span class="badge">2</span>
 </a>
     </sec:authorize>
-<a href ="/orders/viewMyOrders/">
-    <button><spring:message code="view.my.orders"/></button>
+<a href ="/orders/viewMyOrders/" class="notification">
+    <span><spring:message code="view.my.orders"/></span>
 </a>
+<a href ="/orders/completeOrders/" class="notification">
+    <span>Return cars</span>
+    <span class="badge">${list.size()}</span>
+</a>
+
 
 
 

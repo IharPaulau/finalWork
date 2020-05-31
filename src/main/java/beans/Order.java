@@ -1,24 +1,26 @@
 package beans;
 
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
-
 
 public class Order {
     private int id;
     private User user;
     private Car car;
-    @NotBlank
+    @Pattern(regexp = "^[A-Z]{2}$", message = "{pattern.passport.series}")
     private String passportSeries;
-    @NotNull
+    @NotNull(message = "{passport.number}")
+    @Min(value = 7, message = "{passport.number}")
+    @Max(value = 7, message = "{passport.number}")
     private Integer passportNumber;
-    @NotBlank
+    @Pattern(regexp = "^([0-9]{7})([A-Z])([0-9]{3})([A-Z]{2})([0-9])$", message = "{pattern.passport.id}")
     private String passportId;
     @Min(value = 1)
+    @Min(value = 30, message = "{rental.period.max}")
     @NotNull
     private Integer rentalPeriodInDays;
     private Date payTillDate;

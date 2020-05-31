@@ -11,7 +11,7 @@
     </div>
     <div class="container">
 	<h1><spring:message code="fill.order"/></h1>
-    <form:form method="post" action="/orderForm" modelAttribute="order">
+    <form:form method="post" action="/orderForm/${id}" modelAttribute="order">
     <form:hidden path="user.username" value="${pageContext.request.userPrincipal.name}"/>
     <form:hidden path="car.id" value="${carId}"/>
         <table>
@@ -24,7 +24,7 @@
             </tr>
             <tr>
                 <td><spring:message code="passport.number.placeholder"/></td>
-                <td><form:input path="passportNumber" /></td>
+                <td><form:input path="passportNumber" maxlength = "7" /></td>
                 <td><form:errors path="passportNumber" class="error-message"/></td>
             </tr>
             <tr>
