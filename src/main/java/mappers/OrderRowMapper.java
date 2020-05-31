@@ -27,8 +27,12 @@ public class OrderRowMapper implements RowMapper<Order> {
         order.setCar(fillCar(rs));
         order.setUser(fillUser(rs));
         String payDay = rs.getString("payTillDate");
+        String startRent = rs.getString("rentalStartTime");
+        String endRent = rs.getString("rentalEndTime");
         try {
             order.setPayTillDate(stringToDate(payDay));
+            order.setRentalStartTime(stringToDate(startRent));
+            order.setRentalEndTime(stringToDate(endRent));
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -18,6 +18,7 @@ public class OrderDaoImpl implements OrderDao {
     private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id";
     private static final String SELECT_ALL_OWN_ORDERS = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id WHERE userId=?";
     private static final String SET_DEADLINE_TO_PAID = "UPDATE orders SET payTillDate=? WHERE id=?";
+    private static final String SET_START_AND_END_OF_RENT = "UPDATE orders SET rentalStartTime=?, rentalEndTime=? WHERE id=?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -48,18 +49,8 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public int reject(int id) {
-        return jdbcTemplate.update(CHANGE_ORDER_STATUS, "REJECTED", id);
-    }
-
-    @Override
-    public int approve(int id) {
-        return jdbcTemplate.update(CHANGE_ORDER_STATUS, "APPROVED", id);
-    }
-
-    @Override
-    public void setOrderStatusToPaid(Order order) {
-        jdbcTemplate.update(CHANGE_ORDER_STATUS, "IN_RENT", order.getId());
+    public int changeOrderStatus(int id, String newStatus) {
+        return jdbcTemplate.update(CHANGE_ORDER_STATUS, newStatus, id);
     }
 
     @Override
@@ -67,6 +58,10 @@ public class OrderDaoImpl implements OrderDao {
         jdbcTemplate.update(SET_DEADLINE_TO_PAID, payTillDay, order.getId());
     }
 
+    @Override
+    public void setTimes(Order order) {
+        jdbcTemplate.update(SET_START_AND_END_OF_RENT, order.getRentalStartTime(), order.getRentalEndTime(), order.getId());
+    }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

@@ -50,6 +50,8 @@ CREATE TABLE orders (
   passportId        VARCHAR(45) NULL,
   orderStatus    	ENUM('REJECTED', 'APPROVED', 'NOT_VERIFIED', 'IN_RENT', 'COMPLETED') 	NULL,
   payTillDate       VARCHAR(45) NULL,
+  rentalEndTime     VARCHAR(45) NULL,
+  rentalStartTime   VARCHAR(45) NULL,
   rentalPeriodInDays INT NULL
    )ENGINE = InnoDB;
 

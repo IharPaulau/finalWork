@@ -19,15 +19,8 @@ public class Order {
     @NotNull
     private int rentalPeriodInDays;
     private Date payTillDate;
-
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
+    private Date rentalStartTime;
+    private Date rentalEndTime;
     private OrderStatus orderStatus;
 
     public int getId() {
@@ -92,5 +85,29 @@ public class Order {
 
     public void setPayTillDate(Date payTillDate) {
         this.payTillDate = payTillDate;
+    }
+
+    public Date getRentalStartTime() {
+        return rentalStartTime;
+    }
+
+    public void setRentalStartTime(Date rentalStartTime) {
+        this.rentalStartTime = rentalStartTime;
+    }
+
+    public Date getRentalEndTime() {
+        return rentalEndTime;
+    }
+
+    public void setRentalEndTime(Date rentalEndTime) {
+        this.rentalEndTime = rentalEndTime;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

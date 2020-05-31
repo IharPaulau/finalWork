@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
     public int reject(int id) {
         Order order = orderDao.getOrderById(id);
         carService.setCarAvailable(order.getCar());
-        return orderDao.reject(id);
+        return orderDao.changeOrderStatus(id, "REJECTED");
     }
 
     @Override
@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderDao.getOrderById(id);
         order.setPayTillDate(setterPaymentDeadline());
         orderDao.setDeadline(order, dateToString(order.getPayTillDate()));
-        return orderDao.approve(id);
+        return orderDao.changeOrderStatus(id, "APPROVED");
     }
 
 
@@ -84,25 +84,47 @@ public class OrderServiceImpl implements OrderService {
         cal.setTime(new Date());
         cal.add(Calendar.MINUTE, 1);
         return cal.getTime();
+    }
 
+    private Date setterRentalEnd(Date date, Order order) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.MINUTE, order.getRentalPeriodInDays());
+        return cal.getTime();
     }
 
     @Override
     public void setOrderStatusToPaid(Order order) {
-        orderDao.setOrderStatusToPaid(order);
+        order.setRentalStartTime(new Date());
+        order.setRentalEndTime(setterRentalEnd(new Date(), order));
+        orderDao.setTimes(order);
+        orderDao.changeOrderStatus(order.getId(), "IN_RENT");
     }
 
     @Override
     public void cancelExpiredOrders() {
         List<Order> orders = getOrders();
         for (Order order : orders) {
+            autoReturnCars(order);
             Calendar presentTime = Calendar.getInstance();
-            if (order.getPayTillDate() != null)
-                if (order.getPayTillDate().before(presentTime.getTime()) & (order.getOrderStatus() == OrderStatus.APPROVED)) {
+            if (order.getOrderStatus() == OrderStatus.APPROVED)
+                if (order.getPayTillDate().before(presentTime.getTime())) {
                     reject(order.getId());
                 }
         }
     }
+    @Override
+    public void autoReturnCars(Order order) {
+        if (order.getOrderStatus() == OrderStatus.IN_RENT) {
+            Calendar presentTime = Calendar.getInstance();
+            if (order.getRentalEndTime().before(presentTime.getTime())) {
+                order.setOrderStatus(OrderStatus.COMPLETED);
+                orderDao.changeOrderStatus(order.getId(), "COMPLETED");
+                carService.setCarAvailable(order.getCar());
+            }
+        }
+    }
+
 
     @PostConstruct
     private void runCancellationOrdersThread() {

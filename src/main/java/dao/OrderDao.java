@@ -19,12 +19,9 @@ public interface OrderDao {
 
     List<Order> getOrders();
 
-    int reject(int id);
-
-    int approve(int id);
-
-    void setOrderStatusToPaid(Order order);
-
+    int changeOrderStatus(int id, String newStatus);
 
     void setDeadline(Order order, String payTillDay);
+
+    void setTimes(Order order);
 }

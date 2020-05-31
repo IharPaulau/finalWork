@@ -28,5 +28,7 @@ public interface OrderService {
     void setOrderStatusToPaid(Order order);
 
     void cancelExpiredOrders();
+
+    void autoReturnCars(Order order);
 }
 
