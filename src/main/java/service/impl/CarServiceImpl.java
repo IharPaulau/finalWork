@@ -4,16 +4,21 @@ import beans.Car;
 import service.CarService;
 
 import java.util.List;
+import org.apache.log4j.Logger;
+
+import org.springframework.dao.EmptyResultDataAccessException;
+
 
 import dao.CarDao;
 
 
 public class CarServiceImpl implements CarService {
+    private static final Logger LOGGER = Logger.getLogger(CarServiceImpl.class);
 
     private CarDao carDao;
 
     public int save(Car car) {
-        return this.carDao.save(car);
+        return carDao.save(car);
     }
 
     public List<Car> getCars() {
@@ -21,25 +26,31 @@ public class CarServiceImpl implements CarService {
     }
 
     public Car getCarById(int id) {
-        return carDao.getCarById(id);
+        try {
+            return carDao.getCarById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            LOGGER.info(String.format("Could not find car with id %s", id));
+            return null;
+        }
     }
 
-    public int update(Car car) {
-        return this.carDao.update(car);
+    public void update(Car car) {
+        carDao.update(car);
     }
+
 
     public int delete(int id) {
         return carDao.delete(id);
     }
 
     @Override
-    public int setCarNoMoreAvailable(Car car) {
-        return carDao.setCarNoMoreAvailable(car);
+    public void setCarNoMoreAvailable(Car car) {
+        carDao.updateCarAvailability(car.getId(), false);
     }
 
     @Override
-    public int setCarAvailable(Car car) {
-        return carDao.setCarAvailable(car);
+    public void setCarAvailable(Car car) {
+        carDao.updateCarAvailability(car.getId(), true);
     }
 
     public void setCarDao(CarDao carDao) {

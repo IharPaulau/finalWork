@@ -1,9 +1,8 @@
 package dao.impl;
 
-import beans.Car;
+
 import beans.Order;
 import dao.OrderDao;
-import mappers.CarRowMapper;
 import mappers.OrderRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 

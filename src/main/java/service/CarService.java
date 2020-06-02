@@ -12,11 +12,11 @@ public interface CarService {
 
     Car getCarById(int id);
 
-    int update(Car car);
+    void update(Car car);
 
     int delete(int id);
 
-    int setCarNoMoreAvailable(Car car);
+    void setCarNoMoreAvailable(Car car);
 
-    int setCarAvailable(Car car);
+    void setCarAvailable(Car car);
 }

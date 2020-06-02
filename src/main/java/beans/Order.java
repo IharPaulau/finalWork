@@ -20,7 +20,7 @@ public class Order {
     @Pattern(regexp = "^([0-9]{7})([A-Z])([0-9]{3})([A-Z]{2})([0-9])$", message = "{pattern.passport.id}")
     private String passportId;
     @Min(value = 1)
-    @Min(value = 30, message = "{rental.period.max}")
+    @Max(value = 30, message = "{rental.period.max}")
     @NotNull
     private Integer rentalPeriodInDays;
     private Date payTillDate;

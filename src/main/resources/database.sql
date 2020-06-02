@@ -64,13 +64,13 @@ INSERT INTO roles VALUES (2, 'ROLE_ADMIN');
 INSERT INTO users_to_roles VALUES (1, 1);
 INSERT INTO users_to_roles VALUES (2, 1);
 
-INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('1', 'Porche', '911', 'coupe', 'gasoline', 'black', '300', '45', 'true');
-INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('2', 'Lada', 'XRAY Cross', 'sedan', 'gasoline', 'White', '75', 'manual', 'true');
-INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('3', 'Mercedes', 'G 500', 'station wagon', 'gasoline', 'black', '150', 'manual', 'true');
-INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('4', 'BMW', '520d AT', 'sedan', 'diesel', 'black', '150', '55', 'true');
-INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('5', 'FORD', 'TAURUS ', 'sedan', 'gasoline', 'brown', '100', '50', 'true');
-INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('6', 'KIA', 'Cerato', 'sedan', 'gasoline', 'red', '100', '50', 'true');
-INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('7', 'BMW', 'M550i xDrive AT', 'sedan', 'gasoline', 'black', '170', 'manual', 'true');
-INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('8', 'Mercedes', 'AMG', 'coupe', 'gasoline', 'White', '300', '50', 'true');
-INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES ('Tesla Motors', 'Model X', 'sedan', 'electric car', 'White', '100', 'manual', 'true');
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES (1, 'Porsche', '911', 'coupe', 'gasoline', 'black', '300', 'automate', true);
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES (2, 'Lada', 'XRAY Cross', 'sedan', 'gasoline', 'White', '75', 'manual', true);
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES (3, 'Mercedes', 'G 500', 'station wagon', 'gasoline', 'black', '150', 'manual', true);
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES (4, 'BMW', '520d AT', 'sedan', 'diesel', 'black', '150', 'automate', true);
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES (5, 'FORD', 'TAURUS ', 'sedan', 'gasoline', 'brown', '100', 'automate', true);
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES (6, 'KIA', 'Cerato', 'sedan', 'gasoline', 'red', '100', 'automate', true);
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES (7, 'BMW', 'M550i xDrive AT', 'sedan', 'gasoline', 'black', '170', 'manual', true);
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES (8, 'Mercedes', 'AMG', 'coupe', 'gasoline', 'White', '300', 'automate', true);
+INSERT INTO `mydb`.`cars` (`id`, `brand`, `model`, `typeBody`, `typeEngine`, `bodyColor`, `costPerOneDay`, `transmission`, `available`) VALUES (9, 'Tesla Motors', 'Model X', 'sedan', 'electric car', 'White', '100', 'manual', true);
 

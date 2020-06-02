@@ -2,6 +2,10 @@ package dao.impl;
 
 import beans.Car;
 import dao.CarDao;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+
+import java.sql.PreparedStatement;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -10,44 +14,63 @@ import mappers.CarRowMapper;
 import java.util.List;
 
 public class CarDaoImpl implements CarDao {
-    private static final String ADD_NEW_CAR = "INSERT INTO cars(brand,model,typeBody,typeEngine,bodyColor,costPerOneDay,transmission) VALUES(?,?,?,?,?,?,?)";
-    private static final String UPDATE_CAR = "UPDATE cars SET brand=?,model=?,typeBody=?,typeEngine=?,bodyColor=?,costPerOneDay=?,transmission=? WHERE id=?";
+    private static final String ADD_NEW_CAR = "INSERT INTO cars(brand,model,typeBody,typeEngine,bodyColor," +
+            "costPerOneDay,transmission) VALUES(?,?,?,?,?,?,?)";
+    private static final String UPDATE_CAR = "UPDATE cars SET brand=?,model=?,typeBody=?,typeEngine=?,bodyColor=?," +
+            "costPerOneDay=?,transmission=? WHERE id=?";
     private static final String DELETE_CAR = "DELETE FROM cars WHERE id=?";
     private static final String SELECT_CAR_BY_ID = "SELECT * FROM cars WHERE id=?";
     private static final String SELECT_ALL_CARS = "SELECT * FROM cars";
-    private static final String NO_MORE_AVAILABLE = "UPDATE cars SET available = false WHERE id =?";
-    private static final String NOW_AVAILABLE = "UPDATE cars SET available = true WHERE id =?";
+    private static final String UPDATE_CAR_AVAILABILITY = "UPDATE cars SET available=? WHERE id=?";
 
     private JdbcTemplate jdbcTemplate;
 
+    @Override
     public int save(Car car) {
-        return jdbcTemplate.update(ADD_NEW_CAR, car.getBrand(), car.getModel(), car.getTypeBody(), car.getTypeEngine(), car.getBodyColor(), car.getCostPerOneDay(), car.getTransmission());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        return preparedStatement(car, keyHolder);
     }
 
+    @Override
     public int update(Car car) {
-        return jdbcTemplate.update(UPDATE_CAR, car.getBrand(), car.getModel(), car.getTypeBody(), car.getTypeEngine(), car.getBodyColor(), car.getCostPerOneDay(), car.getTransmission(), car.getId());
+        return jdbcTemplate.update(UPDATE_CAR, car.getBrand(), car.getModel(), car.getTypeBody(), car.getTypeEngine(),
+                car.getBodyColor(), car.getCostPerOneDay(), car.getTransmission(), car.getId());
     }
 
+    @Override
     public int delete(int id) {
         return jdbcTemplate.update(DELETE_CAR, id);
     }
 
+    @Override
     public Car getCarById(int id) {
         return jdbcTemplate.queryForObject(SELECT_CAR_BY_ID, new Object[]{id}, new CarRowMapper());
     }
 
+    @Override
     public List<Car> getCars() {
         return jdbcTemplate.query(SELECT_ALL_CARS, new CarRowMapper());
     }
 
     @Override
-    public int setCarNoMoreAvailable(Car car) {
-        return jdbcTemplate.update(NO_MORE_AVAILABLE, car.getId());
+    public int updateCarAvailability(int carId, boolean available) {
+        return jdbcTemplate.update(UPDATE_CAR_AVAILABILITY, available, carId);
     }
 
-    @Override
-    public int setCarAvailable(Car car) {
-        return jdbcTemplate.update(NOW_AVAILABLE, car.getId());
+
+    private int preparedStatement(Car car, KeyHolder keyHolder) {
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(ADD_NEW_CAR, new String[]{"id"});
+            ps.setString(1, car.getBrand());
+            ps.setString(2, car.getModel());
+            ps.setString(3, car.getTypeBody());
+            ps.setString(4, car.getTypeEngine());
+            ps.setString(5, car.getBodyColor());
+            ps.setInt(6, car.getCostPerOneDay());
+            ps.setString(7, car.getTransmission());
+            return ps;
+        }, keyHolder);
+        return keyHolder.getKey().intValue();
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
