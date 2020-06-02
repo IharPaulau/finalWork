@@ -7,30 +7,31 @@ import dao.UserDao;
 import forms.RegistrationForm;
 import service.UserService;
 
+import java.util.Collections;
+
 import org.apache.log4j.Logger;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import static utils.Constants.ROLE_USER_NAME;
 
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
-    private static final String ROLE_USER_NAME = "ROLE_USER";
-
     private UserDao userDao;
     private RoleDao roleDao;
     private BCryptPasswordEncoder encoder;
 
-    public void saveUserWithRole(User user) {
-        userDao.save(user);
-        User savedUser = userDao.getUserByName(user.getUsername());
-        if (savedUser != null) {
-            Role userRole = roleDao.getRoleByName(ROLE_USER_NAME);
-            userDao.saveUserRole(savedUser.getId(), userRole.getId());
-        } else {
-            LOGGER.error(String.format("User with name = '%s' not saved.", user.getUsername()));
-        }
+    public User saveUserWithRole(User user) {
+        int userId = userDao.save(user);
+        Role userRole = roleDao.getRoleByName(ROLE_USER_NAME);
+        userDao.saveUserRole(userId, userRole.getId());
+        user.setId(userId);
+        user.setRoles(Collections.singleton(userRole));
+        return user;
     }
+
 
     @Override
     public User createNewRegisteredUser(RegistrationForm form) {

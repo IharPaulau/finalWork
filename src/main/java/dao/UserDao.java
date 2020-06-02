@@ -11,8 +11,9 @@ public interface UserDao {
      * Save current user
      *
      * @param user user to save
+     * @return User id
      */
-    void save(User user);
+    int save(User user);
 
     /**
      * Get User by provided user name

@@ -12,8 +12,9 @@ public interface UserService {
      * Save provided user and apply 'ROLE_USER' for saved user
      *
      * @param user user to save
+     * @return new User
      */
-    void saveUserWithRole(User user);
+    User saveUserWithRole(User user);
 
     /**
      * Create User according registration form
