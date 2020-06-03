@@ -11,12 +11,11 @@
 <body>
 <div id="header">
     <div id="left-section">
-        <a href="?lang=en">
-            <spring:message code="locale.en"/>
-        </a>
-        <a href="?lang=ru">
-            <spring:message code="locale.ru"/>
-        </a>
+        <a href="?lang=en"><spring:message code="locale.en"/></a>
+        <a href="?lang=ru"><spring:message code="locale.ru"/></a>
+        <div>
+            <a href="/login"><spring:message code="go.back"/></a>
+        </div>
     </div>
     <div id="right-section">
         <form id="logoutForm" method="POST" action="/logout">
@@ -40,7 +39,7 @@
         <div class="form-attributes">
             <div class="form-attribute">
                 <label>
-                <spring:message code="passport.series.placeholder"/>
+                <spring:message code="passport.series"/>
                 </label>
                 <spring:message code="passport.series.placeholder" var="passportSeries"/>
                 <form:input type="text" path="passportSeries" placeholder="${passportSeries}"/>
@@ -48,7 +47,7 @@
             </div>
             <div class="form-attribute">
                 <label>
-                    <spring:message code="passport.number.placeholder"/>
+                    <spring:message code="passport.number"/>
                 </label>
                 <spring:message code="passport.number.placeholder" var="passportNumbers"/>
                 <form:input type="text" path="passportNumber" placeholder="${passportNumbers}"/>
@@ -56,7 +55,7 @@
             </div>
             <div class="form-attribute">
                 <label>
-                    <spring:message code="id.number.placeholder"/>
+                    <spring:message code="id.number"/>
                 </label>
                 <spring:message code="id.number.placeholder" var="idNumber"/>
                 <form:input type="text" path="passportId" placeholder="${idNumber}"/>
@@ -64,7 +63,7 @@
             </div>
             <div class="form-attribute">
                 <label>
-                    <spring:message code="desired.rental.period"/>
+                    <spring:message code="rental.period"/>
                 </label>
                 <spring:message code="desired.rental.period" var="period"/>
                 <form:input type="text" path="rentalPeriodInDays" placeholder="${period}"/>
@@ -80,11 +79,6 @@
 </div>
 </body>
 </html>
-    </div>
-    <form action="/cars/viewCars" >
-       <button><spring:message code="view.all.cars"/></button>
-    </form>
-
     <div id="footer" style="position: relative;">
         <h2>Final Project For Java Web Development Course.</h2>
     </div>

@@ -73,21 +73,27 @@
 
 <br/>
 <sec:authorize access="hasAuthority('ROLE_ADMIN')">
-<a href ="/cars/carForm" class="notification">
-    <span><spring:message code="add.new.car"/></span>
-</a>
-<a href ="/orders/viewOrders" class="notification">
-    <span><spring:message code="view.all.orders"/></span>
-    <span class="badge">2</span>
-</a>
-    </sec:authorize>
-<a href ="/orders/viewMyOrders/" class="notification">
-    <span><spring:message code="view.my.orders"/></span>
-</a>
-<a href ="/orders/completeOrders/" class="notification">
-    <span>Return cars</span>
-    <span class="badge">${list.size()}</span>
-</a>
+    <a href ="/cars/carForm" class="notification">
+        <span><spring:message code="add.new.car"/></span>
+    </a>
+    <a href ="/orders/viewOrders" class="notification">
+        <span><spring:message code="view.all.orders"/></span>
+        <c:if test="${uncheckedOrders > '0'}">
+        <span class="badge">${uncheckedOrders}</span>
+        </c:if>
+    </a>
+    <a href ="/orders/completeOrders/" class="notification">
+        <span>Return cars</span>
+        <c:if test="${returnOrders > '0'}">
+        <span class="badge">${returnOrders}</span>
+        </c:if>
+    </a>
+</sec:authorize>
+    <sec:authorize access="hasAuthority('ROLE_USER')">
+    <a href ="/orders/viewMyOrders/" class="notification">
+        <span><spring:message code="view.my.orders"/></span>
+    </a>
+</sec:authorize>
 
 
 

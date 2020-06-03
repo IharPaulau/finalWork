@@ -138,7 +138,7 @@ a:hover {
 
 h1 {
     color: #008fc3;
-    font-size: 56px;
+    font-size: 50px;
 }
 
 .menu-link {
@@ -146,7 +146,7 @@ h1 {
 }
 
 .notification {
-  background-color: #555;
+  background-color: #008fc3;
   color: white;
   text-decoration: none;
   padding: 15px 26px;
@@ -156,7 +156,7 @@ h1 {
 }
 
 .notification:hover {
-  background: red;
+  opacity: 1;
 }
 
 .notification .badge {

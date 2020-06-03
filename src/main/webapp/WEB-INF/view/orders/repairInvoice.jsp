@@ -14,15 +14,22 @@
 	<h1><spring:message code="fill.order"/></h1>
     <form:form method="post" action="/repairInvoice/${id}" modelAttribute="order">
     <div class="form-attribute">
-                    <label>
-                            amount of damage to return
-                    </label>
-
-                    <form:input type="text" path="compensationAmount" />
-
-                </div>
+        <label>
+        amount of damage to return
+        </label>
+        <form:input type="text" path="compensationAmount" />
+    </div>
+        <button type="submit">
+            <spring:message code="button.to.save"/>
+        </button>
     </form:form>
     </div>
+
+
+
+
+
+
     <form action="/cars/viewCars" >
        <button><spring:message code="view.all.cars"/></button>
     </form>

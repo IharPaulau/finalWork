@@ -120,7 +120,9 @@ public class OrderController {
     }
 
     @PostMapping("/repairInvoice/{id}")
-    public String invoiceForm(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) Order order) {
+    public String invoiceForm(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) Order orderFromJsp) {
+        Order order = orderService.getOrderById(orderFromJsp.getId());
+        order.setCompensationAmount(orderFromJsp.getCompensationAmount());
         orderService.save(order);
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }

@@ -3,7 +3,31 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+    border: 1px solid #ddd;
+}
+
+tr, th, td {
+  text-align: auto;
+  padding: 16px;
+}
+tr:nth-child(even) {
+  background-color: #DCDCDC;
+
+}
+table.center {
+  margin-left:auto;
+  margin-right:auto;
+}
+</style>
+
+
+
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
     <title>CAR DETAILS</title>
     <link href="/resources/css/style.css" rel="stylesheet"/>
@@ -31,10 +55,10 @@
         </form>
     </div>
 </div>
-<div id="content">
-    <form:form method="get" action="/orderForm/${car.id}" modelAttribute="car" class="form">
 
-        <table border="7" width="30%" cellpadding="5">
+    <form:form method="get" action="/orderForm/${car.id}" modelAttribute="car">
+
+        <table class="center">
             <tr>
                 <th><spring:message code="car.characteristics"/></th>
                 <th><spring:message code="values"/></th>

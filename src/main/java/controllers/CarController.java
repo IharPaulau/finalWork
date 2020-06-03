@@ -1,12 +1,15 @@
 package controllers;
 
 import beans.Car;
+import beans.Order;
+import beans.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import service.CarService;
 import org.springframework.validation.BindingResult;
+import service.OrderService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,6 +24,9 @@ public class CarController {
 
     @Autowired
     private CarService carService;
+    @Autowired
+    private OrderService orderService;
+
 
     @GetMapping("/cars/carForm")
     public String showForm(Model model) {
@@ -48,7 +54,12 @@ public class CarController {
     @GetMapping("/cars/viewCars")
     public String viewCar(Model model) {
         List<Car> list = carService.getCars();
+        List<Order> listOrders = orderService.getOrders();
+        long uncheckedOrders = listOrders.stream().filter(x -> OrderStatus.NOT_VERIFIED.equals(x.getOrderStatus())).count();
+        long returnOrders = listOrders.stream().filter(x -> OrderStatus.RETURN.equals(x.getOrderStatus())).count();
         model.addAttribute("list", list);
+        model.addAttribute("uncheckedOrders", uncheckedOrders);
+        model.addAttribute("returnOrders", returnOrders);
         return "cars/viewCars";
     }
 
