@@ -3,12 +3,37 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link href="/resources/css/style.css" rel="stylesheet"/>
-<div>
-<a href="?lang=en"><spring:message code="locale.en"/></a>
-<a href="?lang=ru"><spring:message code="locale.ru"/></a>
+<html>
+<head>
+    <title>CAR DETAILS</title>
+    <link href="/resources/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="header">
+    <div id="left-section">
+        <a href="?lang=en">
+            <spring:message code="locale.en"/>
+        </a>
+        <a href="?lang=ru">
+            <spring:message code="locale.ru"/>
+        </a>
+    </div>
+    <div id="right-section">
+        <form id="logoutForm" method="POST" action="/logout">
+            <h2>
+                <spring:message code="current.user"/>
+            </h2>
+            <h2>${pageContext.request.userPrincipal.name}</h2>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <button class="button" type="submit">
+                <spring:message code="logout.button"/>
+            </button>
+        </form>
+    </div>
 </div>
-    <form:form method="get" action="/orderForm/${car.id}" modelAttribute="car">
+<div id="content">
+    <form:form method="get" action="/orderForm/${car.id}" modelAttribute="car" class="form">
+
         <table border="7" width="30%" cellpadding="5">
             <tr>
                 <th><spring:message code="car.characteristics"/></th>

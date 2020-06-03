@@ -9,8 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
-    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, payTillDate, orderStatus) " +
-            "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, payTillDate, orderStatus, compensationAmount) " +
+            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String CHANGE_ORDER_STATUS = "UPDATE orders SET orderStatus=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
     private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id WHERE o.id=?";
@@ -24,7 +24,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public int save(Order order) {
         return jdbcTemplate.update(ADD_NEW_ORDER, order.getUser().getId(), order.getCar().getId(), order.getPassportSeries(), order.getPassportNumber(),
-                order.getPassportId(), order.getRentalPeriodInDays(), order.getPayTillDate(), order.getOrderStatus().getName());
+                order.getPassportId(), order.getRentalPeriodInDays(), order.getPayTillDate(), order.getOrderStatus().getName(), order.getCompensationAmount());
     }
 
     @Override
@@ -58,8 +58,8 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public void setTimes(Order order) {
-        jdbcTemplate.update(SET_START_AND_END_OF_RENT, order.getRentalStartTime(), order.getRentalEndTime(), order.getId());
+    public void setTimes(Order order, String startRent, String endRent) {
+        jdbcTemplate.update(SET_START_AND_END_OF_RENT, startRent, endRent, order.getId());
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {

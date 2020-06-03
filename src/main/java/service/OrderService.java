@@ -30,5 +30,9 @@ public interface OrderService {
     void cancelExpiredOrders();
 
     void autoReturnCars(Order order);
+
+    int repairInvoice(int id);
+
+    int complete(int id);
 }
 

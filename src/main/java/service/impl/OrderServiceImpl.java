@@ -81,6 +81,20 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.changeOrderStatus(order);
     }
 
+    @Override
+    public int complete(int id){
+        Order order = orderDao.getOrderById(id);
+        order.setOrderStatus(OrderStatus.COMPLETED);
+        carService.setCarAvailable(order.getCar());
+        return orderDao.changeOrderStatus(order);
+    }
+
+    @Override
+    public int repairInvoice(int id){
+        Order order = orderDao.getOrderById(id);
+        order.setOrderStatus(OrderStatus.RECOVERY);
+        return orderDao.changeOrderStatus(order);
+    }
 
     private Date setterPaymentDeadline() {
         Calendar cal = Calendar.getInstance();
@@ -100,7 +114,7 @@ public class OrderServiceImpl implements OrderService {
     public void setOrderStatusToPaid(Order order) {
         order.setRentalStartTime(new Date());
         order.setRentalEndTime(setterRentalEnd(new Date(), order));
-        orderDao.setTimes(order);
+        orderDao.setTimes(order, dateToString(order.getRentalStartTime()), dateToString(order.getRentalEndTime()));
         order.setOrderStatus(OrderStatus.IN_RENT);
         orderDao.changeOrderStatus(order);
     }
@@ -123,13 +137,12 @@ public class OrderServiceImpl implements OrderService {
         if (order.getOrderStatus() == OrderStatus.IN_RENT) {
             Calendar presentTime = Calendar.getInstance();
             if (order.getRentalEndTime().before(presentTime.getTime())) {
-                order.setOrderStatus(OrderStatus.COMPLETED);
+                order.setOrderStatus(OrderStatus.RETURN);
                 orderDao.changeOrderStatus(order);
-                carService.setCarAvailable(order.getCar());
+
             }
         }
     }
-
 
     @PostConstruct
     private void runCancellationOrdersThread() {

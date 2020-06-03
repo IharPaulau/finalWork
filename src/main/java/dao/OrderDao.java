@@ -23,5 +23,5 @@ public interface OrderDao {
 
     void setDeadline(Order order, String payTillDay);
 
-    void setTimes(Order order);
+    void setTimes(Order order, String startRent, String endRent);
 }

@@ -3,12 +3,34 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link href="/resources/css/style.css" rel="stylesheet"/>
-    <div>
-        <a href="?lang=en"><spring:message code="locale.en"/></a>
-        <a href="?lang=ru"><spring:message code="locale.ru"/></a>
-        <br/>
+<html>
+<head>
+    <title>ALL ORDERS</title>
+    <link href="/resources/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="header">
+    <div id="left-section">
+        <a href="?lang=en">
+            <spring:message code="locale.en"/>
+        </a>
+        <a href="?lang=ru">
+            <spring:message code="locale.ru"/>
+        </a>
     </div>
+    <div id="right-section">
+        <form id="logoutForm" method="POST" action="/logout">
+            <h2>
+                <spring:message code="current.user"/>
+            </h2>
+            <h2>${pageContext.request.userPrincipal.name}</h2>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <button class="button" type="submit">
+                <spring:message code="logout.button"/>
+            </button>
+        </form>
+    </div>
+</div>
 	<h1><spring:message code="all.orders"/></h1>
 	<table border="2" width="50%" cellpadding="2" >
         <tr>

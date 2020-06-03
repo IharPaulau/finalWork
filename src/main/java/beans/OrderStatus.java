@@ -6,6 +6,8 @@ public enum OrderStatus {
     REJECTED("REJECTED"),
     APPROVED("APPROVED"),
     IN_RENT("IN_RENT"),
+    RETURN("RETURN"),
+    RECOVERY("RECOVERY"),
     COMPLETED("COMPLETED");
 
     private String name;

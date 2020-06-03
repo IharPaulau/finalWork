@@ -47,6 +47,7 @@ public class OrderController {
             model.addAttribute(ORDER_MODEL_ATTRIBUTE, order);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "orders/orderForm";
+            // WTF, bag in UI if user push button with error messages 1 more time...
         }
 
         orderService.save(order);
@@ -98,10 +99,31 @@ public class OrderController {
 
     @GetMapping("/orders/completeOrders")
     public String showCompletedOrders(Model model) {
-        List<Order> orderList= orderService.getOrders();
-        List<Order> orderList2 = orderList.stream().filter(x -> x.getOrderStatus() == OrderStatus.COMPLETED).collect(Collectors.toList());
-        model.addAttribute("list", orderList2);
+        List<Order> allOrders = orderService.getOrders();
+        List<Order> returnOrders = allOrders.stream().filter(x -> x.getOrderStatus() == OrderStatus.RETURN).collect(Collectors.toList());
+        model.addAttribute("list", returnOrders);
         return "orders/completeOrders";
     }
+
+    @GetMapping("/returnCar/{id}")
+    public String orderCompleteAndReturnCar(@PathVariable int id) {
+        orderService.complete(id);
+        return REDIRECT_PREFIX + "/orders/completeOrders";
+    }
+
+    @GetMapping("/repairInvoice/{id}")
+    public String makeInvoiceForRepairCar(@PathVariable int id, Model model) {
+        Order order = orderService.getOrderById(id);
+        model.addAttribute(ORDER_MODEL_ATTRIBUTE, order);
+        orderService.repairInvoice(id);
+        return "orders/repairInvoice";
+    }
+
+    @PostMapping("/repairInvoice/{id}")
+    public String invoiceForm(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) Order order) {
+        orderService.save(order);
+        return REDIRECT_PREFIX + "/orders/viewOrders";
+    }
+
 
 }

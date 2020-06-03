@@ -35,6 +35,9 @@
                         <c:when test="${order.orderStatus == 'NOT_VERIFIED'}">
                             <spring:message code="order.not.verified"/>
                         </c:when>
+                        <c:when test="${order.orderStatus == 'RETURN'}">
+                            <spring:message code="car.checking.damage"/>
+                        </c:when>
                     </c:choose>
                 </td>
                 <td>
@@ -42,12 +45,16 @@
                         <c:when test="${order.orderStatus == 'APPROVED'}">
                             <button><a href="/reject/${order.id}"><spring:message code="rejected"/></a></button>
                         </c:when>
-                         <c:when test="${order.orderStatus == 'REJECTED'}">
+                        <c:when test="${order.orderStatus == 'REJECTED'}">
                             <button><a href="/approve/${order.id}"><spring:message code="approved"/></a></button>
                         </c:when>
                         <c:when test="${order.orderStatus == 'NOT_VERIFIED'}">
                             <button><a href="/reject/${order.id}"><spring:message code="rejected"/></a></button>
                             <button><a href="/approve/${order.id}"><spring:message code="approved"/></a></button>
+                        </c:when>
+                        <c:when test="${order.orderStatus == 'RETURN'}">
+                            <button><a href="/returnCar/${order.id}"><spring:message code="close.order"/></a></button>
+                            <button><a href="/repairInvoice/${order.id}"><spring:message code="repair.invoice"/></a></button>
                         </c:when>
                     </c:choose>
                 </td>

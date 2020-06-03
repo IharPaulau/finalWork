@@ -13,9 +13,9 @@ public class Order {
     private Car car;
     @Pattern(regexp = "^[A-Z]{2}$", message = "{pattern.passport.series}")
     private String passportSeries;
-    @NotNull(message = "{passport.number}")
-    @Min(value = 7, message = "{passport.number}")
-    @Max(value = 7, message = "{passport.number}")
+//    @NotNull(message = "{passport.number}")
+//    @Min(value = 7, message = "{passport.number}")
+//    @Max(value = 7, message = "{passport.number}")
     private Integer passportNumber;
     @Pattern(regexp = "^([0-9]{7})([A-Z])([0-9]{3})([A-Z]{2})([0-9])$", message = "{pattern.passport.id}")
     private String passportId;
@@ -27,6 +27,7 @@ public class Order {
     private Date rentalStartTime;
     private Date rentalEndTime;
     private OrderStatus orderStatus;
+    private Integer compensationAmount;
 
     public int getId() {
         return id;
@@ -114,5 +115,13 @@ public class Order {
 
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public Integer getCompensationAmount() {
+        return compensationAmount;
+    }
+
+    public void setCompensationAmount(Integer compensationAmount) {
+        this.compensationAmount = compensationAmount;
     }
 }

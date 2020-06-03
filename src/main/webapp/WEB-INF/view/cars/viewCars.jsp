@@ -5,13 +5,35 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<link href="/resources/css/style.css" rel="stylesheet"/>
-<div>
-    <a href="?lang=en"><spring:message code="locale.en"/></a>
-    <a href="?lang=ru"><spring:message code="locale.ru"/></a>
+<html>
+<head>
+    <title>ALL CARS</title>
+    <link href="/resources/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="header">
+    <div id="left-section">
+        <a href="?lang=en">
+            <spring:message code="locale.en"/>
+        </a>
+        <a href="?lang=ru">
+            <spring:message code="locale.ru"/>
+        </a>
+    </div>
+    <div id="right-section">
+        <form id="logoutForm" method="POST" action="/logout">
+            <h2>
+                <spring:message code="current.user"/>
+            </h2>
+            <h2>${pageContext.request.userPrincipal.name}</h2>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <button class="button" type="submit">
+                <spring:message code="logout.button"/>
+            </button>
+        </form>
+    </div>
 </div>
-<h1>All cars</h1>
+
 <table border="2" width="100%" cellpadding="2">
     <tr>
         <th><spring:message code="car.id.placeholder"/></th>
@@ -46,6 +68,8 @@
         </c:if>
     </c:forEach>
 </table>
+</body>
+</html>
 
 <br/>
 <sec:authorize access="hasAuthority('ROLE_ADMIN')">
