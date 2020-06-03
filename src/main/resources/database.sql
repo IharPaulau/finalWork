@@ -48,11 +48,12 @@ CREATE TABLE orders (
   passportSeries    VARCHAR(45) NULL,
   passportNumber    VARCHAR(45) NULL,
   passportId        VARCHAR(45) NULL,
-  orderStatus    	ENUM('REJECTED', 'APPROVED', 'NOT_VERIFIED', 'IN_RENT', 'COMPLETED') 	NULL,
+  orderStatus    	ENUM('REJECTED', 'APPROVED', 'NOT_VERIFIED', 'IN_RENT', 'RETURN', 'RECOVERY', 'COMPLETED') 	NULL,
   payTillDate       VARCHAR(45) NULL,
   rentalEndTime     VARCHAR(45) NULL,
   rentalStartTime   VARCHAR(45) NULL,
-  rentalPeriodInDays INT NULL
+  rentalPeriodInDays INT NULL,
+  compensationAmount INT NULL
    )ENGINE = InnoDB;
 
 INSERT INTO users VALUES (1, 'admin', '$2a$11$qpS3KqDvy9Xd1mq1xC/8jeycG1JCs2nmy7LWdefve/iAYXMsam9Ua', 'admin@gmail.com');
