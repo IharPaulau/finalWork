@@ -32,7 +32,7 @@
     </div>
 </div>
 	<h1><spring:message code="all.orders"/></h1>
-	<table border="2" width="50%" cellpadding="2" >
+	<table id="table">
         <tr>
             <th><spring:message code="user.placeholder"/></th>
             <th><spring:message code="car.placeholder"/></th>
@@ -59,14 +59,14 @@
                 <td>
                     <c:choose>
                         <c:when test="${order.orderStatus == 'APPROVED'}">
-                            <button><a href="/reject/${order.id}"><spring:message code="rejected"/></a></button>
+                            <a href="/reject/${order.id}"><button class="danger"><spring:message code="rejected"/></button></a>
                         </c:when>
                          <c:when test="${order.orderStatus == 'REJECTED'}">
-                            <button><a href="/approve/${order.id}"><spring:message code="approved"/></a></button>
+                            <a href="/approve/${order.id}"><button class="warning"><spring:message code="approved"/></button></a>
                         </c:when>
                         <c:when test="${order.orderStatus == 'NOT_VERIFIED'}">
-                            <button><a href="/reject/${order.id}"><spring:message code="rejected"/></a></button>
-                            <button><a href="/approve/${order.id}"><spring:message code="approved"/></a></button>
+                            <a href="/reject/${order.id}"><button class="danger"><spring:message code="rejected"/></button></a>
+                            <a href="/approve/${order.id}"><button class="info"><spring:message code="approved"/></button></a>
                         </c:when>
                     </c:choose>
                 </td>
@@ -74,9 +74,6 @@
         </c:forEach>
     </table>
     <br/>
-
-
-
-    <form action="/cars/viewCars">
-       <button><spring:message code="view.all.cars"/></button>
-      </form>
+    <a href="/cars/viewCars" class="notification">
+        <spring:message code="view.all.cars"/>
+    </a>

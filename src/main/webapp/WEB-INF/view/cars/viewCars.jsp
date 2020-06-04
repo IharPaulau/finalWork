@@ -34,7 +34,7 @@
     </div>
 </div>
 
-<table border="2" width="100%" cellpadding="2">
+<table id="table">
     <tr>
         <th><spring:message code="car.id.placeholder"/></th>
         <th><spring:message code="car.brand.placeholder"/></th>
@@ -89,9 +89,12 @@
         </c:if>
     </a>
 </sec:authorize>
-    <sec:authorize access="hasAuthority('ROLE_USER')">
+<sec:authorize access="hasAuthority('ROLE_USER')">
     <a href ="/orders/viewMyOrders/" class="notification">
         <span><spring:message code="view.my.orders"/></span>
+        <c:if test="${aprrovedOrders > '0'}">
+        <span class="badge">${aprrovedOrders}</span>
+        </c:if>
     </a>
 </sec:authorize>
 

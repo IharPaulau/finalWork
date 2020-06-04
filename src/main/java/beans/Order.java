@@ -13,15 +13,16 @@ public class Order {
     private Car car;
     @Pattern(regexp = "^[A-Z]{2}$", message = "{pattern.passport.series}")
     private String passportSeries;
-//    @NotNull(message = "{passport.number}")
-//    @Min(value = 7, message = "{passport.number}")
-//    @Max(value = 7, message = "{passport.number}")
+    @NotNull(message = "{passport.number.validation1}")
+    // TODO VALID ON MIN AND MAX SIZE
+    @Min(value = 1000000, message = "{passport.number.validation2}")
+    @Max(value = 9999999, message = "{passport.number.validation3}")
     private Integer passportNumber;
     @Pattern(regexp = "^([0-9]{7})([A-Z])([0-9]{3})([A-Z]{2})([0-9])$", message = "{pattern.passport.id}")
     private String passportId;
-    @Min(value = 1)
+    @Min(value = 1, message = "{rental.period.min}")
     @Max(value = 30, message = "{rental.period.max}")
-    @NotNull
+    @NotNull(message = "{rental.period.validation}")
     private Integer rentalPeriodInDays;
     private Date payTillDate;
     private Date rentalStartTime;

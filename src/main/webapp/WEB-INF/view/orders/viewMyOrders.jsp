@@ -2,7 +2,6 @@
         <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
     <html>
     <head>
         <title>OWN ORDERS</title>
@@ -32,7 +31,7 @@
         </div>
     </div>
 	<h1><spring:message code="own.orders"/></h1>
-	<table border="2" width="50%" cellpadding="2" >
+	<table id="table">
         <tr>
             <th><spring:message code="car.placeholder"/></th>
             <th><spring:message code="rental.placeholder"/></th>
@@ -57,28 +56,28 @@
                         <td>
                             <c:choose>
                                 <c:when test="${order.orderStatus == 'APPROVED'}">
-                                    <a href="/order/pay/${order.id}">
-                                        <button><spring:message code="pay.placeholder"/></button>
-                                    </a>
-                                    <a href="/orders/deleteMyOrder/${order.id}">
-                                        <button><spring:message code="delete.placeholder"/></button>
-                                    </a>
-                                    </c:when>
+                                    <a href="/order/pay/${order.id}"><button class="info"><spring:message code="pay.placeholder"/></button></a>
+                                    <a href="/orders/deleteMyOrder/${order.id}"><button class="danger"><spring:message code="delete.placeholder"/></button></a>
+                                </c:when>
                                 <c:when test="${order.orderStatus == 'REJECTED'}">
-                                    <a href="/orders/deleteMyOrder/${order.id}">
-                                        <button><spring:message code="delete.placeholder"/></button>
-                                    </a>
+                                    <a href="/orders/deleteMyOrder/${order.id}"><button class="danger"><spring:message code="delete.placeholder"/></button></a>
+                                </c:when>
+                                <c:when test="${order.orderStatus == 'IN_RENT'}"> досрочный возврат не предусмотрен</c:when>
+                                <c:when test="${order.orderStatus == 'RETURN'}"> ожидается проверка автомобиля администрацией </c:when>
+                                <c:when test="${order.orderStatus == 'RECOVERY'}">
+                                    <a href="/order/pay/${order.id}"><button class="info"><spring:message code="pay.placeholder"/></button></a>
+                                </c:when>
+                                <c:when test="${order.orderStatus == 'COMPLETED'}">
+                                    <a href="/orders/deleteMyOrder/${order.id}"><button class="danger"><spring:message code="delete.placeholder"/></button></a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/orders/deleteMyOrder/${order.id}">
-                                        <button><spring:message code="delete.placeholder"/></button>
-                                    </a>
+                                    <a href="/orders/deleteMyOrder/${order.id}"><button class="danger"><spring:message code="delete.placeholder"/></button></a>
                                 </c:otherwise>
                             </c:choose>
                         </td>
             </tr>
         </c:forEach>
     </table>
-    <a href="/cars/viewCars">
-        <button><spring:message code="view.all.cars"/></button>
-    </a>
+    <a href="/cars/viewCars" class="notification">
+            <spring:message code="view.all.cars"/>
+          </a>

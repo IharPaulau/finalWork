@@ -34,5 +34,7 @@ public interface OrderService {
     int repairInvoice(int id);
 
     int complete(int id);
+
+    int update(Order order);
 }
 

@@ -57,9 +57,11 @@ public class CarController {
         List<Order> listOrders = orderService.getOrders();
         long uncheckedOrders = listOrders.stream().filter(x -> OrderStatus.NOT_VERIFIED.equals(x.getOrderStatus())).count();
         long returnOrders = listOrders.stream().filter(x -> OrderStatus.RETURN.equals(x.getOrderStatus())).count();
+        long aprrovedOrders = listOrders.stream().filter(x -> OrderStatus.APPROVED.equals(x.getOrderStatus())).count();
         model.addAttribute("list", list);
         model.addAttribute("uncheckedOrders", uncheckedOrders);
         model.addAttribute("returnOrders", returnOrders);
+        model.addAttribute("aprrovedOrders", aprrovedOrders);
         return "cars/viewCars";
     }
 

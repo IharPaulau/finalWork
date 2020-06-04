@@ -2,21 +2,10 @@
         <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
-
-
-
-
-
-
     <html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
-   <html>
+ <html>
    <head>
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <!-- Add icon library -->

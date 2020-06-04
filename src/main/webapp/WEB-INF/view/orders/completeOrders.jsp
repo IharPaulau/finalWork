@@ -10,7 +10,7 @@
         <br/>
     </div>
 	<h1><spring:message code="all.orders"/></h1>
-	<table border="2" width="50%" cellpadding="2" >
+	<table id="table">
         <tr>
             <th><spring:message code="user.placeholder"/></th>
             <th><spring:message code="car.placeholder"/></th>

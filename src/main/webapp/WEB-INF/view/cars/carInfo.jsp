@@ -10,13 +10,19 @@ table {
     border: 1px solid #ddd;
 }
 
-tr, th, td {
-  text-align: auto;
-  padding: 16px;
+table td, table th {
+border: 1px solid #ddd;
+padding: 25px;
 }
-tr:nth-child(even) {
-  background-color: #DCDCDC;
+table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:hover {background-color: #00BFFF;}
 
+table th {
+padding-top: 22px;
+padding-bottom: 22px;
+text-align: center;
+background-color: #008fc3;
+color: white;
 }
 table.center {
   margin-left:auto;
@@ -24,10 +30,7 @@ table.center {
 }
 </style>
 
-
-
 <html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
     <title>CAR DETAILS</title>
     <link href="/resources/css/style.css" rel="stylesheet"/>
@@ -97,8 +100,8 @@ table.center {
             </tr>
             </table>
         <spring:message code="button.to.rent" var="rent"/>
-        <input type="submit" value="${rent}" />
+        <input type="submit" value="${rent}" class="notification"/>
     </form:form>
-<form action="/cars/viewCars" >
-    <button><spring:message code="view.all.cars"/></button>
-</form>
+<a href="/cars/viewCars" class="notification">
+     <spring:message code="view.all.cars"/>
+</a>

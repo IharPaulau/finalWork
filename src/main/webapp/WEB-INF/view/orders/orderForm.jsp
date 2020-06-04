@@ -42,7 +42,7 @@
                 <spring:message code="passport.series"/>
                 </label>
                 <spring:message code="passport.series.placeholder" var="passportSeries"/>
-                <form:input type="text" path="passportSeries" placeholder="${passportSeries}"/>
+                <form:input type="text" path="passportSeries" placeholder="${passportSeries}" maxlength = "2"/>
                  <form:errors path="passportSeries" class="error-message"/>
             </div>
             <div class="form-attribute">
@@ -50,7 +50,7 @@
                     <spring:message code="passport.number"/>
                 </label>
                 <spring:message code="passport.number.placeholder" var="passportNumbers"/>
-                <form:input type="text" path="passportNumber" placeholder="${passportNumbers}"/>
+                <form:input type="text" path="passportNumber" placeholder="${passportNumbers}" maxlength = "7"/>
                 <form:errors path="passportNumber" class="error-message"/>
             </div>
             <div class="form-attribute">
@@ -58,7 +58,7 @@
                     <spring:message code="id.number"/>
                 </label>
                 <spring:message code="id.number.placeholder" var="idNumber"/>
-                <form:input type="text" path="passportId" placeholder="${idNumber}"/>
+                <form:input type="text" path="passportId" placeholder="${idNumber}" maxlength = "14"/>
                 <form:errors path="passportId" class="error-message"/>
             </div>
             <div class="form-attribute">
@@ -66,7 +66,7 @@
                     <spring:message code="rental.period"/>
                 </label>
                 <spring:message code="desired.rental.period" var="period"/>
-                <form:input type="text" path="rentalPeriodInDays" placeholder="${period}"/>
+                <form:input type="text" path="rentalPeriodInDays" placeholder="${period}" maxlength = "2"/>
                 <form:errors path="rentalPeriodInDays" class="error-message"/>
             </div>
         </div>

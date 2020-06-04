@@ -16,7 +16,6 @@ import service.OrderService;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,13 +40,13 @@ public class OrderController {
 
     @PostMapping("/orderForm/{id}")
     public String save(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) @Valid Order order,
-                       BindingResult bindingResult, Model model) {
+                       BindingResult bindingResult, Model model, @PathVariable int id) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute(ORDER_MODEL_ATTRIBUTE, order);
             model.addAttribute("errors", bindingResult.getAllErrors());
+            model.addAttribute("carId", id);
             return "orders/orderForm";
-            // WTF, bag in UI if user push button with error messages 1 more time...
         }
 
         orderService.save(order);
@@ -123,7 +122,7 @@ public class OrderController {
     public String invoiceForm(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) Order orderFromJsp) {
         Order order = orderService.getOrderById(orderFromJsp.getId());
         order.setCompensationAmount(orderFromJsp.getCompensationAmount());
-        orderService.save(order);
+        orderService.update(order);
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }
 
