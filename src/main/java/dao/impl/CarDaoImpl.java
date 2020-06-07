@@ -2,14 +2,17 @@ package dao.impl;
 
 import beans.Car;
 import dao.CarDao;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+
 
 import java.sql.PreparedStatement;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import mappers.CarRowMapper;
+
 
 import java.util.List;
 
@@ -59,7 +62,12 @@ public class CarDaoImpl implements CarDao {
 
 
     private int preparedStatement(Car car, KeyHolder keyHolder) {
-        jdbcTemplate.update(connection -> {
+        jdbcTemplate.update(getPreparedStatementCreator(car), keyHolder);
+        return keyHolder.getKey().intValue();
+    }
+
+    private PreparedStatementCreator getPreparedStatementCreator(Car car) {
+        return connection -> {
             PreparedStatement ps = connection.prepareStatement(ADD_NEW_CAR, new String[]{"id"});
             ps.setString(1, car.getBrand());
             ps.setString(2, car.getModel());
@@ -69,8 +77,7 @@ public class CarDaoImpl implements CarDao {
             ps.setInt(6, car.getCostPerOneDay());
             ps.setString(7, car.getTransmission());
             return ps;
-        }, keyHolder);
-        return keyHolder.getKey().intValue();
+        };
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {

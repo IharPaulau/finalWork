@@ -97,7 +97,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int repairInvoice(int id){
         Order order = orderDao.getOrderById(id);
-        order.setOrderStatus(OrderStatus.RECOVERY);
+        order.setOrderStatus(OrderStatus.RECOVERY); // поменять смену статуса после установки счета за ремонт.
         return orderDao.changeOrderStatus(order);
     }
 

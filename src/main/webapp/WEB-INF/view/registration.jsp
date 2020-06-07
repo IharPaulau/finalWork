@@ -49,9 +49,9 @@
             <button class="button" type="submit"><spring:message code="registration.button"/></button>
         </div>
     </form:form>
-    <div id="footer">
-        <h2>Final Project For Java Web Development Course.</h2>
-    </div>
 </div>
 </body>
+<div id="footer">
+    <h2>Final Project For Java Web Development Course.</h2>
+</div>
 </html>

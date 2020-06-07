@@ -65,8 +65,7 @@
     </div>
 </div>
 </body>
-</html>
-
 <div id="footer">
     <h2>Final Project For Java Web Development Course.</h2>
 </div>
+</html>

@@ -65,7 +65,9 @@ public class OrderController {
     @GetMapping("/orders/viewOrders")
     public String viewAllOrders(Model model) {
         List<Order> list = orderService.getOrders();
+        long returnOrders = list.stream().filter(x -> OrderStatus.RETURN.equals(x.getOrderStatus())).count();
         model.addAttribute("list", list);
+        model.addAttribute("returnOrders", returnOrders);
         return "orders/viewOrders";
     }
 
@@ -90,16 +92,21 @@ public class OrderController {
     @GetMapping("/order/pay/{id}")
     public String payOrder(@PathVariable int id, Model model) {
         Order order = orderService.getOrderById(id);
-        orderService.setOrderStatusToPaid(order);
-        carService.setCarNoMoreAvailable(order.getCar());
         model.addAttribute("order", order);
+        if (OrderStatus.APPROVED.equals(order.getOrderStatus())) {
+            orderService.setOrderStatusToPaid(order);
+            carService.setCarNoMoreAvailable(order.getCar());
+            model.addAttribute("kindOfReceipt", "car.rent.receipt");
+        }
+        if (OrderStatus.RECOVERY.equals(order.getOrderStatus()))
+            model.addAttribute("kindOfReceipt", "car.repair.receipt");
         return "orders/receiptOfPayment";
     }
 
     @GetMapping("/orders/completeOrders")
     public String showCompletedOrders(Model model) {
         List<Order> allOrders = orderService.getOrders();
-        List<Order> returnOrders = allOrders.stream().filter(x -> x.getOrderStatus() == OrderStatus.RETURN).collect(Collectors.toList());
+        List<Order> returnOrders = allOrders.stream().filter(x -> OrderStatus.RETURN.equals(x.getOrderStatus())).collect(Collectors.toList());
         model.addAttribute("list", returnOrders);
         return "orders/completeOrders";
     }
