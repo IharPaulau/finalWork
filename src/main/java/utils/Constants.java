@@ -12,6 +12,12 @@ public final class Constants {
     public static final String USER_USERNAME_COLUMN_NAME = "username";
     public static final String USER_PASSWORD_COLUMN_NAME = "password";
     public static final String USER_EMAIL_COLUMN_NAME = "email";
-
+    public static final String CAR_FORM_PAGE = "cars/carForm";
+    public static final String VIEW_CARS_PAGE = "/cars/viewCars";
     public static final String ROLE_NAME_COLUMN_NAME = "name";
+
+    public static final String LOGIN_PAGE = "/login";
+    public static final String REGISTRATION_PAGE = "/registration";
+    public static final String WELCOME_PAGE = "/welcome";
+    public static final String REGISTRATION_FORM_MODEL_ATTRIBUTE = "registrationForm";
 }

@@ -1,4 +1,4 @@
-package beans;
+package enums;
 
 public enum OrderStatus {
 
@@ -20,7 +20,7 @@ public enum OrderStatus {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 }

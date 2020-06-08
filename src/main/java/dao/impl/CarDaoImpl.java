@@ -1,6 +1,6 @@
 package dao.impl;
 
-import beans.Car;
+import models.Car;
 import dao.CarDao;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

@@ -1,7 +1,7 @@
 package service.impl;
 
-import beans.Role;
-import beans.User;
+import models.Role;
+import models.User;
 import dao.UserDao;
 
 import java.util.HashSet;

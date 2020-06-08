@@ -1,6 +1,6 @@
 package mappers;
 
-import beans.Role;
+import models.Role;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

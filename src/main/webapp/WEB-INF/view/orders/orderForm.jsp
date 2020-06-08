@@ -18,7 +18,7 @@
                 <spring:message code="locale.ru"/>
             </a>
             <div>
-                <a href="/login">
+                <a href="/cars/viewCars">
                     <spring:message code="go.back"/>
                 </a>
             </div>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div id="content">
-    <div class="container">
+
         <h1>
             <spring:message code="fill.order"/>
         </h1>

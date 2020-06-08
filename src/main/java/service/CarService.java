@@ -1,6 +1,6 @@
 package service;
 
-import beans.Car;
+import models.Car;
 
 import java.util.List;
 

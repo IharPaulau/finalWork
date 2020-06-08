@@ -1,10 +1,10 @@
 package mappers;
 
 
-import beans.Car;
-import beans.Order;
-import beans.OrderStatus;
-import beans.User;
+import models.Car;
+import models.Order;
+import enums.OrderStatus;
+import models.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

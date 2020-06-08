@@ -45,21 +45,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><h4>
-                       <spring:message code="${kindOfReceipt}"/></h4>
+                    <td>
+                    <h4>
+                       <spring:message code="${kindOfReceipt}"/>
+                       </h4>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <c:if test="${kindOfReceipt == 'car.rent.receipt'}">
                         <h4>
-                        Your order car: ${order.car.brand} ${order.car.model}<br>
-                        For a period of: ${order.rentalPeriodInDays} days.
+                    <spring:message code="rent.messages" arguments="${order.car.brand}, ${order.car.model}, ${order.rentalPeriodInDays}"/>
                                 </h4>
                                 </c:if>
                          <c:if test="${kindOfReceipt != 'car.rent.receipt'}">
-
-
+                            <spring:message code="repair.messages" arguments="${order.compensationAmount}"/>
                             </c:if>
                     </td>
                    </tr>

@@ -1,7 +1,7 @@
 package extractors;
 
-import beans.Role;
-import beans.User;
+import models.Role;
+import models.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 

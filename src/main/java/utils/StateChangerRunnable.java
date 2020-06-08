@@ -4,7 +4,7 @@ package utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import service.OrderService;
 
-public class OrderCancellationRunnable implements Runnable {
+public class StateChangerRunnable implements Runnable {
 
     @Autowired
     private OrderService orderService;
@@ -13,6 +13,7 @@ public class OrderCancellationRunnable implements Runnable {
     public void run() {
         do {
             orderService.cancelExpiredOrders();
+            orderService.autoChangeOrderStatusToReturn();
             try {
                 Thread.sleep(20000); //20 sec
             } catch (InterruptedException e) {

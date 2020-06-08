@@ -1,11 +1,9 @@
 package dao.impl;
 
-import beans.Role;
+import models.Role;
 import dao.RoleDao;
 import mappers.RoleRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import java.util.List;
 
 public class RoleDaoImpl implements RoleDao {
 

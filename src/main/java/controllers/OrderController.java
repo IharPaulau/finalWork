@@ -1,7 +1,7 @@
 package controllers;
 
-import beans.Order;
-import beans.OrderStatus;
+import models.Order;
+import enums.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -98,8 +98,10 @@ public class OrderController {
             carService.setCarNoMoreAvailable(order.getCar());
             model.addAttribute("kindOfReceipt", "car.rent.receipt");
         }
-        if (OrderStatus.RECOVERY.equals(order.getOrderStatus()))
+        if (OrderStatus.RECOVERY.equals(order.getOrderStatus())) {
             model.addAttribute("kindOfReceipt", "car.repair.receipt");
+            orderService.complete(order.getId());
+        }
         return "orders/receiptOfPayment";
     }
 
@@ -126,9 +128,14 @@ public class OrderController {
     }
 
     @PostMapping("/repairInvoice/{id}")
-    public String invoiceForm(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) Order orderFromJsp) {
-        Order order = orderService.getOrderById(orderFromJsp.getId());
-        order.setCompensationAmount(orderFromJsp.getCompensationAmount());
+    public String invoiceForm(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) @Valid Order order,
+                              BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(ORDER_MODEL_ATTRIBUTE, order);
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "orders/repairInvoice";
+        }
         orderService.update(order);
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }

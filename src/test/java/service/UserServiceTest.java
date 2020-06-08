@@ -1,7 +1,7 @@
 package service;
 
-import beans.Role;
-import beans.User;
+import models.Role;
+import models.User;
 import forms.RegistrationForm;
 
 import java.util.Set;

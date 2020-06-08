@@ -28,11 +28,6 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!--    <bean id="localeChangeInterceptor"-->
-    <!--          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
-    <!--        <property name="paramName" value="lang"/>-->
-    <!--    </bean>-->
-
     <bean id="localeResolver"
           class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
         <property name="defaultLocale" value="en"/>
@@ -50,7 +45,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!-- DAO beans -->
+    <!-- DAO models -->
     <bean id="carDao" class="dao.impl.CarDaoImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
@@ -64,7 +59,7 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
-    <!-- Service beans -->
+    <!-- Service models -->
     <bean id="carService" class="service.impl.CarServiceImpl">
         <property name="carDao" ref="carDao"/>
     </bean>
@@ -91,7 +86,7 @@
         <property name="userService" ref="userService"/>
     </bean>
     <!-- Utils -->
-    <bean id="orderCancellationRunnable" class="utils.OrderCancellationRunnable">
+    <bean id="orderCancellationRunnable" class="utils.StateChangerRunnable">
 
     </bean>
 </beans>

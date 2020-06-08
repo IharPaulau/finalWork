@@ -1,6 +1,6 @@
 package dao.impl;
 
-import beans.User;
+import models.User;
 import dao.UserDao;
 import extractors.UserResultSetExtractor;
 import mappers.UserRowMapper;

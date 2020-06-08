@@ -1,5 +1,7 @@
-package beans;
+package models;
 
+
+import enums.OrderStatus;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -28,6 +30,8 @@ public class Order {
     private Date rentalStartTime;
     private Date rentalEndTime;
     private OrderStatus orderStatus;
+    @NotNull(message = "{compensation.amount.validation}")
+    @Min(value =1, message = "{compensation.amount.validation}")
     private Integer compensationAmount;
 
     public int getId() {

@@ -60,29 +60,7 @@
                 <td>${order.car.brand} ${order.car.model}</td>
                 <td>${order.rentalPeriodInDays}</td>
                 <td>
-                    <c:choose>
-                        <c:when test="${order.orderStatus == 'APPROVED'}">
-                            <spring:message code="order.approved"/>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'REJECTED'}">
-                            <spring:message code="order.rejected"/>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'NOT_VERIFIED'}">
-                            <spring:message code="order.not.verified"/>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'IN_RENT'}">
-                            <spring:message code="order.in.rent"/>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'RETURN'}">
-                            <spring:message code="order.return"/>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'RECOVERY'}">
-                            <spring:message code="order.recovery"/>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'COMPLETED'}">
-                            <spring:message code="order.completed"/>
-                        </c:when>
-                    </c:choose>
+                    <spring:message code="order.status.${order.orderStatus.name.toLowerCase()}"/>
                 </td>
                 <td>
                     <c:choose>

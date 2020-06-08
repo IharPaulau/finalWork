@@ -1,16 +1,16 @@
 package service.impl;
 
-import beans.Car;
-import beans.Order;
-import beans.OrderStatus;
-import beans.User;
+import models.Car;
+import models.Order;
+import enums.OrderStatus;
+import models.User;
 import dao.OrderDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import service.CarService;
 import service.OrderService;
 import service.UserService;
-import utils.OrderCancellationRunnable;
+import utils.StateChangerRunnable;
 
 import javax.annotation.PostConstruct;
 import java.util.Calendar;
@@ -41,8 +41,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int update(Order order){
-        return orderDao.update(order);
+    public int update(Order order) {
+        return orderDao.updateCompensationAmount(order);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int complete(int id){
+    public int complete(int id) {
         Order order = orderDao.getOrderById(id);
         order.setOrderStatus(OrderStatus.COMPLETED);
         carService.setCarAvailable(order.getCar());
@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int repairInvoice(int id){
+    public int repairInvoice(int id) {
         Order order = orderDao.getOrderById(id);
         order.setOrderStatus(OrderStatus.RECOVERY); // поменять смену статуса после установки счета за ремонт.
         return orderDao.changeOrderStatus(order);
@@ -128,7 +128,6 @@ public class OrderServiceImpl implements OrderService {
     public void cancelExpiredOrders() {
         List<Order> orders = getOrders();
         for (Order order : orders) {
-            autoReturnCars(order);
             Calendar presentTime = Calendar.getInstance();
             if (order.getOrderStatus() == OrderStatus.APPROVED)
                 if (order.getPayTillDate().before(presentTime.getTime())) {
@@ -138,20 +137,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void autoReturnCars(Order order) {
-        if (order.getOrderStatus() == OrderStatus.IN_RENT) {
-            Calendar presentTime = Calendar.getInstance();
-            if (order.getRentalEndTime().before(presentTime.getTime())) {
-                order.setOrderStatus(OrderStatus.RETURN);
-                orderDao.changeOrderStatus(order);
+    public void autoChangeOrderStatusToReturn() {
+        List<Order> orders = getOrders();
+        for (Order order : orders) {
+            if (order.getOrderStatus() == OrderStatus.IN_RENT) {
+                Calendar presentTime = Calendar.getInstance();
+                if (order.getRentalEndTime().before(presentTime.getTime())) {
+                    order.setOrderStatus(OrderStatus.RETURN);
+                    orderDao.changeOrderStatus(order);
 
+                }
             }
         }
     }
 
     @PostConstruct
     private void runCancellationOrdersThread() {
-        Runnable runnable = new OrderCancellationRunnable();
+        Runnable runnable = new StateChangerRunnable();
         applicationContext.getAutowireCapableBeanFactory().autowireBean(runnable);
         Thread orderCancellationThread = new Thread(runnable, "OrderCancellationThread");
         orderCancellationThread.start();

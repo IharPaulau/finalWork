@@ -1,6 +1,6 @@
 package dao;
 
-import beans.User;
+import models.User;
 
 /**
  * Data Access Object interface to provide operations with {@link User} objects.

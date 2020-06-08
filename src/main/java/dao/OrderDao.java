@@ -1,8 +1,7 @@
 package dao;
 
 
-import beans.Car;
-import beans.Order;
+import models.Order;
 
 
 import java.util.List;
@@ -11,7 +10,7 @@ public interface OrderDao {
 
     int save(Order order);
 
-    int update(Order order);
+    int updateCompensationAmount(Order order);
 
     int delete(int id);
 

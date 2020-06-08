@@ -1,6 +1,6 @@
 package mappers;
 
-import beans.User;
+import models.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

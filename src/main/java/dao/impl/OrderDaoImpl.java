@@ -1,7 +1,7 @@
 package dao.impl;
 
 
-import beans.Order;
+import models.Order;
 import dao.OrderDao;
 import mappers.OrderRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,7 +11,7 @@ import java.util.List;
 public class OrderDaoImpl implements OrderDao {
     private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, payTillDate, orderStatus, compensationAmount) " +
             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String UPDATE_ORDER = "UPDATE orders SET compensationAmount=? WHERE id=?";
+    private static final String UPDATE_COMPENSATION_AMOUNT = "UPDATE orders SET compensationAmount=? WHERE id=?";
     private static final String CHANGE_ORDER_STATUS = "UPDATE orders SET orderStatus=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
     private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders AS o JOIN cars AS c ON o.carId = c.id JOIN users AS u ON o.userId = u.id WHERE o.id=?";
@@ -29,8 +29,8 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public int update(Order order) {
-        return jdbcTemplate.update(UPDATE_ORDER, order.getCompensationAmount(), order.getId());
+    public int updateCompensationAmount(Order order) {
+        return jdbcTemplate.update(UPDATE_COMPENSATION_AMOUNT, order.getCompensationAmount(), order.getId());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package controllers;
 
-import beans.User;
+import models.User;
 import forms.RegistrationForm;
 import service.LoginService;
 import service.UserService;
@@ -19,15 +19,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import static utils.Constants.LOGIN_PAGE;
 import static utils.Constants.REDIRECT_PREFIX;
+import static utils.Constants.REGISTRATION_FORM_MODEL_ATTRIBUTE;
+import static utils.Constants.REGISTRATION_PAGE;
+import static utils.Constants.WELCOME_PAGE;
 
 @Controller
 public class LoginController {
 
-    private static final String LOGIN_PAGE = "/login";
-    private static final String REGISTRATION_PAGE = "/registration";
-    private static final String WELCOME_PAGE = "/welcome";
-    private static final String REGISTRATION_FORM_MODEL_ATTRIBUTE = "registrationForm";
+
 
     @Autowired
     private UserService userService;
@@ -38,13 +39,13 @@ public class LoginController {
     @Autowired
     private RegistrationFormValidator registrationFormValidator;
 
-    @GetMapping("/registration")
+    @GetMapping(REGISTRATION_PAGE)
     public String openRegistrationPage(Model model) {
         model.addAttribute(REGISTRATION_FORM_MODEL_ATTRIBUTE, new RegistrationForm());
         return REGISTRATION_PAGE;
     }
 
-    @PostMapping("/registration")
+    @PostMapping(REGISTRATION_PAGE)
     public String registerUser(@ModelAttribute(REGISTRATION_FORM_MODEL_ATTRIBUTE) @Valid RegistrationForm registrationForm,
                                BindingResult bindingResult, Model model) {
 
@@ -62,7 +63,7 @@ public class LoginController {
         return REDIRECT_PREFIX + WELCOME_PAGE;
     }
 
-    @GetMapping(value = {"/", "/login"})
+    @GetMapping(value = {"/", LOGIN_PAGE})
     public String openLoginPage(Model model, String error, String logout, Locale locale) {
         if (error != null) {
             model.addAttribute("error", messageSource.getMessage("invalid.credentials", null, locale));

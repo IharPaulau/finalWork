@@ -1,9 +1,7 @@
 package dao;
 
 
-import beans.Role;
-
-import java.util.List;
+import models.Role;
 
 /**
  * Data Access Object interface to provide operations with {@link Role} objects.

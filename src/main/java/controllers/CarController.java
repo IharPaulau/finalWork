@@ -1,8 +1,8 @@
 package controllers;
 
-import beans.Car;
-import beans.Order;
-import beans.OrderStatus;
+import models.Car;
+import models.Order;
+import enums.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +14,12 @@ import service.OrderService;
 import javax.validation.Valid;
 import java.util.List;
 
+import static utils.Constants.CAR_FORM_PAGE;
 import static utils.Constants.CAR_MODEL_ATTRIBUTE;
 import static utils.Constants.FORM_ACTION_MODEL_ATTRIBUTE;
 import static utils.Constants.PAGE_LABEL_MODEL_ATTRIBUTE;
 import static utils.Constants.REDIRECT_PREFIX;
+import static utils.Constants.VIEW_CARS_PAGE;
 
 @Controller
 public class CarController {
@@ -37,8 +39,7 @@ public class CarController {
     }
 
     @PostMapping("/car/carForm")
-    public String save(@ModelAttribute(CAR_MODEL_ATTRIBUTE) @Valid Car car,
-                       BindingResult bindingResult, Model model) {
+    public String save(@Valid Car car, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
             model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "add.new.car.form");
@@ -47,11 +48,11 @@ public class CarController {
             return "cars/carForm";
         }
         carService.save(car);
-        return REDIRECT_PREFIX + "/cars/viewCars";
+        return REDIRECT_PREFIX + VIEW_CARS_PAGE;
     }
 
 
-    @GetMapping("/cars/viewCars")
+    @GetMapping(VIEW_CARS_PAGE)
     public String viewCar(Model model) {
         List<Car> list = carService.getCars();
         List<Order> listOrders = orderService.getOrders();
@@ -71,7 +72,7 @@ public class CarController {
         model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
         model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "edit.car.form");
         model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/editCar/" + car.getId());
-        return "cars/carForm";
+        return CAR_FORM_PAGE;
     }
 
     @PostMapping("/cars/editCar/{id}")
@@ -81,10 +82,10 @@ public class CarController {
             model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "edit.car.form");
             model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/editCar/" + car.getId());
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return "cars/carForm";
+            return CAR_FORM_PAGE;
         }
         carService.update(car);
-        return REDIRECT_PREFIX + "/cars/viewCars";
+        return REDIRECT_PREFIX + VIEW_CARS_PAGE;
     }
 
     @GetMapping("/cars/carDetails/{id}")
@@ -97,6 +98,6 @@ public class CarController {
     @GetMapping("/cars/deleteCar/{id}")
     public String delete(@PathVariable int id) {
         carService.delete(id);
-        return REDIRECT_PREFIX + "/cars/viewCars";
+        return REDIRECT_PREFIX + VIEW_CARS_PAGE;
     }
 }

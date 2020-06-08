@@ -1,14 +1,10 @@
 package service.impl;
 
-import beans.Car;
+import models.Car;
 import service.CarService;
-
 import java.util.List;
 import org.apache.log4j.Logger;
-
 import org.springframework.dao.EmptyResultDataAccessException;
-
-
 import dao.CarDao;
 
 
@@ -29,7 +25,7 @@ public class CarServiceImpl implements CarService {
         try {
             return carDao.getCarById(id);
         } catch (EmptyResultDataAccessException ex) {
-            LOGGER.info(String.format("Could not find car with id %s", id));
+            LOGGER.warn(String.format("Could not find car with id %s", id));
             return null;
         }
     }

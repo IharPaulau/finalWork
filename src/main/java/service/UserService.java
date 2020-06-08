@@ -1,6 +1,6 @@
 package service;
 
-import beans.User;
+import models.User;
 import forms.RegistrationForm;
 
 /**
