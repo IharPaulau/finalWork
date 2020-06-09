@@ -24,7 +24,7 @@ import static utils.Constants.ROLE_USER_NAME;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@ContextConfiguration("file:src/main/webapp/WEB-INF/application-context.xml")
+@ContextConfiguration("file:src/main/webapp/WEB-INF/test_application-context.xml")
 public class UserServiceTest {
 
     private static final String TEST_USERNAME = "TestUsername";

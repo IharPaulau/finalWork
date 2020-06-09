@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
     <head>
@@ -24,7 +25,9 @@
                     <label> <spring:message code="password.label"/></label>
                     <spring:message code="password.placeholder" var="passwordPlaceholder"/>
                     <input name="password" type="password" placeholder="${passwordPlaceholder}"/>
-                    <span class="error-message">${error}</span>
+                    <c:if test="${error}">
+                    <span class="error-message"><spring:message code="invalid.credentials"/></span>
+                    </c:if>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <button class="button" type="submit"><spring:message code="login.button"/></button>

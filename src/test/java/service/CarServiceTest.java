@@ -20,26 +20,16 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@ContextConfiguration("file:src/main/webapp/WEB-INF/application-context.xml")
-public class CarServiceTest {
+@ContextConfiguration("file:src/main/webapp/WEB-INF/test_application-context.xml")
+public class CarServiceTest extends AbstractServiceTest {
 
-    private static final String TEST_CAR_BRAND = "Test Porsche";
     private static final String TEST_CAR_BRAND_2 = "Test Porsche 2";
-    private static final String TEST_CAR_MODEL = "911";
-    private static final String TEST_CAR_TYPE_BODY = "Coupe";
-    private static final String TEST_CAR_TYPE_ENGINE = "Gasoline";
-    private static final String TEST_CAR_BODY_COLOR = "Black";
-    private static final String TEST_CAR_TRANSMISSION = "Automate";
-    private static final Integer TEST_CAR_COST = 300;
 
     private int testCarId;
 
-    @Autowired
-    private CarService carService;
-
     @Before
     public void init() {
-        testCarId = carService.save(createTestCar(TEST_CAR_BRAND));
+        testCarId = saveTestCar();
     }
 
     @Test
@@ -47,8 +37,8 @@ public class CarServiceTest {
         Car notExistingCar = carService.getCarById(testCarId + 1);
         assertNull(notExistingCar);
         Car carToSave = createTestCar(TEST_CAR_BRAND_2);
-        carService.save(carToSave);
-        Car savedCar = carService.getCarById(testCarId + 1);
+        int carId = carService.save(carToSave);
+        Car savedCar = carService.getCarById(carId);
         assertNotNull(savedCar);
         assertEquals(TEST_CAR_BRAND_2, savedCar.getBrand());
     }
@@ -104,18 +94,6 @@ public class CarServiceTest {
 
         car = carService.getCarById(testCarId);
         assertTrue(car.isAvailable());
-    }
-
-    private Car createTestCar(final String carBrand) {
-        Car testCar = new Car();
-        testCar.setBrand(carBrand);
-        testCar.setModel(TEST_CAR_MODEL);
-        testCar.setTypeBody(TEST_CAR_TYPE_BODY);
-        testCar.setTypeEngine(TEST_CAR_TYPE_ENGINE);
-        testCar.setBodyColor(TEST_CAR_BODY_COLOR);
-        testCar.setCostPerOneDay(TEST_CAR_COST);
-        testCar.setTransmission(TEST_CAR_TRANSMISSION);
-        return testCar;
     }
 }
 

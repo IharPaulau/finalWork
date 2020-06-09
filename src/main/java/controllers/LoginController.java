@@ -66,7 +66,7 @@ public class LoginController {
     @GetMapping(value = {"/", LOGIN_PAGE})
     public String openLoginPage(Model model, String error, String logout, Locale locale) {
         if (error != null) {
-            model.addAttribute("error", messageSource.getMessage("invalid.credentials", null, locale));
+            model.addAttribute("error", true);
         }
         if (logout != null) {
             model.addAttribute("message", messageSource.getMessage("success.logout", null, locale));

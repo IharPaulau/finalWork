@@ -40,19 +40,16 @@
         <h1>
             <spring:message code="fill.invoice"/>
         </h1>
-        <form:form method="post" action="/repairInvoice/${id}" modelAttribute="order" class="form">
-        <form:hidden path="passportSeries" value="${order.passportSeries}"/>
-        <form:hidden path="passportNumber" value="${order.passportNumber}"/>
-        <form:hidden path="passportId" value="${order.passportId}"/>
-    <form:hidden path="rentalPeriodInDays" value="${order.rentalPeriodInDays}"/>
-
-            <div class="form-attribute">
+        <form:form method="post" action="/repairInvoice/${order.id}" modelAttribute="order" class="form">
+                    <div class="form-attribute">
                 <label>
                     <spring:message code="payment.amount"/>
                 </label>
                 <spring:message code="payment.amount.placeholder" var="paymentAmount"/>
                 <form:input type="text" path="compensationAmount" placeholder="${paymentAmount}"/>
-                <form:errors path="compensationAmount" class="error-message"/>
+                        <div class="error-message">
+                                        ${compensationError}
+                        </div>
             </div>
             <div>
                  <button class="button" type="submit">

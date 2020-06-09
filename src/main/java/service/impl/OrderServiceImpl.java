@@ -11,15 +11,19 @@ import service.CarService;
 import service.OrderService;
 import service.UserService;
 import utils.StateChangerRunnable;
+import org.apache.log4j.Logger;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import javax.annotation.PostConstruct;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Collections;
 
 import static utils.DateConverter.dateToString;
 
 public class OrderServiceImpl implements OrderService {
+    private static final Logger LOGGER = Logger.getLogger(OrderServiceImpl.class);
 
     private OrderDao orderDao;
     private UserService userService;
@@ -30,8 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int save(Order order) {
-        String usernameFromJSP = order.getUser().getUsername();
-        User user = userService.getUserByName(usernameFromJSP);
+        User user = userService.getUserByName(order.getUser().getUsername());
         order.setUser(user);
         int carId = order.getCar().getId();
         Car car = carService.getCarById(carId);
@@ -52,20 +55,36 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderById(int id) {
-        return orderDao.getOrderById(id);
+        try {
+            return orderDao.getOrderById(id);
+        } catch (EmptyResultDataAccessException ex) {
+            LOGGER.warn(String.format("Could not find order with id %s", id));
+            return null;
+        }
+
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         Order order = getOrderById(id);
-        carService.setCarAvailable(order.getCar());
-        return orderDao.delete(id);
+        if (order != null) {
+            carService.setCarAvailable(order.getCar());
+            orderDao.delete(id);
+        } else {
+            LOGGER.warn(String.format("Could not delete order with id %s. Order was not found", id));
+        }
     }
 
     @Override
-    public List<Order> getOwnOrders(String name) {
-        int id = userService.getUserByName(name).getId();
-        return orderDao.getOwnOrders(id);
+    public List<Order> getOwnOrders(String userName) {
+        User user = userService.getUserByName(userName);
+        if (user != null) {
+            int id = userService.getUserByName(userName).getId();
+            return orderDao.getOwnOrders(id);
+        } else {
+            LOGGER.warn(String.format("Could not find orders for user with name %s. User was not found", userName));
+            return Collections.emptyList();
+        }
     }
 
     @Override

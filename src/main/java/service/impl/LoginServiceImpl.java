@@ -16,7 +16,7 @@ public class LoginServiceImpl implements LoginService {
     private UserDetailsService userDetailsService;
 
     @Override
-    public void autoLogin(final String username, final String password) {
+    public void autoLogin(String username, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());

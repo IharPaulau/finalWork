@@ -32,18 +32,14 @@ public class CarController {
 
     @GetMapping("/cars/carForm")
     public String showForm(Model model) {
-        model.addAttribute(CAR_MODEL_ATTRIBUTE, new Car());
-        model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "add.new.car.form");
-        model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/carForm");
+        fillCarFormModel(model, new Car());
         return "cars/carForm";
     }
 
     @PostMapping("/car/carForm")
     public String save(@Valid Car car, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
-            model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "add.new.car.form");
-            model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/carForm");
+            fillCarFormModel(model, car);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "cars/carForm";
         }
@@ -51,19 +47,26 @@ public class CarController {
         return REDIRECT_PREFIX + VIEW_CARS_PAGE;
     }
 
+    private void fillCarFormModel(Model model, Car car) {
+        model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
+        model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "add.new.car.form");
+        model.addAttribute(FORM_ACTION_MODEL_ATTRIBUTE, "/cars/carForm");
+    }
+
 
     @GetMapping(VIEW_CARS_PAGE)
     public String viewCar(Model model) {
         List<Car> list = carService.getCars();
         List<Order> listOrders = orderService.getOrders();
-        long uncheckedOrders = listOrders.stream().filter(x -> OrderStatus.NOT_VERIFIED.equals(x.getOrderStatus())).count();
-        long returnOrders = listOrders.stream().filter(x -> OrderStatus.RETURN.equals(x.getOrderStatus())).count();
-        long approvedOrders = listOrders.stream().filter(x -> OrderStatus.APPROVED.equals(x.getOrderStatus())).count();
         model.addAttribute("list", list);
-        model.addAttribute("uncheckedOrders", uncheckedOrders);
-        model.addAttribute("returnOrders", returnOrders);
-        model.addAttribute("approvedOrders", approvedOrders);
+        model.addAttribute("uncheckedOrders", getOrdersCountByStatus(listOrders, OrderStatus.NOT_VERIFIED));
+        model.addAttribute("returnOrders", getOrdersCountByStatus(listOrders, OrderStatus.RETURN));
+        model.addAttribute("approvedOrders", getOrdersCountByStatus(listOrders, OrderStatus.APPROVED));
         return "cars/viewCars";
+    }
+
+    private long getOrdersCountByStatus(List<Order> listOrders, OrderStatus orderStatus) {
+        return listOrders.stream().filter(x -> orderStatus.equals(x.getOrderStatus())).count();
     }
 
     @GetMapping("/cars/editCar/{id}")

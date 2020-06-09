@@ -6,6 +6,11 @@ import java.util.List;
 
 public interface CarService {
 
+    /**
+     * Saved provided car
+     * @param car
+     * @return carId
+     */
     int save(Car car);
 
     List<Car> getCars();

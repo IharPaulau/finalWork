@@ -31,21 +31,21 @@ public class OrderController {
     private OrderService orderService;
 
 
-    @GetMapping("/orderForm/{id}")
-    public String showForm(@PathVariable int id, Model model) {
+    @GetMapping("/orderForm/{carId}")
+    public String showForm(@PathVariable int carId, Model model) {
         model.addAttribute(ORDER_MODEL_ATTRIBUTE, new Order());
-        model.addAttribute("carId", id);
+        model.addAttribute("carId", carId);
         return "orders/orderForm";
     }
 
-    @PostMapping("/orderForm/{id}")
+    @PostMapping("/orderForm/{carId}")
     public String save(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) @Valid Order order,
-                       BindingResult bindingResult, Model model, @PathVariable int id) {
+                       BindingResult bindingResult, Model model, @PathVariable int carId) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute(ORDER_MODEL_ATTRIBUTE, order);
             model.addAttribute("errors", bindingResult.getAllErrors());
-            model.addAttribute("carId", id);
+            model.addAttribute("carId", carId);
             return "orders/orderForm";
         }
 
@@ -128,12 +128,12 @@ public class OrderController {
     }
 
     @PostMapping("/repairInvoice/{id}")
-    public String invoiceForm(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) @Valid Order order,
-                              BindingResult bindingResult, Model model) {
+    public String invoiceForm(Order order, Model model) {
 
-        if (bindingResult.hasErrors()) {
+        if (order.getCompensationAmount()==0) {
             model.addAttribute(ORDER_MODEL_ATTRIBUTE, order);
-            model.addAttribute("errors", bindingResult.getAllErrors());
+            model.addAttribute("compensationError", "notNul");
+
             return "orders/repairInvoice";
         }
         orderService.update(order);

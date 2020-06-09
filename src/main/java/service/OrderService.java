@@ -1,8 +1,6 @@
 package service;
 
-
 import models.Order;
-
 
 import java.util.List;
 
@@ -10,11 +8,11 @@ public interface OrderService {
 
     int save(Order order);
 
-    Order getOrderById(int id);
+    Order getOrderById(int orderId);
 
-    int delete(int id);
+    void delete(int orderId);
 
-    List<Order> getOwnOrders(String user);
+    List<Order> getOwnOrders(String username);
 
     List<Order> getOrders();
 

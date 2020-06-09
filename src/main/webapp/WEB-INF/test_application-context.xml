@@ -9,11 +9,8 @@
 
     <import resource="application-beans.xml"/>
     <import resource="application-security.xml"/>
-    <import resource="application-mvc-config.xml"/>
 
-    <context:component-scan base-package="controllers"/>
-
-    <context:property-placeholder ignore-unresolvable="true" location="classpath:database.properties"/>
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:test_database.properties"/>
 
 
 </beans>

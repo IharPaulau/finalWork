@@ -5,12 +5,17 @@ import models.Order;
 import dao.OrderDao;
 import mappers.OrderRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
-    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, payTillDate, orderStatus, compensationAmount) " +
-            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, " +
+            "orderStatus) VALUES(?, ?, ?, ?, ?, ?, ?)";
+
     private static final String UPDATE_COMPENSATION_AMOUNT = "UPDATE orders SET compensationAmount=? WHERE id=?";
     private static final String CHANGE_ORDER_STATUS = "UPDATE orders SET orderStatus=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
@@ -24,8 +29,27 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public int save(Order order) {
-        return jdbcTemplate.update(ADD_NEW_ORDER, order.getUser().getId(), order.getCar().getId(), order.getPassportSeries(), order.getPassportNumber(),
-                order.getPassportId(), order.getRentalPeriodInDays(), order.getPayTillDate(), order.getOrderStatus().getName(), order.getCompensationAmount());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        return preparedStatement(order, keyHolder);
+    }
+
+    private int preparedStatement(Order order, KeyHolder keyHolder) {
+        jdbcTemplate.update(getPreparedStatementCreator(order), keyHolder);
+        return keyHolder.getKey().intValue();
+    }
+
+    private PreparedStatementCreator getPreparedStatementCreator(Order order) {
+        return connection -> {
+            PreparedStatement ps = connection.prepareStatement(ADD_NEW_ORDER, new String[]{"id"});
+            ps.setInt(1, order.getUser().getId());
+            ps.setInt(2, order.getCar().getId());
+            ps.setString(3, order.getPassportSeries());
+            ps.setInt(4, order.getPassportNumber());
+            ps.setString(5, order.getPassportId());
+            ps.setInt(6, order.getRentalPeriodInDays());
+            ps.setString(7, order.getOrderStatus().getName());
+            return ps;
+        };
     }
 
     @Override

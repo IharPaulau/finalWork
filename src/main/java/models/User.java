@@ -41,7 +41,7 @@ public class User {
         this.roles = roles;
     }
 
-    public void setEmail(final String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

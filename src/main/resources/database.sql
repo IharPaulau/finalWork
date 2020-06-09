@@ -41,18 +41,18 @@ CREATE TABLE cars (
 
 -- Table of orders
 CREATE TABLE orders (
-    id                INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    userId            INT NULL,
-    carId             INT NULL,
-    passportSeries    VARCHAR(45) NULL,
-    passportNumber    VARCHAR(45) NULL,
-    passportId        VARCHAR(45) NULL,
-    orderStatus    	ENUM('REJECTED', 'APPROVED', 'NOT_VERIFIED', 'IN_RENT', 'RETURN', 'RECOVERY', 'COMPLETED') 	NULL,
-    payTillDate       VARCHAR(45) NULL,
-    rentalEndTime     VARCHAR(45) NULL,
-    rentalStartTime   VARCHAR(45) NULL,
-    rentalPeriodInDays INT NULL,
-    compensationAmount INT NULL
+    id                  INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userId              INT NULL,
+    carId               INT NULL,
+    passportSeries      VARCHAR(45) NULL,
+    passportNumber      VARCHAR(45) NULL,
+    passportId          VARCHAR(45) NULL,
+    orderStatus    	    ENUM('REJECTED', 'APPROVED', 'NOT_VERIFIED', 'IN_RENT', 'RETURN', 'RECOVERY', 'COMPLETED')  NULL,
+    payTillDate         VARCHAR(45) NULL,
+    rentalEndTime       VARCHAR(45) NULL,
+    rentalStartTime     VARCHAR(45) NULL,
+    rentalPeriodInDays  INT NULL,
+    compensationAmount  INT NULL
  ) ENGINE = InnoDB;
 
 INSERT INTO users VALUES (1, 'admin', '$2a$11$qpS3KqDvy9Xd1mq1xC/8jeycG1JCs2nmy7LWdefve/iAYXMsam9Ua', 'admin@gmail.com');
@@ -65,12 +65,12 @@ INSERT INTO users_to_roles VALUES (1, 1);
 INSERT INTO users_to_roles VALUES (2, 1);
 
 INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (1, 'Porsche', '911', 'coupe', 'gasoline', 'black', 300, 'automate', true);
-INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (2, 'Lada', 'XRAY Cross', 'sedan', 'gasoline', 'White', '75', 'manual', true);
-INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (3, 'Mercedes', 'G 500', 'station wagon', 'gasoline', 'black', '150', 'manual', true);
-INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (4, 'BMW', '520d AT', 'sedan', 'diesel', 'black', '150', 'automate', true);
-INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (5, 'FORD', 'TAURUS ', 'sedan', 'gasoline', 'brown', '100', 'automate', true);
-INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (6, 'KIA', 'Cerato', 'sedan', 'gasoline', 'red', '100', 'automate', true);
-INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (7, 'BMW', 'M550i xDrive AT', 'sedan', 'gasoline', 'black', '170', 'manual', true);
-INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (8, 'Mercedes', 'AMG', 'coupe', 'gasoline', 'White', '300', 'automate', true);
-INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (9, 'Tesla Motors', 'Model X', 'sedan', 'electric car', 'White', '100', 'manual', true);
+INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (2, 'Lada', 'XRAY Cross', 'sedan', 'gasoline', 'White', 75, 'manual', true);
+INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (3, 'Mercedes', 'G 500', 'station wagon', 'gasoline', 'lack', 150, 'manual', true);
+INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (4, 'BMW', '520d AT', 'sedan', 'diesel', 'black', 150, 'automate', true);
+INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (5, 'FORD', 'TAURUS ', 'sedan', 'gasoline', 'brown', 100, 'automate', true);
+INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (6, 'KIA', 'Cerato', 'sedan', 'gasoline', 'red', 100, 'automate', true);
+INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (7, 'BMW', 'M550i xDrive AT', 'sedan', 'gasoline', 'black', 170, 'manual', true);
+INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (8, 'Mercedes', 'AMG', 'coupe', 'gasoline', 'White', 300, 'automate', true);
+INSERT INTO cars (id, brand, model, typeBody, typeEngine, bodyColor, costPerOneDay, transmission, available) VALUES (9, 'Tesla Motors', 'Model X', 'sedan', 'electric car', 'White', 100, 'manual', true);
 
