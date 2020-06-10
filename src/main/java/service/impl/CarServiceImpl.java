@@ -14,10 +14,11 @@ public class CarServiceImpl implements CarService {
     private CarDao carDao;
 
     public int save(Car car) {
+
         return carDao.save(car);
     }
 
-    public List<Car> getCars() {
+    public List<Car> getCars()  {
         return carDao.getCars();
     }
 

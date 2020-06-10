@@ -1,5 +1,6 @@
 package service;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import enums.OrderStatus;
 import models.Car;
 import models.Order;
@@ -30,6 +31,7 @@ public class OrderServiceTest extends AbstractServiceTest {
     private static final String TEST_PASSPORT_ID = "testPassportId";
     private static final Integer TEST_PASSPORT_NUMBER = 1000000;
     private static final Integer TEST_RENTAL_PERIOD_IN_DAYS = 3;
+    private static final Integer TEST_COMPENSATION_AMOUNT = 100;
 
     private int testOrderId;
     private int testCarId;
@@ -115,6 +117,84 @@ public class OrderServiceTest extends AbstractServiceTest {
         List<Order> orders = orderService.getOrders();
         assertEquals(2, orders.size());
     }
+
+    @Test
+    public void test_rejectOrder() {
+        orderService.rejectOrder(testOrderId);
+        Order order = orderService.getOrderById(testOrderId);
+        assertEquals(OrderStatus.REJECTED, order.getOrderStatus());
+        Car car = carService.getCarById(order.getCar().getId());
+        assertTrue(car.isAvailable());
+    }
+
+    @Test
+    public void test_approveOrder() {
+        orderService.approveOrder(testOrderId);
+        Order order = orderService.getOrderById(testOrderId);
+        assertEquals(OrderStatus.APPROVED, order.getOrderStatus());
+        assertNotNull(order.getPayTillDate());
+        Car car = carService.getCarById(order.getCar().getId());
+        assertFalse(car.isAvailable());
+    }
+
+    @Test
+    public void test_setOrderStatusToPaid() {
+        Order order = orderService.getOrderById(testOrderId);
+        assertNull(order.getRentalStartTime());
+        assertNull(order.getRentalEndTime());
+        assertEquals(OrderStatus.NOT_VERIFIED, order.getOrderStatus());
+        orderService.setOrderStatusToPaid(order);
+        Order updatedOrder = orderService.getOrderById(testOrderId);
+        assertNotNull(updatedOrder.getRentalStartTime());
+        assertNotNull(updatedOrder.getRentalEndTime());
+        assertEquals(OrderStatus.IN_RENT, updatedOrder.getOrderStatus());
+    }
+
+//    @Test
+//    public void test_cancelExpiredOrders() {
+//        orderService.approveOrder(testOrderId);
+//        orderService.cancelExpiredOrders();
+//        Order order = orderService.getOrderById(testOrderId);
+//        assertEquals(OrderStatus.REJECTED, order.getOrderStatus());
+//        assertNotNull(order.getPayTillDate());
+//        Car car = carService.getCarById(order.getCar().getId());
+//        assertTrue(car.isAvailable());
+//    }
+
+//    @Test
+//    public void test_autoChangeOrderStatusToReturn() {
+//        Order order = orderService.getOrderById(testOrderId);
+//        orderService.setOrderStatusToPaid(order);
+//        orderService.autoChangeOrderStatusToReturn();
+//        Order updatedOrder = orderService.getOrderById(testOrderId);
+//        assertEquals(OrderStatus.RETURN, updatedOrder.getOrderStatus());
+//    }
+
+    @Test
+    public void test_repairInvoice() {
+        orderService.repairInvoice(testOrderId);
+        Order order = orderService.getOrderById(testOrderId);
+        assertEquals(OrderStatus.RECOVERY, order.getOrderStatus());
+    }
+
+    @Test
+    public void test_completeOrder() {
+        orderService.completeOrder(testOrderId);
+        Order order = orderService.getOrderById(testOrderId);
+        assertEquals(OrderStatus.COMPLETED, order.getOrderStatus());
+        Car car = carService.getCarById(order.getCar().getId());
+        assertTrue(car.isAvailable());
+    }
+
+    @Test
+    public void test_updateCompensationAmount() {
+        Order order = orderService.getOrderById(testOrderId);
+        order.setCompensationAmount(TEST_COMPENSATION_AMOUNT);
+        orderService.updateCompensationAmount(order);
+        Order updatedOrder = orderService.getOrderById(testOrderId);
+        assertEquals(TEST_COMPENSATION_AMOUNT, updatedOrder.getCompensationAmount());
+    }
+
 
     private Order createTestOrder(User user) {
         Order order = new Order();

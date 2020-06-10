@@ -44,8 +44,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int update(Order order) {
-        return orderDao.updateCompensationAmount(order);
+    public void updateCompensationAmount(Order order) {
+         orderDao.updateCompensationAmount(order);
     }
 
     @Override
@@ -88,36 +88,36 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public int reject(int id) {
-        Order order = orderDao.getOrderById(id);
+    public void rejectOrder(int orderId) {
+        Order order = orderDao.getOrderById(orderId);
         carService.setCarAvailable(order.getCar());
         order.setOrderStatus(OrderStatus.REJECTED);
-        return orderDao.changeOrderStatus(order);
+        orderDao.changeOrderStatus(order);
     }
 
     @Override
-    public int approve(int id) {
-        Order order = orderDao.getOrderById(id);
+    public void approveOrder(int orderId) {
+        Order order = orderDao.getOrderById(orderId);
         order.setPayTillDate(setterPaymentDeadline());
         order.setOrderStatus(OrderStatus.APPROVED);
         carService.setCarNoMoreAvailable(order.getCar());
         orderDao.setDeadline(order, dateToString(order.getPayTillDate()));
-        return orderDao.changeOrderStatus(order);
+        orderDao.changeOrderStatus(order);
     }
 
     @Override
-    public int complete(int id) {
+    public void completeOrder(int id) {
         Order order = orderDao.getOrderById(id);
         order.setOrderStatus(OrderStatus.COMPLETED);
         carService.setCarAvailable(order.getCar());
-        return orderDao.changeOrderStatus(order);
+        orderDao.changeOrderStatus(order);
     }
 
     @Override
-    public int repairInvoice(int id) {
+    public void repairInvoice(int id) {
         Order order = orderDao.getOrderById(id);
-        order.setOrderStatus(OrderStatus.RECOVERY); // поменять смену статуса после установки счета за ремонт.
-        return orderDao.changeOrderStatus(order);
+        order.setOrderStatus(OrderStatus.RECOVERY);
+        orderDao.changeOrderStatus(order);
     }
 
     private Date setterPaymentDeadline() {
@@ -138,7 +138,7 @@ public class OrderServiceImpl implements OrderService {
     public void setOrderStatusToPaid(Order order) {
         order.setRentalStartTime(new Date());
         order.setRentalEndTime(setterRentalEnd(new Date(), order));
-        orderDao.setTimes(order, dateToString(order.getRentalStartTime()), dateToString(order.getRentalEndTime()));
+        orderDao.setTime(order, dateToString(order.getRentalStartTime()), dateToString(order.getRentalEndTime()));
         order.setOrderStatus(OrderStatus.IN_RENT);
         orderDao.changeOrderStatus(order);
     }
@@ -146,26 +146,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void cancelExpiredOrders() {
         List<Order> orders = getOrders();
+        Calendar presentTime = Calendar.getInstance();
         for (Order order : orders) {
-            Calendar presentTime = Calendar.getInstance();
-            if (order.getOrderStatus() == OrderStatus.APPROVED)
-                if (order.getPayTillDate().before(presentTime.getTime())) {
-                    reject(order.getId());
-                }
+            if (OrderStatus.APPROVED.equals(order.getOrderStatus()) && order.getPayTillDate().before(presentTime.getTime()))
+                rejectOrder(order.getId());
         }
     }
 
     @Override
     public void autoChangeOrderStatusToReturn() {
         List<Order> orders = getOrders();
+        Calendar presentTime = Calendar.getInstance();
         for (Order order : orders) {
-            if (order.getOrderStatus() == OrderStatus.IN_RENT) {
-                Calendar presentTime = Calendar.getInstance();
-                if (order.getRentalEndTime().before(presentTime.getTime())) {
-                    order.setOrderStatus(OrderStatus.RETURN);
-                    orderDao.changeOrderStatus(order);
-
-                }
+            if (OrderStatus.IN_RENT.equals(order.getOrderStatus()) && order.getRentalEndTime().before(presentTime.getTime())) {
+                order.setOrderStatus(OrderStatus.RETURN);
+                orderDao.changeOrderStatus(order);
             }
         }
     }

@@ -79,13 +79,13 @@ public class OrderController {
 
     @GetMapping("/approve/{id}")
     public String orderApproved(@PathVariable int id) {
-        orderService.approve(id);
+        orderService.approveOrder(id);
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }
 
     @GetMapping("/reject/{id}")
     public String orderReject(@PathVariable int id) {
-        orderService.reject(id);
+        orderService.rejectOrder(id);
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }
 
@@ -100,7 +100,7 @@ public class OrderController {
         }
         if (OrderStatus.RECOVERY.equals(order.getOrderStatus())) {
             model.addAttribute("kindOfReceipt", "car.repair.receipt");
-            orderService.complete(order.getId());
+            orderService.completeOrder(order.getId());
         }
         return "orders/receiptOfPayment";
     }
@@ -115,7 +115,7 @@ public class OrderController {
 
     @GetMapping("/returnCar/{id}")
     public String orderCompleteAndReturnCar(@PathVariable int id) {
-        orderService.complete(id);
+        orderService.completeOrder(id);
         return REDIRECT_PREFIX + "/orders/completeOrders";
     }
 
@@ -123,20 +123,20 @@ public class OrderController {
     public String makeInvoiceForRepairCar(@PathVariable int id, Model model) {
         Order order = orderService.getOrderById(id);
         model.addAttribute(ORDER_MODEL_ATTRIBUTE, order);
-        orderService.repairInvoice(id);
         return "orders/repairInvoice";
     }
 
     @PostMapping("/repairInvoice/{id}")
     public String invoiceForm(Order order, Model model) {
 
-        if (order.getCompensationAmount()==0) {
+        if (order.getCompensationAmount() == 0) {
             model.addAttribute(ORDER_MODEL_ATTRIBUTE, order);
-            model.addAttribute("compensationError", "notNul");
+            model.addAttribute("compensationError", "notNul"); //TODO
 
             return "orders/repairInvoice";
         }
-        orderService.update(order);
+        orderService.repairInvoice(order.getId()); //t odo work ?
+        orderService.updateCompensationAmount(order);
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }
 

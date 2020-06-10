@@ -25,7 +25,7 @@
                     <spring:message code="current.user"/>
                 </h2>
                 <h2>${pageContext.request.userPrincipal.name}</h2>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                 <button class="button" type="submit">
                     <spring:message code="logout.button"/>
                 </button>
@@ -93,8 +93,12 @@
                 <td>${car.costPerOneDay}</td>
             </tr>
         </table>
-        <spring:message code="button.to.rent" var="rent"/>
-        <input type="submit" value="${rent}" class="notification"/>
+        <div>
+        <button class="notification-button" type="submit">
+                            <spring:message code="button.to.rent"/>
+                        </button>
+            </div>
+
     </form:form>
     <a href="/cars/viewCars" class="notification">
         <spring:message code="view.all.cars"/>

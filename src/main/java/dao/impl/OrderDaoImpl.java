@@ -15,7 +15,6 @@ import java.util.List;
 public class OrderDaoImpl implements OrderDao {
     private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, " +
             "orderStatus) VALUES(?, ?, ?, ?, ?, ?, ?)";
-
     private static final String UPDATE_COMPENSATION_AMOUNT = "UPDATE orders SET compensationAmount=? WHERE id=?";
     private static final String CHANGE_ORDER_STATUS = "UPDATE orders SET orderStatus=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
@@ -88,7 +87,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public void setTimes(Order order, String startRent, String endRent) {
+    public void setTime(Order order, String startRent, String endRent) {
         jdbcTemplate.update(SET_START_AND_END_OF_RENT, startRent, endRent, order.getId());
     }
 

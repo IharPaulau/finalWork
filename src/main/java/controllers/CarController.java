@@ -70,7 +70,7 @@ public class CarController {
     }
 
     @GetMapping("/cars/editCar/{id}")
-    public String edit(@PathVariable int id, Model model) {
+    public String editForm(@PathVariable int id, Model model) {
         Car car = carService.getCarById(id);
         model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
         model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "edit.car.form");
@@ -79,7 +79,7 @@ public class CarController {
     }
 
     @PostMapping("/cars/editCar/{id}")
-    public String editSave(@Valid Car car, BindingResult bindingResult, Model model) {
+    public String editCar(@Valid Car car, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(CAR_MODEL_ATTRIBUTE, car);
             model.addAttribute(PAGE_LABEL_MODEL_ATTRIBUTE, "edit.car.form");

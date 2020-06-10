@@ -4,32 +4,106 @@ import models.Order;
 
 import java.util.List;
 
+/**
+ * Service to manage {@link Order} objects.
+ */
 public interface OrderService {
 
+    /**
+     * Change status of selected car and save current order
+     *
+     * @param order order to save
+     * @return id of new created order
+     */
     int save(Order order);
 
+    /**
+     * Get order by current orderId
+     *
+     * @param orderId orderId to search
+     * @return Order
+     */
     Order getOrderById(int orderId);
 
+    /**
+     * Delete order by current orderId
+     *
+     * @param orderId orderId to search
+     */
     void delete(int orderId);
 
-    List<Order> getOwnOrders(String username);
+    /**
+     * Search User by current userName and
+     * get all orders for this User
+     *
+     * @param userName userName to search orders
+     * @return list of orders
+     */
+    List<Order> getOwnOrders(String userName);
 
+    /**
+     * Get all orders
+     *
+     * @return list of all orders
+     */
     List<Order> getOrders();
 
-    int reject(int id);
+    /**
+     * Get order by current orderId,
+     * change order status to reject
+     * and change car status to available
+     *
+     * @param orderId orderId to change
+     */
+    void rejectOrder(int orderId);
 
-    int approve(int id);
+    /**
+     * Get order by current orderId,
+     * change order status to approved
+     * and change car status to not available
+     *
+     * @param orderId orderId to change
+     */
+    void approveOrder(int orderId);
 
+    /**
+     * Set rental Start and End time to current order,
+     * change order status to in_rent and save this order
+     *
+     * @param order order
+     */
     void setOrderStatusToPaid(Order order);
 
+    /**
+     * Reject approved orders if paytilldate was missed
+     */
     void cancelExpiredOrders();
 
+    /**
+     * Change order status to return for in rent orders
+     * when rentalendtime has come
+     */
     void autoChangeOrderStatusToReturn();
 
-    int repairInvoice(int id);
+    /**
+     * Change order status to recovery by current orderId
+     *
+     * @param orderId orderId to change
+     */
+    void repairInvoice(int orderId);
 
-    int complete(int id);
+    /**
+     * Change order status to complete by current orderId
+     *
+     * @param orderId orderId to change
+     */
+    void completeOrder(int orderId);
 
-    int update(Order order);
+    /**
+     * Update compensation amount for current order
+     *
+     * @param order order to change
+     */
+    void updateCompensationAmount(Order order);
 }
 
