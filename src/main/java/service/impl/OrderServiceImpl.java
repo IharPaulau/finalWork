@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateCompensationAmount(Order order) {
-         orderDao.updateCompensationAmount(order);
+        orderDao.updateCompensationAmount(order);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void approveOrder(int orderId) {
         Order order = orderDao.getOrderById(orderId);
-        order.setPayTillDate(setterPaymentDeadline());
+        order.setPayTillDate(setterPaymentDeadline(1));
         order.setOrderStatus(OrderStatus.APPROVED);
         carService.setCarNoMoreAvailable(order.getCar());
         orderDao.setDeadline(order, dateToString(order.getPayTillDate()));
@@ -120,10 +120,10 @@ public class OrderServiceImpl implements OrderService {
         orderDao.changeOrderStatus(order);
     }
 
-    private Date setterPaymentDeadline() {
+    private Date setterPaymentDeadline(int minutes) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        cal.add(Calendar.MINUTE, 1);
+        cal.add(Calendar.MINUTE, minutes);
         return cal.getTime();
     }
 
@@ -148,8 +148,10 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders = getOrders();
         Calendar presentTime = Calendar.getInstance();
         for (Order order : orders) {
-            if (OrderStatus.APPROVED.equals(order.getOrderStatus()) && order.getPayTillDate().before(presentTime.getTime()))
+            if (OrderStatus.APPROVED.equals(order.getOrderStatus()) && order.getPayTillDate().before(presentTime.getTime())) {
                 rejectOrder(order.getId());
+                System.out.println("im here");
+            }
         }
     }
 

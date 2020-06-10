@@ -6,6 +6,8 @@ import models.Car;
 import models.Order;
 import models.User;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -153,11 +155,14 @@ public class OrderServiceTest extends AbstractServiceTest {
 //    @Test
 //    public void test_cancelExpiredOrders() {
 //        orderService.approveOrder(testOrderId);
-//        orderService.cancelExpiredOrders();
 //        Order order = orderService.getOrderById(testOrderId);
-//        assertEquals(OrderStatus.REJECTED, order.getOrderStatus());
-//        assertNotNull(order.getPayTillDate());
-//        Car car = carService.getCarById(order.getCar().getId());
+//        order.setPayTillDate(setterPaymentDeadline(-2));
+//        orderService.
+//        orderService.cancelExpiredOrders();
+//        Order updatedOrder = orderService.getOrderById(testOrderId);
+//        assertEquals(OrderStatus.REJECTED, updatedOrder.getOrderStatus());
+//        assertNotNull(updatedOrder.getPayTillDate());
+//        Car car = carService.getCarById(updatedOrder.getCar().getId());
 //        assertTrue(car.isAvailable());
 //    }
 
@@ -207,5 +212,12 @@ public class OrderServiceTest extends AbstractServiceTest {
         order.setPassportId(TEST_PASSPORT_ID);
         order.setRentalPeriodInDays(TEST_RENTAL_PERIOD_IN_DAYS);
         return order;
+    }
+
+    private Date setterPaymentDeadline(int minutes) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.MINUTE, minutes);
+        return cal.getTime();
     }
 }
