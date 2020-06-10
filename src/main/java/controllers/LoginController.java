@@ -1,15 +1,7 @@
 package controllers;
 
-import models.User;
 import forms.RegistrationForm;
-import service.LoginService;
-import service.UserService;
-import validators.RegistrationFormValidator;
-
-import java.util.Locale;
-
-import javax.validation.Valid;
-
+import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -18,6 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import service.LoginService;
+import service.UserService;
+import validators.RegistrationFormValidator;
+
+import javax.validation.Valid;
+import java.util.Locale;
 
 import static utils.Constants.LOGIN_PAGE;
 import static utils.Constants.REDIRECT_PREFIX;

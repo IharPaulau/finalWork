@@ -20,7 +20,7 @@ public class CarDaoImpl implements CarDao {
     private static final String ADD_NEW_CAR = "INSERT INTO cars(brand,model,typeBody,typeEngine,bodyColor," +
             "costPerOneDay,transmission) VALUES(?,?,?,?,?,?,?)";
     private static final String UPDATE_CAR = "UPDATE cars SET brand=?,model=?,typeBody=?,typeEngine=?,bodyColor=?," +
-            "costPerOneDay=?,transmission=? WHERE id=?";
+            "costPerOneDay=?,transmission=?, WHERE id=?";
     private static final String DELETE_CAR = "DELETE FROM cars WHERE id=?";
     private static final String SELECT_CAR_BY_ID = "SELECT * FROM cars WHERE id=?";
     private static final String SELECT_ALL_CARS = "SELECT * FROM cars";
@@ -41,8 +41,8 @@ public class CarDaoImpl implements CarDao {
     }
 
     @Override
-    public int delete(int id) {
-        return jdbcTemplate.update(DELETE_CAR, id);
+    public int delete(int carId) {
+        return jdbcTemplate.update(DELETE_CAR, carId);
     }
 
     @Override

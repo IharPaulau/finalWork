@@ -22,11 +22,11 @@ public class CarServiceImpl implements CarService {
         return carDao.getCars();
     }
 
-    public Car getCarById(int id) {
+    public Car getCarById(int carId) {
         try {
-            return carDao.getCarById(id);
+            return carDao.getCarById(carId);
         } catch (EmptyResultDataAccessException ex) {
-            LOGGER.warn(String.format("Could not find car with id %s", id));
+            LOGGER.warn(String.format("Could not find car with id %s", carId));
             return null;
         }
     }
@@ -36,8 +36,8 @@ public class CarServiceImpl implements CarService {
     }
 
 
-    public int delete(int id) {
-        return carDao.delete(id);
+    public int delete(int carId) {
+        return carDao.delete(carId);
     }
 
     @Override
@@ -53,6 +53,4 @@ public class CarServiceImpl implements CarService {
     public void setCarDao(CarDao carDao) {
         this.carDao = carDao;
     }
-
-
 }

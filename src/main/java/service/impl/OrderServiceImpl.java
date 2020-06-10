@@ -92,8 +92,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void rejectOrder(int orderId) {
-        Order order = orderDao.getOrderById(orderId);
+    public void rejectOrder(Order order) {
         carService.setCarAvailable(order.getCar());
         order.setOrderStatus(OrderStatus.REJECTED);
         save(order);
@@ -153,7 +152,7 @@ public class OrderServiceImpl implements OrderService {
         Calendar presentTime = Calendar.getInstance();
         for (Order order : orders) {
             if (OrderStatus.APPROVED.equals(order.getOrderStatus()) && order.getPayTillDate().before(presentTime.getTime())) {
-                rejectOrder(order.getId());
+                rejectOrder(order);
             }
         }
     }

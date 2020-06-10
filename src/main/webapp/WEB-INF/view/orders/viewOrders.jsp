@@ -51,6 +51,9 @@
                 <spring:message code="status.placeholder"/>
             </th>
             <th>
+                 <spring:message code="comment.placeholder"/>
+            </th>
+            <th>
                 <spring:message code="decision.placeholder"/>
             </th>
         </tr>
@@ -63,9 +66,12 @@
                     <spring:message code="order.status.${order.orderStatus.name.toLowerCase()}"/>
                 </td>
                 <td>
+                        ${order.rejectReason}
+                </td>
+                                <td>
                     <c:choose>
                         <c:when test="${order.orderStatus == 'APPROVED'}">
-                            <a href="/reject/${order.id}">
+                            <a href="/rejectReason/${order.id}">
                                 <button class="danger">
                                     <spring:message code="rejected"/>
                                 </button>
@@ -79,7 +85,7 @@
                             </a>
                         </c:when>
                         <c:when test="${order.orderStatus == 'NOT_VERIFIED'}">
-                            <a href="/reject/${order.id}">
+                             <a href="/rejectReason/${order.id}">
                                 <button class="danger">
                                     <spring:message code="rejected"/>
                                 </button>

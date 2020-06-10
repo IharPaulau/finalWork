@@ -1,9 +1,9 @@
 package dao.impl;
 
 
-import models.Order;
 import dao.OrderDao;
 import mappers.OrderRowMapper;
+import models.Order;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -12,15 +12,14 @@ import org.springframework.jdbc.support.KeyHolder;
 import utils.DateConverter;
 
 import java.sql.PreparedStatement;
-import java.util.Date;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
 
     private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, orderStatus, payTillDate, rentalEndTime," +
-            " rentalStartTime, compensationAmount) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            " rentalStartTime, compensationAmount, rejectReason) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_ORDER = "UPDATE orders SET userId=?, carId=?, passportSeries=?, passportNumber=?, passportId=?" +
-            ", rentalPeriodInDays=?, orderStatus=?, payTillDate=?, rentalEndTime=?,rentalStartTime=?, compensationAmount=? WHERE id=?";
+            ", rentalPeriodInDays=?, orderStatus=?, payTillDate=?, rentalEndTime=?,rentalStartTime=?, compensationAmount=?, rejectReason=? WHERE id=?";
     private static final String UPDATE_COMPENSATION_AMOUNT = "UPDATE orders SET compensationAmount=? WHERE id=?";
     private static final String CHANGE_ORDER_STATUS = "UPDATE orders SET orderStatus=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
@@ -37,7 +36,8 @@ public class OrderDaoImpl implements OrderDao {
         if (getOrderById(order.getId()) != null) {
             jdbcTemplate.update(UPDATE_ORDER, order.getUser().getId(), order.getCar().getId(), order.getPassportSeries(),
                     order.getPassportNumber(), order.getPassportId(), order.getRentalPeriodInDays(), order.getOrderStatus().getName(),
-                    order.getPayTillDate(), order.getRentalEndTime(), order.getRentalStartTime(), order.getCompensationAmount(), order.getId());
+                    order.getPayTillDate(), order.getRentalEndTime(), order.getRentalStartTime(), order.getCompensationAmount(),
+                    order.getRejectReason(), order.getId());
         } else {
             KeyHolder keyHolder = new GeneratedKeyHolder();
             return preparedStatement(order, keyHolder);
@@ -68,6 +68,7 @@ public class OrderDaoImpl implements OrderDao {
             String rentalStartTime = order.getRentalStartTime() != null ? DateConverter.dateToString(order.getRentalStartTime()) : null;
             ps.setString(10, rentalStartTime);
             ps.setInt(11, order.getCompensationAmount());
+            ps.setString(12, order.getRejectReason());
             return ps;
         };
     }
@@ -86,7 +87,7 @@ public class OrderDaoImpl implements OrderDao {
     public Order getOrderById(int id) {
         try {
             return jdbcTemplate.queryForObject(SELECT_ORDER_BY_ID, new Object[]{id}, new OrderRowMapper());
-        } catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }

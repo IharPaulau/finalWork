@@ -48,7 +48,7 @@
                 <spring:message code="payment.amount.placeholder" var="paymentAmount"/>
                 <form:input type="text" path="compensationAmount" placeholder="${paymentAmount}"/>
                         <div class="error-message">
-                                        ${compensationError}
+                                        <spring:message code="${compensationError}"/>
                         </div>
             </div>
             <div>

@@ -93,12 +93,11 @@
                 <td>${car.costPerOneDay}</td>
             </tr>
         </table>
-        <div>
+        <sec:authorize access="hasAuthority('ROLE_USER')">
         <button class="notification-button" type="submit">
                             <spring:message code="button.to.rent"/>
                         </button>
-            </div>
-
+            </sec:authorize>
     </form:form>
     <a href="/cars/viewCars" class="notification">
         <spring:message code="view.all.cars"/>

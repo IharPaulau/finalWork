@@ -1,14 +1,16 @@
 package controllers;
 
+import enums.OrderStatus;
 import models.Car;
 import models.Order;
-import enums.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import service.CarService;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import service.CarService;
 import service.OrderService;
 
 import javax.validation.Valid;

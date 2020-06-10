@@ -12,7 +12,7 @@ public class DateConverter {
     }
 
     public static Date stringToDate(String str) throws ParseException {
-        if (str != null) {
+        if (str != null && !str.isEmpty()) {
             return dateFormat.parse(str);
         }
         return null;

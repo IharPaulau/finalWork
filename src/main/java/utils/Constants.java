@@ -1,5 +1,7 @@
 package utils;
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 public final class Constants {
 
     public static final String REDIRECT_PREFIX = "redirect:";
@@ -15,6 +17,7 @@ public final class Constants {
     public static final String CAR_FORM_PAGE = "cars/carForm";
     public static final String VIEW_CARS_PAGE = "/cars/viewCars";
     public static final String ROLE_NAME_COLUMN_NAME = "name";
+    public static final Integer ZERO_COMPENSATION_AMOUNT = 0;
 
     public static final String LOGIN_PAGE = "/login";
     public static final String REGISTRATION_PAGE = "/registration";

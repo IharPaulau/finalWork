@@ -37,6 +37,7 @@ public class OrderRowMapper implements RowMapper<Order> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        order.setRejectReason(rs.getString("rejectReason"));
         return order;
     }
 

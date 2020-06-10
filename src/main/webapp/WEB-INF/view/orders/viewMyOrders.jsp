@@ -47,6 +47,9 @@
                 <spring:message code="status.placeholder"/>
             </th>
             <th>
+                <spring:message code="comment.placeholder"/>
+            </th>
+            <th>
                 <spring:message code="action.placeholder"/>
             </th>
         </tr>
@@ -56,6 +59,9 @@
                 <td>${order.rentalPeriodInDays}</td>
                 <td>
                     <spring:message code="order.status.${order.orderStatus.name.toLowerCase()}"/>
+                </td>
+                <td>
+                    ${order.rejectReason}
                 </td>
                 <td>
                     <c:choose>

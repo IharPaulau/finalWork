@@ -15,10 +15,7 @@ public class Order {
     private Car car;
     @Pattern(regexp = "^[A-Z]{2}$", message = "{pattern.passport.series}")
     private String passportSeries;
-    @NotNull(message = "{passport.number.validation1}")
-    // TODO VALID ON MIN AND MAX SIZE
-    @Min(value = 1000000, message = "{passport.number.validation2}")
-    @Max(value = 9999999, message = "{passport.number.validation3}")
+    @Pattern(regexp = "\\d{7}", message = "{passport.number.validation}")
     private Integer passportNumber;
     @Pattern(regexp = "^([0-9]{7})([A-Z])([0-9]{3})([A-Z]{2})([0-9])$", message = "{pattern.passport.id}")
     private String passportId;
@@ -31,6 +28,7 @@ public class Order {
     private Date rentalEndTime;
     private OrderStatus orderStatus;
     private Integer compensationAmount;
+    private String rejectReason;
 
     public Order() {
         this.orderStatus = OrderStatus.NOT_VERIFIED;
@@ -131,5 +129,13 @@ public class Order {
 
     public void setCompensationAmount(Integer compensationAmount) {
         this.compensationAmount = compensationAmount;
+    }
+
+    public String getRejectReason() {
+        return rejectReason;
+    }
+
+    public void setRejectReason(String rejectReason) {
+        this.rejectReason = rejectReason;
     }
 }

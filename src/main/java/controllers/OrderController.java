@@ -1,5 +1,6 @@
 package controllers;
 
+import forms.RejectReasonForm;
 import models.Order;
 import enums.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,11 +84,28 @@ public class OrderController {
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }
 
-    @GetMapping("/reject/{id}")
-    public String orderReject(@PathVariable int id) {
-        orderService.rejectOrder(id);
+    @GetMapping("/rejectReason/{orderId}")
+    public String reasonForm(@PathVariable int orderId, Model model) {
+
+        model.addAttribute("rejectReasonForm", new RejectReasonForm(orderId));
+        return  "orders/rejectReason";
+    }
+
+    @PostMapping("/rejectReason/{orderId}")
+    public String orderReject(@PathVariable int orderId, RejectReasonForm rejectReasonForm) {
+        Order order = orderService.getOrderById(orderId);
+        order.setRejectReason(rejectReasonForm.getRejectReason());
+        orderService.rejectOrder(order);
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }
+
+
+
+//    @GetMapping("/reject/{id}")
+//    public String orderReject(@PathVariable int id) {
+//        orderService.rejectOrder(id);
+//        return REDIRECT_PREFIX + "/orders/viewOrders";
+//    }
 
     @GetMapping("/order/pay/{id}")
     public String payOrder(@PathVariable int id, Model model) {
@@ -129,9 +147,9 @@ public class OrderController {
     @PostMapping("/repairInvoice/{id}")
     public String invoiceForm(Order order, Model model) {
 
-        if (order.getCompensationAmount() == 0) {
+        if (ZERO_COMPENSATION_AMOUNT.equals(order.getCompensationAmount())) {
             model.addAttribute(ORDER_MODEL_ATTRIBUTE, order);
-            model.addAttribute("compensationError", "notNul"); //TODO
+            model.addAttribute("compensationError", "compensation.amount.validation");
 
             return "orders/repairInvoice";
         }

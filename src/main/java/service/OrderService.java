@@ -62,9 +62,9 @@ public interface OrderService {
      * change order status to reject
      * and change car status to available
      *
-     * @param orderId orderId to change
+     * @param order order to change
      */
-    void rejectOrder(int orderId);
+    void rejectOrder(Order order);
 
     /**
      * Get order by current orderId,

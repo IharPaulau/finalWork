@@ -122,10 +122,11 @@ public class OrderServiceTest extends AbstractServiceTest {
 
     @Test
     public void test_rejectOrder() {
-        orderService.rejectOrder(testOrderId);
         Order order = orderService.getOrderById(testOrderId);
-        assertEquals(OrderStatus.REJECTED, order.getOrderStatus());
-        Car car = carService.getCarById(order.getCar().getId());
+        orderService.rejectOrder(order);
+        Order rejectedOrder = orderService.getOrderById(testOrderId);
+        assertEquals(OrderStatus.REJECTED, rejectedOrder.getOrderStatus());
+        Car car = carService.getCarById(rejectedOrder.getCar().getId());
         assertTrue(car.isAvailable());
     }
 
