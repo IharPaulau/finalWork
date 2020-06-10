@@ -32,6 +32,11 @@ public class Order {
     private OrderStatus orderStatus;
     private Integer compensationAmount;
 
+    public Order() {
+        this.orderStatus = OrderStatus.NOT_VERIFIED;
+        this.compensationAmount = 0;
+    }
+
     public int getId() {
         return id;
     }

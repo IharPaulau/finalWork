@@ -33,13 +33,17 @@ public class OrderServiceImpl implements OrderService {
     private ApplicationContext applicationContext;
 
     @Override
-    public int save(Order order) {
+    public int createOrder(Order order) {
         User user = userService.getUserByName(order.getUser().getUsername());
         order.setUser(user);
         int carId = order.getCar().getId();
         Car car = carService.getCarById(carId);
         carService.setCarNoMoreAvailable(car);
-        order.setOrderStatus(OrderStatus.NOT_VERIFIED);
+        return orderDao.save(order);
+    }
+
+    @Override
+    public int save(Order order) {
         return orderDao.save(order);
     }
 
@@ -92,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderDao.getOrderById(orderId);
         carService.setCarAvailable(order.getCar());
         order.setOrderStatus(OrderStatus.REJECTED);
-        orderDao.changeOrderStatus(order);
+        save(order);
     }
 
     @Override
@@ -102,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus(OrderStatus.APPROVED);
         carService.setCarNoMoreAvailable(order.getCar());
         orderDao.setDeadline(order, dateToString(order.getPayTillDate()));
-        orderDao.changeOrderStatus(order);
+        save(order);
     }
 
     @Override
@@ -110,14 +114,14 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderDao.getOrderById(id);
         order.setOrderStatus(OrderStatus.COMPLETED);
         carService.setCarAvailable(order.getCar());
-        orderDao.changeOrderStatus(order);
+        save(order);
     }
 
     @Override
     public void repairInvoice(int id) {
         Order order = orderDao.getOrderById(id);
         order.setOrderStatus(OrderStatus.RECOVERY);
-        orderDao.changeOrderStatus(order);
+        save(order);
     }
 
     private Date setterPaymentDeadline(int minutes) {
@@ -140,7 +144,7 @@ public class OrderServiceImpl implements OrderService {
         order.setRentalEndTime(setterRentalEnd(new Date(), order));
         orderDao.setTime(order, dateToString(order.getRentalStartTime()), dateToString(order.getRentalEndTime()));
         order.setOrderStatus(OrderStatus.IN_RENT);
-        orderDao.changeOrderStatus(order);
+        save(order);
     }
 
     @Override
@@ -150,7 +154,6 @@ public class OrderServiceImpl implements OrderService {
         for (Order order : orders) {
             if (OrderStatus.APPROVED.equals(order.getOrderStatus()) && order.getPayTillDate().before(presentTime.getTime())) {
                 rejectOrder(order.getId());
-                System.out.println("im here");
             }
         }
     }
@@ -162,7 +165,7 @@ public class OrderServiceImpl implements OrderService {
         for (Order order : orders) {
             if (OrderStatus.IN_RENT.equals(order.getOrderStatus()) && order.getRentalEndTime().before(presentTime.getTime())) {
                 order.setOrderStatus(OrderStatus.RETURN);
-                orderDao.changeOrderStatus(order);
+                save(order);
             }
         }
     }

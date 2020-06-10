@@ -10,10 +10,19 @@ import java.util.List;
 public interface OrderService {
 
     /**
-     * Change status of selected car and save current order
+     * Create new Order
      *
      * @param order order to save
      * @return id of new created order
+     */
+
+    int createOrder(Order order);
+
+    /**
+     * Persist order to db
+     *
+     * @param order order to persist
+     * @return id of updated order
      */
     int save(Order order);
 

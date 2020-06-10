@@ -49,7 +49,7 @@ public class OrderController {
             return "orders/orderForm";
         }
 
-        orderService.save(order);
+        orderService.createOrder(order);
         return REDIRECT_PREFIX + "/orders/viewMyOrders";
     }
 

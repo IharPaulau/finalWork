@@ -4,17 +4,23 @@ package dao.impl;
 import models.Order;
 import dao.OrderDao;
 import mappers.OrderRowMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import utils.DateConverter;
 
 import java.sql.PreparedStatement;
+import java.util.Date;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
-    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, " +
-            "orderStatus) VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String ADD_NEW_ORDER = "INSERT INTO orders(userId, carId, passportSeries, passportNumber, passportId, rentalPeriodInDays, orderStatus, payTillDate, rentalEndTime," +
+            " rentalStartTime, compensationAmount) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_ORDER = "UPDATE orders SET userId=?, carId=?, passportSeries=?, passportNumber=?, passportId=?" +
+            ", rentalPeriodInDays=?, orderStatus=?, payTillDate=?, rentalEndTime=?,rentalStartTime=?, compensationAmount=? WHERE id=?";
     private static final String UPDATE_COMPENSATION_AMOUNT = "UPDATE orders SET compensationAmount=? WHERE id=?";
     private static final String CHANGE_ORDER_STATUS = "UPDATE orders SET orderStatus=? WHERE id=?";
     private static final String DELETE_ORDER = "DELETE FROM orders WHERE id=?";
@@ -28,9 +34,17 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public int save(Order order) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        return preparedStatement(order, keyHolder);
+        if (getOrderById(order.getId()) != null) {
+            jdbcTemplate.update(UPDATE_ORDER, order.getUser().getId(), order.getCar().getId(), order.getPassportSeries(),
+                    order.getPassportNumber(), order.getPassportId(), order.getRentalPeriodInDays(), order.getOrderStatus().getName(),
+                    order.getPayTillDate(), order.getRentalEndTime(), order.getRentalStartTime(), order.getCompensationAmount(), order.getId());
+        } else {
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            return preparedStatement(order, keyHolder);
+        }
+        return order.getId();
     }
+
 
     private int preparedStatement(Order order, KeyHolder keyHolder) {
         jdbcTemplate.update(getPreparedStatementCreator(order), keyHolder);
@@ -47,6 +61,13 @@ public class OrderDaoImpl implements OrderDao {
             ps.setString(5, order.getPassportId());
             ps.setInt(6, order.getRentalPeriodInDays());
             ps.setString(7, order.getOrderStatus().getName());
+            String payTillDate = order.getPayTillDate() != null ? DateConverter.dateToString(order.getPayTillDate()) : null;
+            ps.setString(8, payTillDate);
+            String rentalEndTime = order.getRentalEndTime() != null ? DateConverter.dateToString(order.getRentalEndTime()) : null;
+            ps.setString(9, rentalEndTime);
+            String rentalStartTime = order.getRentalStartTime() != null ? DateConverter.dateToString(order.getRentalStartTime()) : null;
+            ps.setString(10, rentalStartTime);
+            ps.setInt(11, order.getCompensationAmount());
             return ps;
         };
     }
@@ -63,7 +84,11 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getOrderById(int id) {
-        return jdbcTemplate.queryForObject(SELECT_ORDER_BY_ID, new Object[]{id}, new OrderRowMapper());
+        try {
+            return jdbcTemplate.queryForObject(SELECT_ORDER_BY_ID, new Object[]{id}, new OrderRowMapper());
+        } catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     @Override

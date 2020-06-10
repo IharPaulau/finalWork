@@ -46,7 +46,7 @@ public class OrderServiceTest extends AbstractServiceTest {
     public void init() {
         testUser = saveTestUser();
         testCarId = saveTestCar();
-        testOrderId = orderService.save(createTestOrder(testUser));
+        testOrderId = orderService.createOrder(createTestOrder(testUser));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class OrderServiceTest extends AbstractServiceTest {
         Order notExistingOrder = orderService.getOrderById(testOrderId + 1);
         assertNull(notExistingOrder);
         Order orderToSave = createTestOrder(testUser);
-        int orderId = orderService.save(orderToSave);
+        int orderId = orderService.createOrder(orderToSave);
         Order savedOrder = orderService.getOrderById(orderId);
         assertNotNull(savedOrder);
     }
@@ -100,7 +100,7 @@ public class OrderServiceTest extends AbstractServiceTest {
     public void test_getOwnOrders() {
         User anotherUser = createTestUser(TEST_USERNAME_2, TEST_USER_EMAIL_2);
         userService.saveUserWithRole(anotherUser);
-        orderService.save(createTestOrder(anotherUser));
+        orderService.createOrder(createTestOrder(anotherUser));
         List<Order> orders = orderService.getOwnOrders(TEST_USERNAME);
         assertEquals(1, orders.size());
     }
@@ -115,7 +115,7 @@ public class OrderServiceTest extends AbstractServiceTest {
     public void test_getOrders() {
         User anotherUser = createTestUser(TEST_USERNAME_2, TEST_USER_EMAIL_2);
         userService.saveUserWithRole(anotherUser);
-        orderService.save(createTestOrder(anotherUser));
+        orderService.createOrder(createTestOrder(anotherUser));
         List<Order> orders = orderService.getOrders();
         assertEquals(2, orders.size());
     }
@@ -152,28 +152,28 @@ public class OrderServiceTest extends AbstractServiceTest {
         assertEquals(OrderStatus.IN_RENT, updatedOrder.getOrderStatus());
     }
 
-//    @Test
-//    public void test_cancelExpiredOrders() {
-//        orderService.approveOrder(testOrderId);
-//        Order order = orderService.getOrderById(testOrderId);
-//        order.setPayTillDate(setterPaymentDeadline(-2));
-//        orderService.
-//        orderService.cancelExpiredOrders();
-//        Order updatedOrder = orderService.getOrderById(testOrderId);
-//        assertEquals(OrderStatus.REJECTED, updatedOrder.getOrderStatus());
-//        assertNotNull(updatedOrder.getPayTillDate());
-//        Car car = carService.getCarById(updatedOrder.getCar().getId());
-//        assertTrue(car.isAvailable());
-//    }
+    @Test
+    public void test_cancelExpiredOrders() {
+        orderService.approveOrder(testOrderId);
+        Order order = orderService.getOrderById(testOrderId);
+        order.setPayTillDate(setterPaymentDeadline(-2));
+        orderService.save(order);
+        orderService.cancelExpiredOrders();
+        Order updatedOrder = orderService.getOrderById(testOrderId);
+        assertEquals(OrderStatus.REJECTED, updatedOrder.getOrderStatus());
+        assertNotNull(updatedOrder.getPayTillDate());
+        Car car = carService.getCarById(updatedOrder.getCar().getId());
+        assertTrue(car.isAvailable());
+    }
 
-//    @Test
-//    public void test_autoChangeOrderStatusToReturn() {
-//        Order order = orderService.getOrderById(testOrderId);
-//        orderService.setOrderStatusToPaid(order);
-//        orderService.autoChangeOrderStatusToReturn();
-//        Order updatedOrder = orderService.getOrderById(testOrderId);
-//        assertEquals(OrderStatus.RETURN, updatedOrder.getOrderStatus());
-//    }
+    @Test
+    public void test_autoChangeOrderStatusToReturn() {
+        Order order = orderService.getOrderById(testOrderId);
+        orderService.setOrderStatusToPaid(order);
+        orderService.autoChangeOrderStatusToReturn();
+        Order updatedOrder = orderService.getOrderById(testOrderId);
+        assertEquals(OrderStatus.RETURN, updatedOrder.getOrderStatus());
+    }
 
     @Test
     public void test_repairInvoice() {

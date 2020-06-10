@@ -17,7 +17,6 @@ public class StateChangerRunnable implements Runnable {
         do {
             orderService.cancelExpiredOrders();
             orderService.autoChangeOrderStatusToReturn();
-            System.out.println("im thread");
             try {
                 Thread.sleep(20000);
             } catch (InterruptedException e) {
