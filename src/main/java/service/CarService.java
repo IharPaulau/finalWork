@@ -41,7 +41,17 @@ public interface CarService {
      */
     int delete(int carId);
 
+    /**
+     * Set Car flag not available
+     *
+     * @param car car to set not available
+     */
     void setCarNoMoreAvailable(Car car);
 
+    /**
+     * Set Car flag available
+     *
+     * @param car car to set available
+     */
     void setCarAvailable(Car car);
 }

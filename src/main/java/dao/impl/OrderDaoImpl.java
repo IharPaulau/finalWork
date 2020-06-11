@@ -84,9 +84,9 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order getOrderById(int id) {
+    public Order getOrderById(int orderId) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_ORDER_BY_ID, new Object[]{id}, new OrderRowMapper());
+            return jdbcTemplate.queryForObject(SELECT_ORDER_BY_ID, new Object[]{orderId}, new OrderRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -98,13 +98,8 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getOwnOrders(int id) {
-        return jdbcTemplate.query(SELECT_ALL_OWN_ORDERS, new OrderRowMapper(), id);
-    }
-
-    @Override
-    public int changeOrderStatus(Order order) {
-        return jdbcTemplate.update(CHANGE_ORDER_STATUS, order.getOrderStatus().getName(), order.getId());
+    public List<Order> getOwnOrders(int userId) {
+        return jdbcTemplate.query(SELECT_ALL_OWN_ORDERS, new OrderRowMapper(), userId);
     }
 
     @Override

@@ -33,7 +33,7 @@ public interface UserDao {
 
 
     /**
-     * Get User With Roles by provided value
+     * Get User With Roles by current value
      *
      * @param value user name or email to search
      * @return User
