@@ -1,10 +1,8 @@
 package validators;
 
 import forms.RegistrationForm;
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 import service.UserService;
 
 public class RegistrationFormValidator implements Validator {

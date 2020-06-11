@@ -88,7 +88,7 @@ public class OrderController {
     public String reasonForm(@PathVariable int orderId, Model model) {
 
         model.addAttribute("rejectReasonForm", new RejectReasonForm(orderId));
-        return  "orders/rejectReason";
+        return "orders/rejectReason";
     }
 
     @PostMapping("/rejectReason/{orderId}")
@@ -99,29 +99,25 @@ public class OrderController {
         return REDIRECT_PREFIX + "/orders/viewOrders";
     }
 
-
-
-//    @GetMapping("/reject/{id}")
-//    public String orderReject(@PathVariable int id) {
-//        orderService.rejectOrder(id);
-//        return REDIRECT_PREFIX + "/orders/viewOrders";
-//    }
-
-    @GetMapping("/order/pay/{id}")
+    @GetMapping("/order/payOrder/{id}")
     public String payOrder(@PathVariable int id, Model model) {
         Order order = orderService.getOrderById(id);
         model.addAttribute("order", order);
-        if (OrderStatus.APPROVED.equals(order.getOrderStatus())) {
-            orderService.setOrderStatusToPaid(order);
-            carService.setCarNoMoreAvailable(order.getCar());
-            model.addAttribute("kindOfReceipt", "car.rent.receipt");
-        }
-        if (OrderStatus.RECOVERY.equals(order.getOrderStatus())) {
-            model.addAttribute("kindOfReceipt", "car.repair.receipt");
-            orderService.completeOrder(order.getId());
-        }
+        orderService.setOrderStatusToPaid(order);
+        carService.setCarNoMoreAvailable(order.getCar());
+        model.addAttribute("kindOfReceipt", "car.rent.receipt");
         return "orders/receiptOfPayment";
     }
+
+    @GetMapping("/order/payRepair/{id}")
+    public String payRepair(@PathVariable int id, Model model) {
+        Order order = orderService.getOrderById(id);
+        model.addAttribute("order", order);
+        model.addAttribute("kindOfReceipt", "car.repair.receipt");
+        orderService.completeOrder(order.getId());
+              return "orders/receiptOfPayment";
+    }
+
 
     @GetMapping("/orders/completeOrders")
     public String showCompletedOrders(Model model) {

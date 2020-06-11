@@ -38,7 +38,7 @@ public class CarController {
         return "cars/carForm";
     }
 
-    @PostMapping("/car/carForm")
+    @PostMapping("/cars/carForm")
     public String save(@Valid Car car, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             fillCarFormModel(model, car);

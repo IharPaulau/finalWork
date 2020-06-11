@@ -18,9 +18,9 @@ import java.util.List;
 
 public class CarDaoImpl implements CarDao {
     private static final String ADD_NEW_CAR = "INSERT INTO cars(brand,model,typeBody,typeEngine,bodyColor," +
-            "costPerOneDay,transmission) VALUES(?,?,?,?,?,?,?)";
+            "costPerOneDay,transmission, available) VALUES(?,?,?,?,?,?,?,?)";
     private static final String UPDATE_CAR = "UPDATE cars SET brand=?,model=?,typeBody=?,typeEngine=?,bodyColor=?," +
-            "costPerOneDay=?,transmission=?, WHERE id=?";
+            "costPerOneDay=?,transmission=?,available=? WHERE id=?";
     private static final String DELETE_CAR = "DELETE FROM cars WHERE id=?";
     private static final String SELECT_CAR_BY_ID = "SELECT * FROM cars WHERE id=?";
     private static final String SELECT_ALL_CARS = "SELECT * FROM cars";
@@ -37,7 +37,7 @@ public class CarDaoImpl implements CarDao {
     @Override
     public int update(Car car) {
         return jdbcTemplate.update(UPDATE_CAR, car.getBrand(), car.getModel(), car.getTypeBody(), car.getTypeEngine(),
-                car.getBodyColor(), car.getCostPerOneDay(), car.getTransmission(), car.getId());
+                car.getBodyColor(), car.getCostPerOneDay(), car.getTransmission(), true, car.getId());
     }
 
     @Override
@@ -76,6 +76,7 @@ public class CarDaoImpl implements CarDao {
             ps.setString(5, car.getBodyColor());
             ps.setInt(6, car.getCostPerOneDay());
             ps.setString(7, car.getTransmission());
+            ps.setBoolean(8, car.isAvailable());
             return ps;
         };
     }

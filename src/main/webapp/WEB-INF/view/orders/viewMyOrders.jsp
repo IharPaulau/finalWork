@@ -66,7 +66,7 @@
                 <td>
                     <c:choose>
                         <c:when test="${order.orderStatus == 'APPROVED'}">
-                            <a href="/order/pay/${order.id}">
+                            <a href="/order/payOrder/${order.id}">
                                 <button class="info">
                                     <spring:message code="pay.placeholder"/>
                                 </button>
@@ -78,26 +78,18 @@
                             </a>
                         </c:when>
                         <c:when test="${order.orderStatus == 'REJECTED'}">
-                            <a href="/orders/deleteMyOrder/${order.id}">
-                                <button class="danger">
-                                    <spring:message code="delete.placeholder"/>
-                                </button>
-                            </a>
+                            <spring:message code="no.options"/>
                         </c:when>
                         <c:when test="${order.orderStatus == 'IN_RENT' or order.orderStatus == 'RETURN'}"><spring:message code="no.options"/></c:when>
                         <c:when test="${order.orderStatus == 'RECOVERY'}">
-                            <a href="/order/pay/${order.id}">
+                            <a href="/order/payRepair/${order.id}">
                                 <button class="info">
                                     <spring:message code="pay.placeholder"/>
                                 </button>
                             </a>
                         </c:when>
                         <c:when test="${order.orderStatus == 'COMPLETED'}">
-                            <a href="/orders/deleteMyOrder/${order.id}">
-                                <button class="danger">
-                                    <spring:message code="delete.placeholder"/>
-                                </button>
-                            </a>
+
                         </c:when>
                         <c:otherwise>
                             <a href="/orders/deleteMyOrder/${order.id}">

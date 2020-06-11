@@ -15,7 +15,9 @@ public class Order {
     private Car car;
     @Pattern(regexp = "^[A-Z]{2}$", message = "{pattern.passport.series}")
     private String passportSeries;
-    @Pattern(regexp = "\\d{7}", message = "{passport.number.validation}")
+    @NotNull(message = "{passport.number.validation}")
+    @Min(value = 1000000, message = "{passport.number.validation}")
+    @Max(value = 9999999, message = "{passport.number.validation}")
     private Integer passportNumber;
     @Pattern(regexp = "^([0-9]{7})([A-Z])([0-9]{3})([A-Z]{2})([0-9])$", message = "{pattern.passport.id}")
     private String passportId;

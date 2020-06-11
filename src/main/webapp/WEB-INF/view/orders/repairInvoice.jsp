@@ -41,15 +41,17 @@
             <spring:message code="fill.invoice"/>
         </h1>
         <form:form method="post" action="/repairInvoice/${order.id}" modelAttribute="order" class="form">
-                    <div class="form-attribute">
+            <div class="form-attribute">
                 <label>
                     <spring:message code="payment.amount"/>
                 </label>
                 <spring:message code="payment.amount.placeholder" var="paymentAmount"/>
-                <form:input type="text" path="compensationAmount" placeholder="${paymentAmount}"/>
+                <form:input type="number" path="compensationAmount" placeholder="${paymentAmount}"/>
+                        <c:if test="${not empty compensationError}">
                         <div class="error-message">
                                         <spring:message code="${compensationError}"/>
                         </div>
+                        </c:if>
             </div>
             <div>
                  <button class="button" type="submit">

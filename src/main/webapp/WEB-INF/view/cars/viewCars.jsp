@@ -39,17 +39,19 @@
         </div>
     <table id="table">
         <tr>
+        <sec:authorize access="hasAuthority('ROLE_ADMIN')">
             <th>
                 <spring:message code="car.id.placeholder"/>
             </th>
+        </sec:authorize>
             <th>
-                <spring:message code="car.brand.placeholder"/>
+                <spring:message code="car.brand.label"/>
             </th>
             <th>
-                <spring:message code="car.model.placeholder"/>
+                <spring:message code="car.model.label"/>
             </th>
             <th>
-                <spring:message code="car.cost.placeholder"/>
+                <spring:message code="car.cost.label"/>
             </th>
             <th>
                 <spring:message code="car.info.placeholder"/>
@@ -71,7 +73,7 @@
         <c:forEach var="car" items="${list}">
             <c:if test="${car.available}">
                 <tr>
-                    <td>${car.id}</td>
+                    <sec:authorize access="hasAuthority('ROLE_ADMIN')"><td>${car.id}</td></sec:authorize>
                     <td>${car.brand}</td>
                     <td>${car.model}</td>
                     <td>${car.costPerOneDay}</td>
@@ -127,11 +129,12 @@
     </c:if>
 </a>
 </sec:authorize>
+
+</div>
 </body>
+</html>
 <div id="footer">
     <h2>Final Project For Java Web Development Course.</h2>
-</div>
-</html>
 
 
 

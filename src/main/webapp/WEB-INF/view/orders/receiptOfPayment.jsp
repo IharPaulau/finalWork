@@ -74,6 +74,8 @@
         <span class="badge">${approvedOrders}</span>
     </c:if>
 </a>
-</a>
-</html>
 
+    <div id="footer">
+        <h2>Final Project For Java Web Development Course.</h2>
+    </div>
+    </html>

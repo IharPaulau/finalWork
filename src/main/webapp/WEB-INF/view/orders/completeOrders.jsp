@@ -62,60 +62,21 @@
                 <td>${order.car.brand} ${order.car.model}</td>
                 <td>${order.rentalPeriodInDays}</td>
                 <td>
-                    <c:choose>
-                        <c:when test="${order.orderStatus == 'APPROVED'}">
-                            <spring:message code="order.approved"/>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'REJECTED'}">
-                            <spring:message code="order.rejected"/>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'NOT_VERIFIED'}">
-                            <spring:message code="order.not.verified"/>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'RETURN'}">
-                            <spring:message code="car.checking.damage"/>
-                        </c:when>
-                    </c:choose>
+                    <spring:message code="order.status.${order.orderStatus.name.toLowerCase()}"/>
                 </td>
                 <td>
                     <c:choose>
-                        <c:when test="${order.orderStatus == 'APPROVED'}">
-                            <button>
-                                <a href="/reject/${order.id}">
-                                    <spring:message code="rejected"/>
-                                </a>
-                            </button>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'REJECTED'}">
-                            <button>
-                                <a href="/approve/${order.id}">
-                                    <spring:message code="approved"/>
-                                </a>
-                            </button>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'NOT_VERIFIED'}">
-                            <button>
-                                <a href="/reject/${order.id}">
-                                    <spring:message code="rejected"/>
-                                </a>
-                            </button>
-                            <button>
-                                <a href="/approve/${order.id}">
-                                    <spring:message code="approved"/>
-                                </a>
-                            </button>
-                        </c:when>
-                        <c:when test="${order.orderStatus == 'RETURN'}">
-                            <button>
+                       <c:when test="${order.orderStatus == 'RETURN'}">
                                 <a href="/returnCar/${order.id}">
+                            <button class="info">
                                     <spring:message code="close.order"/>
-                                </a>
                             </button>
-                            <button>
+                                </a>
                                 <a href="/repairInvoice/${order.id}">
+                            <button class="danger">
                                     <spring:message code="repair.invoice"/>
-                                </a>
                             </button>
+                                </a>
                         </c:when>
                     </c:choose>
                 </td>

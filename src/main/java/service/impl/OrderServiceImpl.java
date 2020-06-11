@@ -173,8 +173,8 @@ public class OrderServiceImpl implements OrderService {
     private void runCancellationOrdersThread() {
         Runnable runnable = new StateChangerRunnable();
         applicationContext.getAutowireCapableBeanFactory().autowireBean(runnable);
-        Thread orderCancellationThread = new Thread(runnable, "OrderCancellationThread");
-        orderCancellationThread.start();
+        Thread stateChanger = new Thread(runnable, "stateChanger");
+        stateChanger.start();
     }
 
     public void setOrderDao(OrderDao orderDao) {

@@ -58,7 +58,7 @@
                         <spring:message code="passport.number"/>
                     </label>
                     <spring:message code="passport.number.placeholder" var="passportNumbers"/>
-                    <form:input type="text" path="passportNumber" placeholder="${passportNumbers}" maxlength="7"/>
+                    <form:input type="number" path="passportNumber" placeholder="${passportNumbers}" maxlength="7"/>
                     <form:errors path="passportNumber" class="error-message"/>
                 </div>
                 <div class="form-attribute">
@@ -74,7 +74,7 @@
                         <spring:message code="rental.period"/>
                     </label>
                     <spring:message code="desired.rental.period" var="period"/>
-                    <form:input type="text" path="rentalPeriodInDays" placeholder="${period}" maxlength="2"/>
+                    <form:input type="number" path="rentalPeriodInDays" placeholder="${period}" maxlength="2"/>
                     <form:errors path="rentalPeriodInDays" class="error-message"/>
                 </div>
             </div>

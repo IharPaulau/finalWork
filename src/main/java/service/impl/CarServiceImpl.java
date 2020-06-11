@@ -14,7 +14,6 @@ public class CarServiceImpl implements CarService {
     private CarDao carDao;
 
     public int save(Car car) {
-
         return carDao.save(car);
     }
 

@@ -20,10 +20,14 @@ public class Car {
     private String bodyColor;
     @NotBlank(message = "{empty.car.transmission}")
     private String transmission;
-    @Min(value = 100, message = "{min.car.costPerOneDay}")
+    @Min(value = 50, message = "{min.car.costPerOneDay}")
     @NotNull(message = "{null.car.costPerOneDay}")
     private Integer costPerOneDay;
     private boolean available;
+
+    public Car() {
+        this.available=true;
+    }
 
     public int getId() {
         return id;
