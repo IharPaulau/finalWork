@@ -32,7 +32,7 @@
             </form>
         </div>
     </div>
-    <form:form method="get" action="/orderForm/${car.id}" modelAttribute="car">
+    <form:form method="get" action="/orders/orderForm/${car.id}" modelAttribute="car">
         <table id="table">
             <tr>
                 <th>

@@ -44,7 +44,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int save(Order order) {
-        return orderDao.save(order);
+        int orderId = orderDao.save(order);
+        LOGGER.info(String.format("Order saved with id: %s", orderId));
+        return orderId;
     }
 
     @Override
@@ -96,6 +98,7 @@ public class OrderServiceImpl implements OrderService {
         carService.setCarAvailable(order.getCar());
         order.setOrderStatus(OrderStatus.REJECTED);
         save(order);
+        LOGGER.info(String.format("Order with id: %s rejected", order.getId()));
     }
 
     @Override
@@ -106,6 +109,7 @@ public class OrderServiceImpl implements OrderService {
         carService.setCarNoMoreAvailable(order.getCar());
         orderDao.setDeadline(order, dateToString(order.getPayTillDate()));
         save(order);
+        LOGGER.info(String.format("Order with id: %s approved", order.getId()));
     }
 
     @Override
@@ -114,6 +118,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus(OrderStatus.COMPLETED);
         carService.setCarAvailable(order.getCar());
         save(order);
+        LOGGER.info(String.format("Order with id: %s completed", order.getId()));
     }
 
     @Override
@@ -121,6 +126,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderDao.getOrderById(id);
         order.setOrderStatus(OrderStatus.RECOVERY);
         save(order);
+        LOGGER.info(String.format("Order with id: %s set status to recovery", order.getId()));
     }
 
     private Date setterPaymentDeadline(int minutes) {

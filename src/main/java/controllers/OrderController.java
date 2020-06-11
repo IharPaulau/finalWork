@@ -32,14 +32,14 @@ public class OrderController {
     private OrderService orderService;
 
 
-    @GetMapping("/orderForm/{carId}")
+    @GetMapping("/orders/orderForm/{carId}")
     public String showForm(@PathVariable int carId, Model model) {
         model.addAttribute(ORDER_MODEL_ATTRIBUTE, new Order());
         model.addAttribute("carId", carId);
         return "orders/orderForm";
     }
 
-    @PostMapping("/orderForm/{carId}")
+    @PostMapping("/orders/orderForm/{carId}")
     public String save(@ModelAttribute(ORDER_MODEL_ATTRIBUTE) @Valid Order order,
                        BindingResult bindingResult, Model model, @PathVariable int carId) {
 

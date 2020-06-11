@@ -14,6 +14,7 @@ public class CarServiceImpl implements CarService {
     private CarDao carDao;
 
     public int save(Car car) {
+        LOGGER.info(String.format("Creating new car with id: %s", car.getId()));
         return carDao.save(car);
     }
 
@@ -31,22 +32,25 @@ public class CarServiceImpl implements CarService {
     }
 
     public void update(Car car) {
-
+        LOGGER.info(String.format("Updating car with id: %s", car.getId()));
         carDao.update(car);
     }
 
 
     public int delete(int carId) {
+        LOGGER.info(String.format("Deleting car with id: %s", carId));
         return carDao.delete(carId);
     }
 
     @Override
     public void setCarNoMoreAvailable(Car car) {
+        LOGGER.info(String.format("Setting car no more available with id: %s", car.getId()));
         carDao.updateCarAvailability(car.getId(), false);
     }
 
     @Override
     public void setCarAvailable(Car car) {
+        LOGGER.info(String.format("Setting car now available with id: %s", car.getId()));
         carDao.updateCarAvailability(car.getId(), true);
     }
 

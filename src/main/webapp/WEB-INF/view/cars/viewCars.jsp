@@ -82,7 +82,7 @@
                     </td>
                     <sec:authorize access="hasAuthority('ROLE_USER')">
                         <td>
-                            <a href="/orderForm/${car.id}">to rent</a>
+                            <a href="/orders/orderForm/${car.id}">to rent</a>
                         </td>
                     </sec:authorize>
                     <sec:authorize access="hasAuthority('ROLE_ADMIN')">

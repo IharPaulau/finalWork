@@ -24,7 +24,7 @@
                     <spring:message code="current.user"/>
                 </h2>
                 <h2>${pageContext.request.userPrincipal.name}</h2>
-
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <button class="button" type="submit">
                     <spring:message code="logout.button"/>
                 </button>
@@ -33,20 +33,18 @@
     </div>
     <div id="content">
         <h1>
-                    <spring:message code="fill.reject.reason"/>
-                </h1>
-
-                </div>
+            <spring:message code="fill.reject.reason"/>
+        </h1>
+    </div>
     <form:form method="post" action="/rejectReason/${orderId}" modelAttribute="rejectReasonForm" class="form">
         <form:hidden path="orderId" value="${orderId}"/>
-
-
-    <form:input type="text" path="rejectReason"/>
-    <button class="button" type="submit"> <spring:message code="send.reject.reason"/>
-    </button>
+        <form:input type="text" path="rejectReason"/>
+        <button class="button" type="submit">
+            <spring:message code="send.reject.reason"/>
+        </button>
     </form:form>
-    </body>
-    <div id="footer">
-        <h2>Final Project For Java Web Development Course.</h2>
-    </div>
-    </html>
+</body>
+<div id="footer">
+    <h2>Final Project For Java Web Development Course.</h2>
+</div>
+</html>

@@ -11,14 +11,14 @@
         <intercept-url pattern="/cars/viewCars" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/cars/carInfo" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <!-- available for admin only       -->
-        <intercept-url pattern="/cars/carForm" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/cars/carForm/*" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/orders/viewOrders" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/orders/completeOrders" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/orders/repairInvoice" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/orders/rejectReason" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/orders/repairInvoice/*" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/orders/rejectReason/*" access="hasRole('ROLE_ADMIN')"/>
         <!-- available for user only       -->
-        <intercept-url pattern="/orders/receiptOfPayment" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/orders/orderForm" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/orders/receiptOfPayment/*" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/orders/orderForm/*" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/orders/viewMyOrders" access="hasRole('ROLE_USER')"/>
 
         <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"

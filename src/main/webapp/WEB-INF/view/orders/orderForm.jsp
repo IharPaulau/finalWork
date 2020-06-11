@@ -41,7 +41,7 @@
         <h1>
             <spring:message code="fill.order"/>
         </h1>
-        <form:form method="post" action="/orderForm/${carId}" modelAttribute="order" class="form">
+        <form:form method="post" action="/orders/orderForm/${carId}" modelAttribute="order" class="form">
             <form:hidden path="user.username" value="${pageContext.request.userPrincipal.name}"/>
             <form:hidden path="car.id" value="${carId}"/>
             <div class="form-attributes">

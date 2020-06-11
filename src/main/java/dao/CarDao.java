@@ -18,7 +18,7 @@ public interface CarDao {
      * Update attributes in current car
      *
      * @param car car to changes attributes
-     * @return
+     * @return number of rows affected
      */
     int update(Car car);
 
@@ -26,7 +26,7 @@ public interface CarDao {
      * Delete car by current carId
      *
      * @param carId carId to search car
-     * @return
+     * @return number of rows affected
      */
     int delete(int carId);
 
@@ -50,7 +50,7 @@ public interface CarDao {
      *
      * @param carId to search car
      * @param available new value of attributes
-     * @return
+     * @return number of rows affected
      */
     int updateCarAvailability(int carId, boolean available);
 

@@ -47,17 +47,17 @@
                 </label>
                 <spring:message code="payment.amount.placeholder" var="paymentAmount"/>
                 <form:input type="number" path="compensationAmount" placeholder="${paymentAmount}"/>
-                        <c:if test="${not empty compensationError}">
-                        <div class="error-message">
-                                        <spring:message code="${compensationError}"/>
-                        </div>
-                        </c:if>
+                <c:if test="${not empty compensationError}">
+                    <div class="error-message">
+                        <spring:message code="${compensationError}"/>
+                    </div>
+                </c:if>
             </div>
             <div>
-                 <button class="button" type="submit">
+                <button class="button" type="submit">
                     <spring:message code="button.to.save"/>
-                 </button>
-             </div>
+                </button>
+            </div>
         </form:form>
 
     </div>

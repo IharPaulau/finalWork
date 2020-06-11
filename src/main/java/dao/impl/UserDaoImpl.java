@@ -5,8 +5,11 @@ import dao.UserDao;
 import extractors.UserResultSetExtractor;
 import mappers.UserRowMapper;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -52,12 +55,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     private int preparedStatement(User user, KeyHolder keyHolder) {
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(CREATE_NEW_USER, new String[]{"id"});
-            ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, user.getEmail());
-            return ps;
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                PreparedStatement ps = connection.prepareStatement(CREATE_NEW_USER, new String[]{"id"});
+                ps.setString(1, user.getUsername());
+                ps.setString(2, user.getPassword());
+                ps.setString(3, user.getEmail());
+                return ps;
+            }
         }, keyHolder);
         return keyHolder.getKey().intValue();
     }
